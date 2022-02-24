@@ -1,0 +1,102 @@
+***********SIZE CONSTRUCT TESTS*************
+FAILING CONSTRUCS TESTS
+TEST vector(18446744073709551615)
+std::bad_alloc
+TEST vector(18446744073709551615, 10)
+std::bad_alloc
+TEST vector(18446744073709551615, -1)
+std::bad_alloc
+
+OK CONSTRUCTS TESTS
+TEST vector(0, 0)
+
+TEST vector(0, 5)
+
+TEST vector(10, -1)
+v[0] = -1
+v[1] = -1
+v[2] = -1
+v[3] = -1
+v[4] = -1
+v[5] = -1
+v[6] = -1
+v[7] = -1
+v[8] = -1
+v[9] = -1
+
+TEST vector(10)
+v[0] = 0
+v[1] = 0
+v[2] = 0
+v[3] = 0
+v[4] = 0
+v[5] = 0
+v[6] = 0
+v[7] = 0
+v[8] = 0
+v[9] = 0
+
+TEST vector(10, 0)
+v[0] = 0
+v[1] = 0
+v[2] = 0
+v[3] = 0
+v[4] = 0
+v[5] = 0
+v[6] = 0
+v[7] = 0
+v[8] = 0
+v[9] = 0
+
+TEST vector(10, -2147483648)
+v[0] = -2147483648
+v[1] = -2147483648
+v[2] = -2147483648
+v[3] = -2147483648
+v[4] = -2147483648
+v[5] = -2147483648
+v[6] = -2147483648
+v[7] = -2147483648
+v[8] = -2147483648
+v[9] = -2147483648
+
+TEST vector(10, 2147483647)
+v[0] = 2147483647
+v[1] = 2147483647
+v[2] = 2147483647
+v[3] = 2147483647
+v[4] = 2147483647
+v[5] = 2147483647
+v[6] = 2147483647
+v[7] = 2147483647
+v[8] = 2147483647
+v[9] = 2147483647
+
+
+
+STRING TESTS
+TEST vector(10, )
+v[0] = 
+v[1] = 
+v[2] = 
+v[3] = 
+v[4] = 
+v[5] = 
+v[6] = 
+v[7] = 
+v[8] = 
+v[9] = 
+
+TEST vector(10, hello world!)
+v[0] = hello world!
+v[1] = hello world!
+v[2] = hello world!
+v[3] = hello world!
+v[4] = hello world!
+v[5] = hello world!
+v[6] = hello world!
+v[7] = hello world!
+v[8] = hello world!
+v[9] = hello world!
+
+***********RANGE CONSTRUCT TESTS*************
