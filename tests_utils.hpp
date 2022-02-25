@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/25 13:29:58 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/02/25 15:03:14 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,16 @@ template <typename T, typename ite>
 void	test_range_construct(ite begin, ite end)
 {
 	vector<int> v(begin, end);
+	size_t		i = 0;
 
-	for (size_t i = 0; i < n; i++)
+	while (begin != end)
 	{
-		if ()
+		if (v[i] != *begin)
+		{
+			std::cout << "TEST KO, v[" << i << "] = " << v[i] << " != " << *begin << std::endl;
+			break ;
+		}
+		i++;
+		begin++;
 	}
 }

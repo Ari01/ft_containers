@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/24 16:50:01 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/02/25 15:07:38 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ namespace ft
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
 					const allocator_type& alloc = allocator_type());
+			/*{
+				size_t	n;
+
+				n = std::distance(first, last);
+				_alloc = alloc;
+				_begin = alloc.allocate()
+			}*/
+
 			vector (const vector& x);
 
 			/********************************** ACCESSORS ********************************/
