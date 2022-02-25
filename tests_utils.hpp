@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/24 17:29:45 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:29:58 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,13 @@ void	test_size_construct(std::size_t n, T val)
 	}
 }
 
-template <typename ite>
+template <typename T, typename ite>
 void	test_range_construct(ite begin, ite end)
 {
 	vector<int> v(begin, end);
+
+	for (size_t i = 0; i < n; i++)
+	{
+		if ()
+	}
 }
