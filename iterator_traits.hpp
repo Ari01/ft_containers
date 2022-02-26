@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/25 15:51:23 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:01:41 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 
-	/********************** ITERATOR TRAITRS ***************************/
+	/********************** ITERATOR TRAITS ***************************/
 	template <class T>
 	struct iterator_traits {
 		typedef typename T::value_type			value_type;
@@ -50,5 +50,14 @@ namespace ft
 		typedef	random_access_iterator_tag	iterator_category;
 		typedef	T*							pointer;
 		typedef	T&							reference;
+	};
+
+	template	<class	T>
+	struct	iterator_traits<const T*>	{
+		typedef	T							value_type;
+		typedef	ptrdiff_t					difference_type;
+		typedef	random_access_iterator_tag	iterator_category;
+		typedef	const T*					pointer;
+		typedef	const T&					reference;
 	};
 }

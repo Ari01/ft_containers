@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/25 15:07:38 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/02/26 12:31:42 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define VECTOR_HPP
 
 #include <memory>
+#include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -33,6 +34,16 @@ namespace ft
 			//const_iterator
 			//reverse_iterator
 			//const_reverse_iterator
+
+			/********************************** ITERATORS ********************************/
+			class Iterator
+			{
+				typedef iterator_traits<T>::value_type			value_type;
+				typedef iterator_traits<T>::difference_type		difference_type;
+				typedef iterator_traits<T>::iterator_category	iterator_category;
+				typedef iterator_traits<T>::pointer				pointer;
+				typedef iterator_traits<T>::reference			reference;
+			}
 
 			/********************************** CONSTRUCTORS *****************************/
 
