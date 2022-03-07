@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/26 12:31:42 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/07 11:42:48 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,37 @@
 #define VECTOR_HPP
 
 #include <memory>
-#include "iterator_traits.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
 	template < class T, class Alloc = std::allocator<T> >
 	class vector
 	{
+		/****************************** TYPES *****************************/
 		public:
-			// MEMBER TYPES
 			typedef T										value_type;
 			typedef Alloc									allocator_type;
 			typedef typename allocator_type::reference		reference;
 			typedef typename allocator_type::pointer		pointer;
 			typedef	typename allocator_type::const_pointer	const_pointer;
-			typedef std::ptrdiff_t							difference_type;
+			typedef ptrdiff_t								difference_type;
 			typedef	size_t									size_type;
-			//iterator
+			typedef RandomIte <value_type>					iterator;
+			typedef RandomIte <const value_type>			const_iterator;
 			//const_iterator
 			//reverse_iterator
 			//const_reverse_iterator
 
-			/********************************** ITERATORS ********************************/
-			class Iterator
-			{
-				typedef iterator_traits<T>::value_type			value_type;
-				typedef iterator_traits<T>::difference_type		difference_type;
-				typedef iterator_traits<T>::iterator_category	iterator_category;
-				typedef iterator_traits<T>::pointer				pointer;
-				typedef iterator_traits<T>::reference			reference;
-			}
+		/****************************** ATTRIBUTES *****************************/
+		private:
+			allocator_type	_alloc;
+			pointer			_begin;
+			pointer			_end;
+			size_type		_capacity;
 
-			/********************************** CONSTRUCTORS *****************************/
+		public:
+			/****************************** CONSTRUCTORS *****************************/
 
 			/* DEFAULT : initializes default allocator and saves copy in _allocator */
 			explicit vector (const allocator_type& alloc = allocator_type()) :
@@ -89,14 +88,16 @@ namespace ft
 				return (ret);
 			}
 
-			private:
-				// ATTRIBUTES
-				allocator_type	_alloc;
-				pointer			_begin;
-				pointer			_end;
-				size_type		_capacity;
+			/********************************** ITERATOR ********************************/
+			iterator	begin()
+			{
+				return (iterator(_begin));
+			}
 
-
+			iterator	end()
+			{
+				return (iterator(_end));
+			}
 	};
 }
 

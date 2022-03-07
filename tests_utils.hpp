@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/25 15:03:14 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/07 11:54:03 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,13 @@ void	test_range_construct(ite begin, ite end)
 		i++;
 		begin++;
 	}
+}
+
+template <typename T>
+void	test_iterators(vector<T> v)
+{
+	std::cout << "TEST V.BEGIN()" << std::endl;
+	std::cout << *v.begin() << std::endl;
+	std::cout << "TEST V.END()" << std::endl;
+	std::cout << *v.end() << std::endl;
 }

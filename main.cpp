@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/02/24 17:12:28 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/07 11:54:21 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ int main()
 	test_size_construct<std::string>(n, s);
 
 	std::cout << "***********RANGE CONSTRUCT TESTS*************" << std::endl;
+	std::vector<int> l(10, 1);
+	std::cout << l.end() - 1 - l.begin() << std::endl;
+
+	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
+	vector<int> v(10);
+	std::cout << "v = ";
+	for (int i = 0; i < 10; i++)
+	{
+		v[i] = i;
+		std::cout << v[i] << " ";
+	}
+	std::cout << std::endl;
+	test_iterators(v);
 /*	std::list<int> l(10, 0);
 	std::list<int>::iterator begin;
 	std::list<int>::iterator end;
