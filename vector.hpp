@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/07 11:42:48 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/08 21:12:46 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft
 				_alloc = alloc;
 				_begin = _alloc.allocate(n);
 				_end = _begin;
-				_capacity += n;
+				_capacity = n;
 				for (size_type i = 0; i < n; i++)
 					_alloc.construct(_end++, val);
 			}
@@ -70,19 +70,51 @@ namespace ft
 			** @param last : end of range */
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type());
-			/*{
-				size_t	n;
+					const allocator_type& alloc = allocator_type())
+			{
+				size_t			n = 0;
+				InputIterator	ite;
 
-				n = std::distance(first, last);
+				for (ite = first; ite != last; ite++)
+					n++;
 				_alloc = alloc;
-				_begin = alloc.allocate()
-			}*/
+				_begin = _alloc.allocate(n);
+				_end = _begin;
+				_capacity = n;
+				while (first != last)
+				{
+					_alloc.construct(_end++, *first);
+					first++;
+				}
+			}
 
-			vector (const vector& x);
+			/* COPY : copies another vector
+			** @param x : vector to copy */
+			vector (const vector& x)
+			{
+				size_type	len;
+
+				len = x.size();
+				_alloc = x._alloc;
+				_begin = _alloc.allocate(len);
+				_end = _begin;
+				_capacity = len;
+				for (size_type i = 0; i < len; i++)
+					_alloc.construct(_end++, x[i]);
+			}
 
 			/********************************** ACCESSORS ********************************/
-			reference	operator[] (size_type n)
+			size_type	size() const
+			{
+				return (_end - _begin);
+			}
+
+			size_type	capacity() const
+			{
+				return (_capacity);
+			}
+
+			reference	operator[] (size_type n) const
 			{
 				reference ret = *(_begin + n);
 				return (ret);

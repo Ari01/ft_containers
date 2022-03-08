@@ -12,7 +12,7 @@ else
 	make
 	./ft > ftout
 
-	make fclean
+	make clean
 	make std
 	./std > stdout
 fi
@@ -22,9 +22,9 @@ echo ""
 # print output diff
 if diff -y stdout ftout
 then
-	echo "\n\nTEST OK, OUTPUTS FT AND STD ARE EQUAL"
+	echo "TEST OK, OUTPUTS FT AND STD ARE EQUAL"
 else
-	echo "\nTEST KO, DIFFS FOUND"
+	echo "TEST KO, DIFFS FOUND"
 fi
 
 echo ""

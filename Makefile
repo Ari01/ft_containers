@@ -20,6 +20,9 @@ debug:		main.cpp
 			$(CC) $(CFLAGS) -D STD=0 -D DEBUG=1 $^ -o $(NAME)
 			$(CC) $(CFLAGS) -D STD=1 -D DEBUG=1 $^ -o std
 
+sanitize:	main.cpp
+			$(CC) $(CFLAGS) -fsanitize=address $^ -o $@
+
 #debug:		$(OBJS)
 #			$(CC) $(CFLAGS) -g -fsanitize=address $^ -o $@
 
@@ -30,7 +33,7 @@ clean:
 			rm -rf $(OBJS)
 
 fclean:		clean
-			rm -rf $(NAME) .*.swp debug std
+			rm -rf $(NAME) .*.swp ft std sanitize stdout ftout
 
 re:			fclean all
 

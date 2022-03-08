@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/07 11:54:21 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/08 21:27:31 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,86 @@
 int main()
 {
 	std::cout << "***********SIZE CONSTRUCT TESTS*************" << std::endl;
-	std::cout << "FAILING CONSTRUCS TESTS" << std::endl;
+
+	std::cout << std::endl << "** FAILING CONSTRUCS TESTS" << std::endl;
 	std::size_t n = -1;
 	test_size_construct<int>(n);
-	test_size_construct<int>(n, 10);
-	test_size_construct<int>(n, -1);
-
-	std::cout << std::endl << "OK CONSTRUCTS TESTS" << std::endl;
-	n = 0;
-	test_size_construct<int>(n, 0);
-	test_size_construct<int>(n, 5);
-	n = 10;
-	test_size_construct<int>(n, -1);
+	n = 2147483647;
 	test_size_construct<int>(n);
-	test_size_construct<int>(n, 0);
-	test_size_construct<int>(n, -2147483648);
-	test_size_construct<int>(n, 2147483647);
-	std::cout << std::endl;
 
-	std::cout << std::endl << "STRING TESTS" << std::endl;
-	std::string s = "";
-	test_size_construct<std::string>(n, s);
-	s = "hello world!";
-	test_size_construct<std::string>(n, s);
+	std::cout << "** OK CONSTRUCTS TESTS" << std::endl;
+	n = 0;
+	test_size_construct<int>(n);
+	n = 150;
+	test_size_construct<int>(n);
 
 	std::cout << "***********RANGE CONSTRUCT TESTS*************" << std::endl;
-	std::vector<int> l(10, 1);
-	std::cout << l.end() - 1 - l.begin() << std::endl;
+	std::cout << std::endl << "** LIST TEST" << std::endl;
+	std::list<int> l(10);
+	test_range_construct<int, std::list<int>::iterator>(l.begin(), l.end());
+
+	std::cout << std::endl << "** VECTOR TEST" << std::endl;
+	vector<std::string> vs(10);
+	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
+	
+	std::string	stmp;
+	stmp = "hw";
+	for (size_t i = 0; i < vs.size(); i++)
+		vs[i] = stmp + static_cast<char>(i + '0');
+	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
+
+	std::cout << std::endl << "** POINTER TEST" << std::endl;
+	int *a = new int[10];
+	vector<int> v(10);
+	test_range_construct<int, int *>(a, a + 10);
+
+	for (int i = 0; i < 10; i++)
+		a[i] = i;
+	test_range_construct<int, int *>(a, a + 10);
+
+	std::cout << "*********** COPY TESTS*************" << std::endl;
+
+	std::cout << std::endl << "** Int tests" << std::endl;
+	// FILLED WITH 0
+	vector<int> v1(10);
+	test_copy_construct(v1);
+
+	// FILLED WITH i from 0 to 10
+	for (size_t i = 0; i < v1.size(); i++)
+		v1[i] = i;
+	test_copy_construct(v1);
+
+	std::cout << std::endl << "** String tests" << std::endl;
+	// EMPTY STRINGS
+	vector<std::string> vss(10);
+	test_copy_construct(vss);
+
+	// STRINGS WITH HW + i
+	test_copy_construct(vs);
 
 	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
-	vector<int> v(10);
+
+	// v filled with ints from 0 to 10
+	vector<int> v2(10);
 	std::cout << "v = ";
 	for (int i = 0; i < 10; i++)
 	{
-		v[i] = i;
-		std::cout << v[i] << " ";
+		v2[i] = i;
+		std::cout << v2[i] << " ";
 	}
 	std::cout << std::endl;
-	test_iterators(v);
+	test_iterators(v2);
+
+	// v filled with strings hw + i
+	std::cout << "v = ";
+	for (int i = 0; i < 10; i++)
+	{
+		vs[i] = stmp + static_cast<char>(i + '0');
+		std::cout << vs[i] << " ";
+	}
+	std::cout << std::endl;
+	test_iterators(vs);
+
 /*	std::list<int> l(10, 0);
 	std::list<int>::iterator begin;
 	std::list<int>::iterator end;

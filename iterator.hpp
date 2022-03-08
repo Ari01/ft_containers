@@ -6,9 +6,12 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/07 12:05:07 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:12:49 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ITERATOR_HPP
+#define ITERATOR_HPP
 
 #include <cstddef>
 
@@ -105,6 +108,7 @@ namespace ft
 			{
 				if (this != &other)
 					val = other.val;
+				return (*this);
 			}
 			~BidirIte() {}
 
@@ -125,7 +129,7 @@ namespace ft
 				return (*this);
 			}
 
-			BidirIte &operator++(int)
+			BidirIte operator++(int)
 			{
 				BidirIte tmp(*this);
 
@@ -139,7 +143,7 @@ namespace ft
 				return (*this);
 			}
 
-			BidirIte &operator--(int)
+			BidirIte operator--(int)
 			{
 				BidirIte tmp(*this);
 
@@ -199,7 +203,10 @@ namespace ft
 			// NON MEMBER OPERATORS
 			friend RandomIte	operator+(RandomIte const& lhs, difference_type n)
 			{
-				return (lhs.val + n);
+				RandomIte	tmp(lhs);
+
+				tmp.val += n;
+				return (tmp);
 			}
 
 			/*friend RandomIte	operator+(difference_type n, RandomIte const& rhs)
@@ -209,7 +216,10 @@ namespace ft
 
 			friend RandomIte	operator-(RandomIte const& lhs, difference_type n)
 			{
-				return (lhs - n);
+				RandomIte	tmp(lhs);
+
+				tmp.val -= n;
+				return (tmp);
 			}
 
 			friend RandomIte	operator-(RandomIte const& lhs, RandomIte const& rhs)
@@ -221,3 +231,5 @@ namespace ft
 			}
 	};
 }
+
+#endif
