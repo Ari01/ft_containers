@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/08 21:27:31 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/10 04:14:52 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,26 @@ int main()
 	std::cout << "***********SIZE CONSTRUCT TESTS*************" << std::endl;
 
 	std::cout << std::endl << "** FAILING CONSTRUCS TESTS" << std::endl;
-	std::size_t n = -1;
-	test_size_construct<int>(n);
-	n = 2147483647;
-	test_size_construct<int>(n);
+	test_size_construct<int>(-1);
+	test_size_construct<int>(2147483647);
 
 	std::cout << "** OK CONSTRUCTS TESTS" << std::endl;
-	n = 0;
-	test_size_construct<int>(n);
-	n = 150;
-	test_size_construct<int>(n);
+	test_size_construct<int>(0);
+	test_size_construct<int>(150);
+
 
 	std::cout << "***********RANGE CONSTRUCT TESTS*************" << std::endl;
+
 	std::cout << std::endl << "** LIST TEST" << std::endl;
 	std::list<int> l(10);
 	test_range_construct<int, std::list<int>::iterator>(l.begin(), l.end());
 
 	std::cout << std::endl << "** VECTOR TEST" << std::endl;
+	// empty strings
 	vector<std::string> vs(10);
 	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
 	
+	// hw + i strings
 	std::string	stmp;
 	stmp = "hw";
 	for (size_t i = 0; i < vs.size(); i++)
@@ -54,13 +54,19 @@ int main()
 	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
 
 	std::cout << std::endl << "** POINTER TEST" << std::endl;
+	// filled with 0
 	int *a = new int[10];
-	vector<int> v(10);
 	test_range_construct<int, int *>(a, a + 10);
 
+	// filled with i = 0-9
 	for (int i = 0; i < 10; i++)
 		a[i] = i;
 	test_range_construct<int, int *>(a, a + 10);
+
+	std::cout << std::endl << "** NULL ITERATORS" << std::endl;
+	test_range_construct<int, int *>(NULL, NULL);
+	// undefined behaviour test_range_construct<int, int *>(NULL, a + 9);
+	// undefined behaviour test_range_construct<int, int *>(a, NULL);
 
 	std::cout << "*********** COPY TESTS*************" << std::endl;
 
@@ -104,6 +110,24 @@ int main()
 	}
 	std::cout << std::endl;
 	test_iterators(vs);
+
+	std::cout << "*********** OPERATOR TESTS*************" << std::endl;
+	std::cout << "** OPERATOR =" << std::endl;
+	vector<int> test1(5);
+	for (int i = 0; i < 5; i++)
+		test1[i] = 5;
+
+	vector<int> test2(20);
+	for (int i = 0; i < 20; i++)
+		test1[i] = 20;
+
+	vector<int> test3(10);
+	for (int i = 0; i < 10; i++)
+		test1[i] = 10;
+
+	test_affectation_operator(test1, test3);
+	test_affectation_operator(test1, test2);
+	test_affectation_operator(test1, test1);
 
 /*	std::list<int> l(10, 0);
 	std::list<int>::iterator begin;

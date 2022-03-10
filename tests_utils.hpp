@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/08 21:35:51 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/10 04:15:48 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 	using namespace ft;
 #endif
 
+// CONSTRUCTORS
 template <typename T>
-void	test_size_construct(std::size_t n)
+void	test_size_construct(int n)
 {
 	std::cout << "TEST vector(" << n << ")" << std::endl;
 	try {
@@ -32,6 +33,35 @@ void	test_size_construct(std::size_t n)
 	} catch (std::bad_alloc e) {
 		std::cout << e.what() << std::endl;
 	}
+	std::cout << std::endl;
+}
+
+template <typename T, typename iterator>
+void	test_range_construct(iterator begin, iterator end)
+{
+	vector<T>	v(begin, end);
+	iterator	ite;
+	size_t		i = 0;
+
+	std::cout << "range = ";
+	for (ite = begin; ite != end; ite++)
+		std::cout << *ite << " ";
+	std::cout << std::endl;
+
+	std::cout << "vector = ";
+	while (begin != end)
+	{
+		if (v[i] != *begin)
+		{
+			std::cout << "TEST KO, v[" << i << "] = " << v[i] << " != " << *begin << std::endl;
+			break ;
+		}
+		else
+			std::cout << v[i] << " ";
+		i++;
+		begin++;
+	}
+	std::cout << std::endl << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
 	std::cout << std::endl;
 }
 
@@ -70,35 +100,7 @@ void	test_copy_construct(vector<T> v1)
 	std::cout << std::endl << std::endl;
 }
 
-template <typename T, typename iterator>
-void	test_range_construct(iterator begin, iterator end)
-{
-	vector<T>	v(begin, end);
-	iterator	ite;
-	size_t		i = 0;
-
-	std::cout << "range = ";
-	for (ite = begin; ite != end; ite++)
-		std::cout << *ite << " ";
-	std::cout << std::endl;
-
-	std::cout << "vector = ";
-	while (begin != end)
-	{
-		if (v[i] != *begin)
-		{
-			std::cout << "TEST KO, v[" << i << "] = " << v[i] << " != " << *begin << std::endl;
-			break ;
-		}
-		else
-			std::cout << v[i] << " ";
-		i++;
-		begin++;
-	}
-	std::cout << std::endl << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
-	std::cout << std::endl;
-}
-
+// ITERATORS
 template <typename T>
 void	test_iterators(vector<T> v)
 {
@@ -138,5 +140,39 @@ void	test_iterators(vector<T> v)
 
 	std::cout << std::endl << std::endl;
 }
+
+// OPERATORS
+template <typename T>
+void	test_affectation_operator(vector<T> src, vector<T> dst)
+{
+	std::cout << "src = ";
+	for (size_t i = 0; i < src.size(); i++)
+		std::cout << src[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "dst = ";
+	for (size_t i = 0; i < dst.size(); i++)
+		std::cout << dst[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "dst capacity = " << dst.capacity() << std::endl;
+	std::cout << "dst size = " << dst.size() << std::endl;
+	dst = src;
+	std::cout << "dst capacity = " << dst.capacity() << std::endl;
+	std::cout << "dst size = " << dst.size() << std::endl;
+
+	for (size_t i = 0; i < dst.size(); i++)
+	{
+		if (dst[i] != src[i])
+		{
+			std::cout << "TEST KO : dst[" << i << "] = " << dst[i] << " != " << src[i] << std::endl;
+			break ;
+		}
+		else
+			std::cout << dst[i] << " ";
+	}
+	std::cout << std::endl << std::endl;
+}
+
 
 #endif

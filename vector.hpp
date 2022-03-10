@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/08 21:12:46 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/10 04:01:06 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ namespace ft
 			typedef	size_t									size_type;
 			typedef RandomIte <value_type>					iterator;
 			typedef RandomIte <const value_type>			const_iterator;
-			//const_iterator
 			//reverse_iterator
 			//const_reverse_iterator
 
@@ -70,17 +69,15 @@ namespace ft
 			** @param last : end of range */
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type())
+					const allocator_type& alloc = allocator_type()) : _capacity(0)
 			{
-				size_t			n = 0;
 				InputIterator	ite;
 
 				for (ite = first; ite != last; ite++)
-					n++;
+					_capacity++;
 				_alloc = alloc;
-				_begin = _alloc.allocate(n);
+				_begin = _alloc.allocate(_capacity);
 				_end = _begin;
-				_capacity = n;
 				while (first != last)
 				{
 					_alloc.construct(_end++, *first);
@@ -103,7 +100,7 @@ namespace ft
 					_alloc.construct(_end++, x[i]);
 			}
 
-			/********************************** ACCESSORS ********************************/
+			/********************************** CAPACITY ********************************/
 			size_type	size() const
 			{
 				return (_end - _begin);
@@ -114,13 +111,15 @@ namespace ft
 				return (_capacity);
 			}
 
+			/********************************** ACCESSORS ********************************/
+
 			reference	operator[] (size_type n) const
 			{
 				reference ret = *(_begin + n);
 				return (ret);
 			}
 
-			/********************************** ITERATOR ********************************/
+			/********************************** ITERATORS ********************************/
 			iterator	begin()
 			{
 				return (iterator(_begin));
@@ -129,6 +128,30 @@ namespace ft
 			iterator	end()
 			{
 				return (iterator(_end));
+			}
+
+			/********************************** OPERATORS ********************************/
+			vector& operator=(const vector& x)
+			{
+				size_t	xlen;
+				size_t	len;
+				pointer	ite;
+
+				xlen = x.size();
+				len = size();
+				ite = _begin;
+				if (xlen > _capacity)
+				{
+					while (ite != _end)
+						_alloc.destroy(ite++);
+					_alloc.deallocate(_begin, len);
+					_capacity = xlen;
+					_begin = _alloc.allocate(xlen);
+				}
+				_end = _begin;
+				for (size_t i = 0; i < xlen; i++)
+					_alloc.construct(_end++, x[i]);
+				return (*this);
 			}
 	};
 }
