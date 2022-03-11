@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/10 04:01:06 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/11 06:51:50 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,18 @@ namespace ft
 			** @param val : value to fill the array with
 			** @exception : alloc() throws std::bad_alloc if allocation failed */
 			explicit vector (size_type n, const value_type& val = value_type(),
-							 const allocator_type& alloc = allocator_type())
+							 const allocator_type& alloc = allocator_type()) :
+							 _alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 			{
-				_alloc = alloc;
-				_begin = _alloc.allocate(n);
-				_end = _begin;
-				_capacity = n;
-				for (size_type i = 0; i < n; i++)
-					_alloc.construct(_end++, val);
+				if (n > 0)
+				{
+					_alloc = alloc;
+					_begin = _alloc.allocate(n);
+					_end = _begin;
+					_capacity = n;
+					for (size_type i = 0; i < n; i++)
+						_alloc.construct(_end++, val);
+				}
 			}
 
 			/* RANGE : fills vector with elements from range first included to last not included
@@ -69,19 +73,23 @@ namespace ft
 			** @param last : end of range */
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type()) : _capacity(0)
+					const allocator_type& alloc = allocator_type()) :
+					_alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 			{
 				InputIterator	ite;
 
-				for (ite = first; ite != last; ite++)
-					_capacity++;
-				_alloc = alloc;
-				_begin = _alloc.allocate(_capacity);
-				_end = _begin;
-				while (first != last)
+				if (first != last)
 				{
-					_alloc.construct(_end++, *first);
-					first++;
+					for (ite = first; ite != last; ite++)
+						_capacity++;
+					_alloc = alloc;
+					_begin = _alloc.allocate(_capacity);
+					_end = _begin;
+					while (first != last)
+					{
+						_alloc.construct(_end++, *first);
+						first++;
+					}
 				}
 			}
 
@@ -98,6 +106,16 @@ namespace ft
 				_capacity = len;
 				for (size_type i = 0; i < len; i++)
 					_alloc.construct(_end++, x[i]);
+			}
+
+			~vector ()
+			{
+				pointer	tmp;
+
+				tmp = _begin;
+				while (tmp != _end)
+					_alloc.destroy(tmp++);
+				_alloc.deallocate(_begin, _capacity);
 			}
 
 			/********************************** CAPACITY ********************************/
@@ -134,17 +152,15 @@ namespace ft
 			vector& operator=(const vector& x)
 			{
 				size_t	xlen;
-				size_t	len;
 				pointer	ite;
 
 				xlen = x.size();
-				len = size();
 				ite = _begin;
 				if (xlen > _capacity)
 				{
 					while (ite != _end)
 						_alloc.destroy(ite++);
-					_alloc.deallocate(_begin, len);
+					_alloc.deallocate(_begin, _capacity);
 					_capacity = xlen;
 					_begin = _alloc.allocate(xlen);
 				}

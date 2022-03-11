@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/10 04:15:48 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/11 06:53:59 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	test_size_construct(int n)
 	try {
 		vector<T> v(n);
 		std::cout << "v.size = " << v.size() << ", v.capacity = " << v.capacity() << std::endl;
-	} catch (std::bad_alloc e) {
+	} catch (std::bad_alloc &e) {
 		std::cout << e.what() << std::endl;
 	}
 	std::cout << std::endl;
@@ -116,6 +116,10 @@ void	test_iterators(vector<T> v)
 	for (begin = v.begin(); begin != end; begin++)
 		std::cout << *(begin) << " ";
 
+	std::cout << std::endl << std::endl << "TEST begin = 1 + begin" << std::endl;
+	for (begin = v.begin(); begin != end; begin = 1 + begin)
+		std::cout << *(begin) << " ";
+
 	std::cout << std::endl << std::endl << "TEST begin = begin + 1" << std::endl;
 	for (begin = v.begin(); begin != end; begin = begin + 1)
 		std::cout << *(begin) << " ";
@@ -145,23 +149,27 @@ void	test_iterators(vector<T> v)
 template <typename T>
 void	test_affectation_operator(vector<T> src, vector<T> dst)
 {
+	size_t	i;
+
 	std::cout << "src = ";
-	for (size_t i = 0; i < src.size(); i++)
+	for (i = 0; i < src.size(); i++)
 		std::cout << src[i] << " ";
 	std::cout << std::endl;
 
 	std::cout << "dst = ";
-	for (size_t i = 0; i < dst.size(); i++)
+	for (i = 0; i < dst.size(); i++)
 		std::cout << dst[i] << " ";
 	std::cout << std::endl;
 
 	std::cout << "dst capacity = " << dst.capacity() << std::endl;
 	std::cout << "dst size = " << dst.size() << std::endl;
+	std::cout << "dst = src" << std::endl;
 	dst = src;
 	std::cout << "dst capacity = " << dst.capacity() << std::endl;
 	std::cout << "dst size = " << dst.size() << std::endl;
 
-	for (size_t i = 0; i < dst.size(); i++)
+	std::cout << "final dst = ";
+	for (i = 0; i < dst.size(); i++)
 	{
 		if (dst[i] != src[i])
 		{

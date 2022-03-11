@@ -21,7 +21,13 @@ debug:		main.cpp
 			$(CC) $(CFLAGS) -D STD=1 -D DEBUG=1 $^ -o std
 
 sanitize:	main.cpp
-			$(CC) $(CFLAGS) -fsanitize=address $^ -o $@
+			$(CC) $(CFLAGS) -D STD=0 -D SANITIZE=1 $^ -o $(NAME)
+			$(CC) $(CFLAGS) -D STD=1 -D SANITIZE=1 $^ -o std
+
+time:		main.cpp
+			$(CC) $(CFLAGS) -D STD=0 -D TIME=1 $^ -o $(NAME)
+			$(CC) $(CFLAGS) -D STD=1 -D TIME=1 $^ -o std
+
 
 #debug:		$(OBJS)
 #			$(CC) $(CFLAGS) -g -fsanitize=address $^ -o $@
@@ -33,7 +39,7 @@ clean:
 			rm -rf $(OBJS)
 
 fclean:		clean
-			rm -rf $(NAME) .*.swp ft std sanitize stdout ftout
+			rm -rf $(NAME) .*.swp ft std sanitize stdout ftout time
 
 re:			fclean all
 

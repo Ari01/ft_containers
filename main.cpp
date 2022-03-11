@@ -6,13 +6,14 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/10 04:14:52 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/11 06:56:17 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <vector>
 #include <list>
+#include <sys/time.h>
 #include "vector.hpp"
 #include "tests_utils.hpp"
 
@@ -22,28 +23,49 @@
 	using namespace ft;
 #endif
 
+#ifndef TIME
+# define TIME 0
+#endif
+
+#ifndef SANITIZE
+# define SANITIZE 0
+#endif
+
 int main()
 {
+	struct timeval begin;
+	struct timeval end;
+	gettimeofday(&begin, NULL);
+
+	/****************************** CONSTRUCTORS ****************************/
+
 	std::cout << "***********SIZE CONSTRUCT TESTS*************" << std::endl;
 
-	std::cout << std::endl << "** FAILING CONSTRUCS TESTS" << std::endl;
-	test_size_construct<int>(-1);
-	test_size_construct<int>(2147483647);
+	if (!SANITIZE)
+	{
+		std::cout << std::endl << "** FAILING CONSTRUCT TESTS" << std::endl;
+		test_size_construct<int>(-1);
+		test_size_construct<int>(2147483647);
+	}
 
-	std::cout << "** OK CONSTRUCTS TESTS" << std::endl;
+	std::cout << "** OK CONSTRUCT TESTS" << std::endl;
 	test_size_construct<int>(0);
 	test_size_construct<int>(150);
-
 
 	std::cout << "***********RANGE CONSTRUCT TESTS*************" << std::endl;
 
 	std::cout << std::endl << "** LIST TEST" << std::endl;
+	// list filled with 0
 	std::list<int> l(10);
+	for (int i = 0; i < 10; i++)
+		l.push_back(0);
 	test_range_construct<int, std::list<int>::iterator>(l.begin(), l.end());
 
 	std::cout << std::endl << "** VECTOR TEST" << std::endl;
 	// empty strings
 	vector<std::string> vs(10);
+	for (size_t i = 0; i < vs.size(); i++)
+		vs[i] = "";
 	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
 	
 	// hw + i strings
@@ -52,10 +74,13 @@ int main()
 	for (size_t i = 0; i < vs.size(); i++)
 		vs[i] = stmp + static_cast<char>(i + '0');
 	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
+	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.begin());
 
 	std::cout << std::endl << "** POINTER TEST" << std::endl;
 	// filled with 0
 	int *a = new int[10];
+	for (int i = 0; i < 10; i++)
+		a[i] = 0;
 	test_range_construct<int, int *>(a, a + 10);
 
 	// filled with i = 0-9
@@ -67,6 +92,7 @@ int main()
 	test_range_construct<int, int *>(NULL, NULL);
 	// undefined behaviour test_range_construct<int, int *>(NULL, a + 9);
 	// undefined behaviour test_range_construct<int, int *>(a, NULL);
+	delete [] a;
 
 	std::cout << "*********** COPY TESTS*************" << std::endl;
 
@@ -87,6 +113,8 @@ int main()
 
 	// STRINGS WITH HW + i
 	test_copy_construct(vs);
+
+	/****************************** ITERATORS ****************************/
 
 	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
 
@@ -111,6 +139,8 @@ int main()
 	std::cout << std::endl;
 	test_iterators(vs);
 
+	/****************************** OPERATORS ****************************/
+
 	std::cout << "*********** OPERATOR TESTS*************" << std::endl;
 	std::cout << "** OPERATOR =" << std::endl;
 	vector<int> test1(5);
@@ -119,11 +149,11 @@ int main()
 
 	vector<int> test2(20);
 	for (int i = 0; i < 20; i++)
-		test1[i] = 20;
+		test2[i] = 20;
 
 	vector<int> test3(10);
 	for (int i = 0; i < 10; i++)
-		test1[i] = 10;
+		test3[i] = 10;
 
 	test_affectation_operator(test1, test3);
 	test_affectation_operator(test1, test2);
@@ -170,5 +200,8 @@ int main()
 
 	}*/
 
-  return 0;
+	gettimeofday(&end, NULL);
+	if (TIME)
+		std::cout << "time : " << end.tv_usec - begin.tv_usec << "us" << std::endl;
+	return 0;
 }

@@ -1,20 +1,33 @@
 #!/bin/bash
 
-# compile exec debug/non debug FT and STD
+# compile exec FT and STD
+make fclean
+
 if [ "$1" = 'debug' ]
 then
-	make fclean
 	make debug
 	./ft > ftout
 	./std > stdout
-else
-	make fclean
-	make
-	./ft > ftout
+	else if [ "$1" = 'time' ]
+	then
+		make time
+		./ft > ftout
+		./std > stdout
+		else if [ "$1" = 'sanitize' ]
+		then
+			make sanitize
+			valgrind ./ft > ftout
+			valgrind ./std > stdout
+		else
+			make fclean
+			make
+			./ft > ftout
 
-	make clean
-	make std
-	./std > stdout
+			make clean
+			make std
+			./std > stdout
+		fi
+	fi
 fi
 
 echo ""
