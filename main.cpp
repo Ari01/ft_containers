@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/11 06:56:17 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/12 07:07:17 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <vector>
 #include <list>
 #include <sys/time.h>
-#include "vector.hpp"
 #include "tests_utils.hpp"
 
 #if STD == 1
@@ -56,9 +55,9 @@ int main()
 
 	std::cout << std::endl << "** LIST TEST" << std::endl;
 	// list filled with 0
-	std::list<int> l(10);
+	std::list<int> l;
 	for (int i = 0; i < 10; i++)
-		l.push_back(0);
+		l.push_back(i);
 	test_range_construct<int, std::list<int>::iterator>(l.begin(), l.end());
 
 	std::cout << std::endl << "** VECTOR TEST" << std::endl;
@@ -117,7 +116,6 @@ int main()
 	/****************************** ITERATORS ****************************/
 
 	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
-
 	// v filled with ints from 0 to 10
 	vector<int> v2(10);
 	std::cout << "v = ";
@@ -138,6 +136,17 @@ int main()
 	}
 	std::cout << std::endl;
 	test_iterators(vs);
+
+	/**************************** REV ITERATORS **************************/
+	std::cout << "*********** REV ITERATOR TESTS*************" << std::endl;
+	std::cout << "** LIST 0-9" << std::endl;
+	test_bidir_rev_iterators(l);
+
+	std::cout << "** VECTOR hw0-9" << std::endl;
+	test_random_rev_iterators(vs);
+
+	std::cout << "** VECTOR 0-9" << std::endl;
+	test_random_rev_iterators(v1);
 
 	/****************************** OPERATORS ****************************/
 

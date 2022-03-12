@@ -35,9 +35,15 @@ echo ""
 # print output diff
 if diff -y stdout ftout
 then
-	echo "TEST OK, OUTPUTS FT AND STD ARE EQUAL"
+	echo "DIFF TEST OK"
 else
-	echo "TEST KO, DIFFS FOUND"
+	echo "DIFF TEST KO, diffs found"
 fi
 
-echo ""
+# grep TEST KO in tests
+if grep "TEST KO" stdout ftout
+then
+	echo "GREP TEST KO, some tests ko'd"
+else
+	echo "GREP TEST OK"
+fi

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/11 06:51:50 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/12 07:13:07 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ namespace ft
 			typedef	size_t									size_type;
 			typedef RandomIte <value_type>					iterator;
 			typedef RandomIte <const value_type>			const_iterator;
-			//reverse_iterator
-			//const_reverse_iterator
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const iterator>	const_reverse_iterator;
 
 		/****************************** ATTRIBUTES *****************************/
 		private:
@@ -146,6 +146,16 @@ namespace ft
 			iterator	end()
 			{
 				return (iterator(_end));
+			}
+
+			reverse_iterator	rbegin()
+			{
+				return (reverse_iterator(_end));
+			}
+
+			reverse_iterator	rend()
+			{
+				return (reverse_iterator(_begin));
 			}
 
 			/********************************** OPERATORS ********************************/

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/11 08:28:13 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/12 07:57:14 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,15 +225,13 @@ namespace ft
 				return (tmp);
 			}
 
-			friend RandomIte	operator-(RandomIte const& lhs, RandomIte const& rhs)
+			friend difference_type	operator-(RandomIte const& lhs, RandomIte const& rhs)
 			{
-				RandomIte	tmp;
-
-				tmp.val = lhs.val - rhs.val;
-				return (tmp);
+				return (lhs.val - rhs.val);
 			}
 	};
 
+	/********************** REVERSE ITERATOR  ***************************/
 	template <class Iterator>
 	class reverse_iterator
 	{
@@ -250,131 +248,131 @@ namespace ft
 		private:
 			iterator_type	ite;
 
-		/****************************** CONSTRUCTORS *****************************/
-		
-		/** default */
-		reverse_iterator() : ite() {}
+		// CONSTS
+		public:
+			/** default */
+			reverse_iterator() : ite() {}
 
-		/** initialize */
-		explicit reverse_iterator(iterator_type it) : ite(it) {}
+			/** initialize */
+			explicit reverse_iterator(iterator_type it) : ite(it) {}
 
-		/** copy */
-		template <class Iter>
-		reverse_iterator(const reverse_iterator<Iter>& rev_it) : ite(rev_it.base()) {}
+			/** copy */
+			template <class Iter>
+			reverse_iterator(const reverse_iterator<Iter>& rev_it) : ite(rev_it.base()) {}
 
-		/****************************** ACCESSORS *****************************/
+			/****************************** ACCESSORS *****************************/
 
-		/* BASE : returns base operator */
-		iterator_type base() const { return (ite); }
+			/* BASE : returns base operator */
+			iterator_type base() const { return (ite); }
 
-		/****************************** OPERATORS *****************************/
+			/****************************** OPERATORS *****************************/
 
-		// MEMBER OPS
-		reference	operator*() const
-		{
-			return (*(ite - 1));
-		}
+			// MEMBER OPS
+			reference	operator*() const
+			{
+				return (*(--base()));
+			}
 
-		reverse_iterator operator+ (difference_type n) const
-		{
-			return (reverse_iterator(ite - n));
-		}
+			reverse_iterator operator+ (difference_type n) const
+			{
+				return (reverse_iterator(ite - n));
+			}
 
-		reverse_iterator& operator++()
-		{
-			ite--;
-			return (*this);
-		}
+			reverse_iterator& operator++()
+			{
+				ite--;
+				return (*this);
+			}
 
-		reverse_iterator  operator++(int)
-		{
-			reverse_iterator	tmp(*this);
+			reverse_iterator  operator++(int)
+			{
+				reverse_iterator	tmp(*this);
 
-			++(*this);
-			return (tmp);
-		}
+				++(*this);
+				return (tmp);
+			}
 
-		reverse_iterator& operator+= (difference_type n)
-		{
-			ite -= n;
-			return (*this);
-		}
+			reverse_iterator& operator+= (difference_type n)
+			{
+				ite -= n;
+				return (*this);
+			}
 
-		reverse_iterator operator- (difference_type n) const
-		{
-			return (reverse_iterator(ite + n));
-		}
+			reverse_iterator operator- (difference_type n) const
+			{
+				return (reverse_iterator(ite + n));
+			}
 
-		reverse_iterator& operator--()
-		{
-			ite++;
-			return (*this);
-		}
+			reverse_iterator& operator--()
+			{
+				ite++;
+				return (*this);
+			}
 
-		reverse_iterator  operator--(int)
-		{
-			reverse_iterator	tmp(*this);
+			reverse_iterator  operator--(int)
+			{
+				reverse_iterator	tmp(*this);
 
-			--(*this);
-			return (tmp);
-		}
+				--(*this);
+				return (tmp);
+			}
 
-		reverse_iterator& operator-= (difference_type n)
-		{
-			ite += n;
-			return (*this);
-		}
+			reverse_iterator& operator-= (difference_type n)
+			{
+				ite += n;
+				return (*this);
+			}
 
-		pointer operator->() const
-		{
-			return (&(operator*()));
-		}
+			pointer operator->() const
+			{
+				return (&(operator*()));
+			}
 
-		reference operator[] (difference_type n) const
-		{
-			return (ite[-n - 1]);
-		}
+			reference operator[] (difference_type n) const
+			{
+				return (ite[-n - 1]);
+			}
 
-		// NON MEMBER OPS
-		friend bool operator== (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite == rhs.ite);
-		}
+			// NON MEMBER OPS
+			friend bool operator== (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite == rhs.ite);
+			}
 
-		friend bool operator!= (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite != rhs.ite);
-		}
+			friend bool operator!= (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite != rhs.ite);
+			}
 
-		friend bool operator<  (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite > rhs.ite);
-		}
+			friend bool operator<  (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite > rhs.ite);
+			}
 
-		friend bool operator<= (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite >= rhs.ite);
-		}
+			friend bool operator<= (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite >= rhs.ite);
+			}
 
-		friend bool operator>  (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite < rhs.ite);
-		}
+			friend bool operator>  (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite < rhs.ite);
+			}
 
-		friend bool operator>= (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite <= rhs.ite);
-		}
+			friend bool operator>= (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite <= rhs.ite);
+			}
 
-		friend reverse_iterator operator+ (difference_type n, const reverse_iterator& rev_it)
-		{
-			return (rev_it + n);
-		}
+			friend reverse_iterator operator+ (difference_type n, const reverse_iterator& rev_it)
+			{
+				return (rev_it + n);
+			}
 
-		friend difference_type operator- (const reverse_iterator& lhs, const reverse_iterator& rhs)
-		{
-			return (lhs.ite - rhs.ite);
-		}
+			friend difference_type operator- (const reverse_iterator& lhs, const reverse_iterator& rhs)
+			{
+				return (lhs.ite - rhs.ite);
+			}
 	};
 }
 

@@ -6,19 +6,18 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/11 06:53:59 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/12 08:10:07 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TESTS_HPP
 #define TESTS_HPP
 
-#include "vector.hpp"
-#include "iterator.hpp"
-
 #if STD == 1
 	using namespace std;
 #else
+	#include "vector.hpp"
+	#include "iterator.hpp"
 	using namespace ft;
 #endif
 
@@ -112,6 +111,7 @@ void	test_iterators(vector<T> v)
 	len = v.size();
 	end = v.end();
 	tmp = len;
+
 	std::cout << "TEST begin++" << std::endl;
 	for (begin = v.begin(); begin != end; begin++)
 		std::cout << *(begin) << " ";
@@ -142,7 +142,85 @@ void	test_iterators(vector<T> v)
 	for (begin = end - 1; tmp--; begin -= 1)
 		std::cout << *(begin) << " ";
 
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl << std::endl << "TEST begin == begin" << std::endl;
+	if (v.begin() == v.begin())
+		std::cout << "TEST OK" << std::endl;
+	else
+		std::cout << "TEST KO" << std::endl;
+	
+	std::cout << std::endl << "TEST begin[i]" << std::endl;
+	begin = v.begin();
+	for (size_t i = 0; i < v.size(); i++)
+	{
+		if (begin[i] != v[i])
+			std::cout << "TEST KO : begin[" << i << "] = " << begin[i] << " != " << v[i] << std::endl;
+		else
+			std::cout << "begin[" << i << "] = " << begin[i] << std::endl;
+	}
+	std::cout << std::endl;
+
+	std::cout << std::endl << "TEST begin->val" << std::endl;
+}
+
+// REVERSE ITERATORS
+template <typename Container>
+void	test_bidir_rev_iterators(Container container)
+{
+	typedef typename Container::iterator	iterator;
+	reverse_iterator<iterator>				rbegin(container.end());
+	reverse_iterator<iterator>				rend(container.begin());
+	reverse_iterator<iterator>				rtmp(rbegin);
+
+	std::cout << "**init dereferencing and operator++" << std::endl;
+	while (rtmp != rend)
+	{
+		std::cout << *rtmp << std::endl;
+		rtmp++;
+	}
+	std::cout << std::endl;
+
+	std::cout << "** operator--" << std::endl;
+	while (rtmp != rbegin)
+		std::cout << *(--rtmp) << std::endl;
+	std::cout << std::endl;
+}
+
+template <typename Container>
+void	test_random_rev_iterators(Container container)
+{
+	typedef typename Container::iterator	iterator;
+	reverse_iterator<iterator>				rbegin(container.rbegin());
+	reverse_iterator<iterator>				rend(container.rend());
+	reverse_iterator<iterator>				rtmp(rbegin);
+
+	test_bidir_rev_iterators(container);
+	std::cout << "** operator+=" << std::endl;
+	while (rtmp != rend)
+	{
+		std::cout << *rtmp << std::endl;
+		rtmp += 1;
+	}
+
+	std::cout << std::endl << "** operator-=" << std::endl;
+	while (rtmp != rbegin)
+	{
+		rtmp -= 1;
+		std::cout << *rtmp << std::endl;
+	}
+
+	std::cout << std::endl << "** operator+" << std::endl;
+	std::cout << "*(rtmp + 1) = " << *(rtmp + 1) << std::endl;
+	std::cout << "*(1 + rtmp) = " << *(1 + rtmp) << std::endl;
+
+	std::cout << std::endl << "** operator-" << std::endl;
+	rtmp++;
+	std::cout << "*(rtmp - 1) = " << *(rtmp - 1) << std::endl;
+	rtmp--;
+
+	std::cout << std::endl << "rbegin base = " << *(rbegin.base() - 1) << std::endl;
+	std::cout << "rend.base = " << *rend.base() << std::endl;
+	std::cout << std::endl << "rbegin - rend = " << rbegin - rend << std::endl;
+	std::cout << "rend - rbegin = " << rend - rbegin << std::endl << std::endl;
 }
 
 // OPERATORS
