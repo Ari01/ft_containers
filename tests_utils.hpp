@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/12 08:10:07 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/13 05:09:07 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@
 	using namespace ft;
 #endif
 
-// CONSTRUCTORS
+/**************** CONSTRUCTORS **************/
+
+/* SIZE CONST
+** @param n : size to initialize the container with
+** on success, prints size and capacity
+** on failure, throws bad alloc exception */
 template <typename T>
 void	test_size_construct(int n)
 {
@@ -35,6 +40,13 @@ void	test_size_construct(int n)
 	std::cout << std::endl;
 }
 
+/* RANGE CONST
+** copies elements from range begin to end in container
+** and compares each element from the range and the container
+** on failure, prints test KO and the elems that differ
+** on success, prints every elems in the container
+** @param begin : start of range
+** @param end : end of range */
 template <typename T, typename iterator>
 void	test_range_construct(iterator begin, iterator end)
 {
@@ -64,6 +76,9 @@ void	test_range_construct(iterator begin, iterator end)
 	std::cout << std::endl;
 }
 
+/* COPY CONST
+** same as range const but copies elements from another vector instead of a range
+** @param v1 : the vector to copy */
 template <typename T>
 void	test_copy_construct(vector<T> v1)
 {
@@ -99,7 +114,10 @@ void	test_copy_construct(vector<T> v1)
 	std::cout << std::endl << std::endl;
 }
 
-// ITERATORS
+/**************** ITERATORS **************/
+/* ITERATORS
+** prints vector.begin(), end() and operators from a random access iterator
+** @param v : the vector to get the iterators from */
 template <typename T>
 void	test_iterators(vector<T> v)
 {
@@ -162,7 +180,9 @@ void	test_iterators(vector<T> v)
 	std::cout << std::endl << "TEST begin->val" << std::endl;
 }
 
-// REVERSE ITERATORS
+/* BIDIR REVERSE ITERATORS
+** prints bidirectional reverse iterator instanciations and operators
+** @param container : the container to get the iterators from */
 template <typename Container>
 void	test_bidir_rev_iterators(Container container)
 {
@@ -185,12 +205,14 @@ void	test_bidir_rev_iterators(Container container)
 	std::cout << std::endl;
 }
 
+/* RANDOM REVERSE ITERATORS
+** same as bidir reverse iterators but with reverse random access iterator */
 template <typename Container>
 void	test_random_rev_iterators(Container container)
 {
 	typedef typename Container::iterator	iterator;
-	reverse_iterator<iterator>				rbegin(container.rbegin());
-	reverse_iterator<iterator>				rend(container.rend());
+	reverse_iterator<iterator>				rbegin(container.end());
+	reverse_iterator<iterator>				rend(container.begin());
 	reverse_iterator<iterator>				rtmp(rbegin);
 
 	test_bidir_rev_iterators(container);
@@ -217,8 +239,6 @@ void	test_random_rev_iterators(Container container)
 	std::cout << "*(rtmp - 1) = " << *(rtmp - 1) << std::endl;
 	rtmp--;
 
-	std::cout << std::endl << "rbegin base = " << *(rbegin.base() - 1) << std::endl;
-	std::cout << "rend.base = " << *rend.base() << std::endl;
 	std::cout << std::endl << "rbegin - rend = " << rbegin - rend << std::endl;
 	std::cout << "rend - rbegin = " << rend - rbegin << std::endl << std::endl;
 }

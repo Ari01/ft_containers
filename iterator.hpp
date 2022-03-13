@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/12 07:57:14 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/13 05:08:32 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,7 +371,7 @@ namespace ft
 
 			friend difference_type operator- (const reverse_iterator& lhs, const reverse_iterator& rhs)
 			{
-				return (lhs.ite - rhs.ite);
+				return (rhs.ite - lhs.ite);
 			}
 	};
 }
