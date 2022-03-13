@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/12 07:07:17 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/13 08:04:13 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,25 @@ int main()
 
 	std::cout << "** VECTOR 0-9" << std::endl;
 	test_random_rev_iterators(v1);
+
+	/**************************** CAPACITY **************************/
+
+	std::cout << "********** CAPACITY TESTS ******************" << std::endl;
+	std::cout << "** MAX SIZE" << std::endl;
+	std::cout << "vector int max size = " << v1.max_size() << std::endl;
+	std::cout << "vector string max size = " << vs.max_size() << std::endl << std::endl;
+
+	std::cout << "** RESIZE" << std::endl;
+	test_resize(v1, 5);
+	test_resize(v1, 10);
+	test_resize(v1, 0);
+	test_resize(vs, 12);
+	test_resize(vs, 10);
+	test_resize(vs, 20);
+	test_resize(vs, 5);
+	test_resize(vs, 0);
+	test_resize(vs, -1);
+	//test_resize(vs, 2147483647);
 
 	/****************************** OPERATORS ****************************/
 

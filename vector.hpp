@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/12 07:13:07 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/13 08:11:29 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ namespace ft
 					_alloc.construct(_end++, x[i]);
 			}
 
+			/* DESTRUCTOR : destroy all elements in vector and deallocate memory */
 			~vector ()
 			{
 				pointer	tmp;
@@ -118,15 +119,108 @@ namespace ft
 				_alloc.deallocate(_begin, _capacity);
 			}
 
+			/* OPERATOR= : copies elements from another vector
+			** if x.size() > this->capacity(), causes reallocation
+			** @param x : the vector to copy */
+			vector& operator=(const vector& x)
+			{
+				size_t	xlen;
+				pointer	ite;
+
+				xlen = x.size();
+				ite = _begin;
+				if (xlen > _capacity)
+				{
+					while (ite != _end)
+						_alloc.destroy(ite++);
+					_alloc.deallocate(_begin, _capacity);
+					_capacity = xlen;
+					_begin = _alloc.allocate(xlen);
+				}
+				_end = _begin;
+				for (size_t i = 0; i < xlen; i++)
+					_alloc.construct(_end++, x[i]);
+				return (*this);
+			}
+
+
 			/********************************** CAPACITY ********************************/
+			/* SIZE : returns number of elements in vector */
 			size_type	size() const
 			{
 				return (_end - _begin);
 			}
 
+			/* MAX SIZE : returns the theoretical maximum number of elements that vector can hold */
+			size_type	max_size() const
+			{
+				return (_alloc.max_size());
+			}
+
+			/* RESIZE : resizes the container so that it contains n elements
+			** @param n : the new size of vector
+			** @param val : value to initialize elements with
+			** if n < vector.size(), destroys elements past n
+			** if n > vector.size(), inserts elements at the end of vector initialized to the value val
+			** if n > vector.capacity(), reallocates memory
+			** if exception is thrown, content of vector remains unchanged */
+			void	resize(size_type n, value_type val = value_type())
+			{
+				size_type	len;
+				pointer		tmp;
+
+				len = size();
+				tmp = _begin;
+				if (n > _capacity)
+				{
+					if (_capacity * 2 >= n)
+						reserve(_capacity * 2);
+					else
+						reserve(n);
+				}
+				else if (n < len)
+				{
+					while (tmp != _end)
+						_alloc.destroy(tmp++);
+					_end = _begin + n;
+				}
+				while (len++ < n)
+					_alloc.construct(_end++, val);
+			}
+
+
+
+			/* CAPACITY : returns number of space currently allocated for the vector */
 			size_type	capacity() const
 			{
 				return (_capacity);
+			}
+
+			/* RESERVE : requests that vector capacity be at least enough to contain n elements
+			** if n is greater than current capacity, causes reallocation
+			** @param n : capacity size request */
+			void reserve (size_type n)
+			{
+				pointer	begin;
+				pointer end;
+				pointer	tmp;
+
+				begin = _begin;
+				tmp = begin;
+				end = _end;
+				if (n > max_size())
+					throw std::length_error("vector::_M_default_append");
+				if (n > _capacity)
+				{
+					while (_begin != _end)
+						_alloc.destroy(_begin++);
+					_begin = _alloc.allocate(n);
+					_end = _begin;
+					_capacity = n;
+					while (tmp != end)
+						_alloc.construct(_end++, *tmp++);
+					_alloc.deallocate(begin, end - begin);
+				}
 			}
 
 			/********************************** ACCESSORS ********************************/
@@ -159,26 +253,6 @@ namespace ft
 			}
 
 			/********************************** OPERATORS ********************************/
-			vector& operator=(const vector& x)
-			{
-				size_t	xlen;
-				pointer	ite;
-
-				xlen = x.size();
-				ite = _begin;
-				if (xlen > _capacity)
-				{
-					while (ite != _end)
-						_alloc.destroy(ite++);
-					_alloc.deallocate(_begin, _capacity);
-					_capacity = xlen;
-					_begin = _alloc.allocate(xlen);
-				}
-				_end = _begin;
-				for (size_t i = 0; i < xlen; i++)
-					_alloc.construct(_end++, x[i]);
-				return (*this);
-			}
 	};
 }
 
