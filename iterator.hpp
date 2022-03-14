@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/13 05:08:32 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/14 09:24:44 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,9 @@ namespace ft
 			// MEMBER OPS
 			reference	operator*() const
 			{
-				return (*(--base()));
+				iterator_type	tmp = ite;
+
+				return (*(--tmp));
 			}
 
 			reverse_iterator operator+ (difference_type n) const

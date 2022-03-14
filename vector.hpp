@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/13 08:11:29 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/14 09:04:38 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,18 @@ namespace ft
 	{
 		/****************************** TYPES *****************************/
 		public:
-			typedef T										value_type;
-			typedef Alloc									allocator_type;
-			typedef typename allocator_type::reference		reference;
-			typedef typename allocator_type::pointer		pointer;
-			typedef	typename allocator_type::const_pointer	const_pointer;
-			typedef ptrdiff_t								difference_type;
-			typedef	size_t									size_type;
-			typedef RandomIte <value_type>					iterator;
-			typedef RandomIte <const value_type>			const_iterator;
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const iterator>	const_reverse_iterator;
+			typedef T											value_type;
+			typedef Alloc										allocator_type;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+			typedef	typename allocator_type::const_pointer		const_pointer;
+			typedef ptrdiff_t									difference_type;
+			typedef	size_t										size_type;
+			typedef RandomIte <value_type>						iterator;
+			typedef RandomIte <const value_type>				const_iterator;
+			typedef ft::reverse_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 		/****************************** ATTRIBUTES *****************************/
 		private:
@@ -196,6 +197,12 @@ namespace ft
 				return (_capacity);
 			}
 
+			/* EMPTY : test whether vector is empty */
+			bool	empty() const
+			{
+				return (!size());
+			}
+
 			/* RESERVE : requests that vector capacity be at least enough to contain n elements
 			** if n is greater than current capacity, causes reallocation
 			** @param n : capacity size request */
@@ -231,10 +238,17 @@ namespace ft
 				return (ret);
 			}
 
+
+
 			/********************************** ITERATORS ********************************/
 			iterator	begin()
 			{
 				return (iterator(_begin));
+			}
+
+			const_iterator	begin() const
+			{
+				return (const_iterator(_begin));
 			}
 
 			iterator	end()
@@ -242,14 +256,29 @@ namespace ft
 				return (iterator(_end));
 			}
 
+			const_iterator	end() const
+			{
+				return (const_iterator(_end));
+			}
+
 			reverse_iterator	rbegin()
 			{
 				return (reverse_iterator(_end));
 			}
 
+			const_reverse_iterator	rbegin() const
+			{
+				return (const_reverse_iterator (_end));
+			}
+
 			reverse_iterator	rend()
 			{
 				return (reverse_iterator(_begin));
+			}
+
+			const_reverse_iterator	rend() const
+			{
+				return (reverse_iterator(_end));
 			}
 
 			/********************************** OPERATORS ********************************/

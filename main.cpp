@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/13 08:04:13 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/14 09:21:13 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ int main()
 	std::cout << "** LIST 0-9" << std::endl;
 	test_bidir_rev_iterators(l);
 
-	std::cout << "** VECTOR hw0-9" << std::endl;
-	test_random_rev_iterators(vs);
+/*	std::cout << "** VECTOR hw0-9" << std::endl;
+	test_random_rev_iterators(vs);*/
 
 	std::cout << "** VECTOR 0-9" << std::endl;
 	test_random_rev_iterators(v1);
@@ -166,6 +166,18 @@ int main()
 	test_resize(vs, 0);
 	test_resize(vs, -1);
 	//test_resize(vs, 2147483647);
+
+	std::cout << "** EMPTY" << std::endl;
+	v1.resize(0);
+	if (!v1.empty())
+		std::cout << "TEST KO : vector should be empty" << std::endl;
+	else
+		std::cout << "TEST OK" << std::endl;
+	v1.resize(1);
+	if (v1.empty())
+		std::cout << "TEST KO : vector should not be empty";
+	else
+		std::cout << "TEST OK" << std::endl;
 
 	/****************************** OPERATORS ****************************/
 
