@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/14 09:24:44 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/15 09:46:16 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,12 @@ namespace ft
 			}
 			~BidirIte() {}
 
+			// ACCESSORS
+			pointer	base() const
+			{
+				return (val);
+			}
+
 			// MEMBER OPERATORS
 			reference	operator*()
 			{
@@ -178,7 +184,13 @@ namespace ft
 
 			// CONSTS DESTS
 			RandomIte() : BidirIte<T>() {}
-			RandomIte(RandomIte const& other) : BidirIte<T>(other) {}
+
+			template <typename TT>
+			RandomIte(RandomIte<TT> const& other)
+			{
+				this->val = other.base();
+			}
+
 			RandomIte(pointer p) : BidirIte<T>(p) {}
 			~RandomIte() {}
 

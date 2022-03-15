@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/14 09:16:26 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/15 09:44:29 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void	print(vector<T> v)
 }
 
 	/* RANDOM REVERSE ITERATORS
-	** same as bidir reverse iterators but with reverse random access iterator */
+	** same as bidir reverse iterators but with const reverse random access iterator */
 	template <typename Container>
 	void	test_random_rev_iterators(Container const container)
 	{
@@ -227,6 +227,7 @@ void	print(vector<T> v)
 
 		test_bidir_rev_iterators(container);
 		std::cout << "** operator+=" << std::endl;
+		std::cout << "rtmp = " << *rtmp << ", rend = " << *rend << std::endl;
 		while (rtmp != rend)
 		{
 			std::cout << *rtmp << std::endl;

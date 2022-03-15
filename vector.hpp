@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/14 09:04:38 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/15 09:47:12 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,7 +278,7 @@ namespace ft
 
 			const_reverse_iterator	rend() const
 			{
-				return (reverse_iterator(_end));
+				return (const_reverse_iterator(_begin));
 			}
 
 			/********************************** OPERATORS ********************************/
