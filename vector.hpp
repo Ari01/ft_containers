@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/15 09:47:12 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/15 10:55:44 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ namespace ft
 				tmp = begin;
 				end = _end;
 				if (n > max_size())
-					throw std::length_error("vector::_M_default_append");
+					throw std::length_error("vector::_M_fill_insert");
 				if (n > _capacity)
 				{
 					while (_begin != _end)
@@ -238,7 +238,25 @@ namespace ft
 				return (ret);
 			}
 
+			reference	at(size_type n)
+			{
+				std::string	tmp;
+				size_t		len;
 
+				len = size();
+				if (n >= len || n < 0)
+					throw std::out_of_range("vector::_M_range_check");
+				return (*(_begin + n));
+			}
+
+			const_reference	at(size_type n) const
+			{
+				const_reference	ret;
+				if (n >= size() || n < 0)
+					throw std::out_of_range("vector::_M_range_check");
+				ret = *(_begin + n);
+				return (ret);
+			}
 
 			/********************************** ITERATORS ********************************/
 			iterator	begin()

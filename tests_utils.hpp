@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/15 09:44:29 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/15 10:46:24 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,21 @@ void	test_resize(vector<T> v, size_t n)
 		std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
 	} catch (std::length_error& e) {
 		std::cout << e.what() << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+/************************ ACCESSORS **************************/
+template <typename T>
+void	test_at(vector<T> v, size_t pos)
+{
+	try
+	{
+		std::cout << "v.at(" << pos << ") = " << v.at(pos);
+	}
+	catch (std::out_of_range &e)
+	{
+		std::cout << "vector::_M_range_check";
 	}
 	std::cout << std::endl;
 }
