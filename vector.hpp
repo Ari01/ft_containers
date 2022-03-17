@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/15 10:55:44 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/17 10:09:41 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,10 +251,10 @@ namespace ft
 
 			const_reference	at(size_type n) const
 			{
-				const_reference	ret;
+				const_reference	ret = *(_begin + n);
+
 				if (n >= size() || n < 0)
 					throw std::out_of_range("vector::_M_range_check");
-				ret = *(_begin + n);
 				return (ret);
 			}
 

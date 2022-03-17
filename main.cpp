@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/15 10:52:29 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/17 10:42:39 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int main()
 
 	/****************************** ITERATORS ****************************/
 
-/*	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
+	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
 	// v filled with ints from 0 to 10
 	vector<int> v2(10);
 	std::cout << "v = ";
@@ -135,10 +135,10 @@ int main()
 		std::cout << vs[i] << " ";
 	}
 	std::cout << std::endl;
-	test_iterators(vs);*/
+	test_iterators(vs);
 
 	/**************************** REV ITERATORS **************************/
-/*	std::cout << "*********** REV ITERATOR TESTS*************" << std::endl;
+	std::cout << "*********** REV ITERATOR TESTS*************" << std::endl;
 	std::cout << "** LIST 0-9" << std::endl;
 	test_bidir_rev_iterators(l);
 
@@ -146,7 +146,7 @@ int main()
 	test_random_rev_iterators(vs);
 
 	std::cout << "** VECTOR 0-9" << std::endl;
-	test_random_rev_iterators(v1);*/
+	test_random_rev_iterators(v1);
 
 	/**************************** CAPACITY **************************/
 
@@ -184,12 +184,22 @@ int main()
 
 	std::cout << "************ ACCESSOR TESTS ************" << std::endl;
 	std::cout << std::endl << "** AT" << std::endl;
-	test_at(vs, 0);
-	test_at(vs, 9);
-	test_at(vs, 10);
-	test_at(vs, 20);
-	test_at(vs, 2147483647);
-	test_at(vs, -1);
+
+	// OK TESTS
+	vector<int> vtmp(10);
+	for (int i = 0; i < 10; i++)
+		vtmp[i] = i;
+	test_at(vtmp, 0);
+	test_at(vtmp, 9);
+
+	// FAILING THROWING EXCEPTION TESTS
+	if (!SANITIZE)
+	{
+		test_at(vtmp, 10);
+		test_at(vtmp, 20);
+		test_at(vtmp, 2147483647);
+		test_at(vtmp, -1);
+	}
 	std::cout << std::endl;
 
 	/****************************** OPERATORS ****************************/

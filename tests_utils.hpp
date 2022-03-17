@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/15 10:46:24 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/17 10:44:43 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ void	print(vector<T> v)
 
 		test_bidir_rev_iterators(container);
 		std::cout << "** operator+=" << std::endl;
-		std::cout << "rtmp = " << *rtmp << ", rend = " << *rend << std::endl;
 		while (rtmp != rend)
 		{
 			std::cout << *rtmp << std::endl;
@@ -274,13 +273,13 @@ void	test_resize(vector<T> v, size_t n)
 
 /************************ ACCESSORS **************************/
 template <typename T>
-void	test_at(vector<T> v, size_t pos)
+void	test_at(vector<T> const& v, size_t pos)
 {
 	try
 	{
 		std::cout << "v.at(" << pos << ") = " << v.at(pos);
 	}
-	catch (std::out_of_range &e)
+	catch (std::exception &e)
 	{
 		std::cout << "vector::_M_range_check";
 	}
