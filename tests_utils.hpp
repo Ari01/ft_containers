@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/17 10:44:43 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:06:53 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #endif
 
 template <typename T>
-void	print(vector<T> v)
+void	print(vector<T> &v)
 {
 	std::cout << "vector : ";
 	for (size_t i = 0; i < v.size(); i++)
@@ -265,7 +265,7 @@ void	test_resize(vector<T> v, size_t n)
 		v.resize(n);
 		print(v);
 		std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
-	} catch (std::length_error& e) {
+	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
 	std::cout << std::endl;
@@ -273,7 +273,7 @@ void	test_resize(vector<T> v, size_t n)
 
 /************************ ACCESSORS **************************/
 template <typename T>
-void	test_at(vector<T> const& v, size_t pos)
+void	test_at(vector<T> v, size_t pos)
 {
 	try
 	{
@@ -323,6 +323,5 @@ void	test_affectation_operator(vector<T> src, vector<T> dst)
 	}
 	std::cout << std::endl << std::endl;
 }
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/17 10:42:39 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:07:46 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,23 +150,30 @@ int main()
 
 	/**************************** CAPACITY **************************/
 
-/*	std::cout << "********** CAPACITY TESTS ******************" << std::endl;
+	std::cout << "********** CAPACITY TESTS ******************" << std::endl;
 	std::cout << "** MAX SIZE" << std::endl;
 	std::cout << "vector int max size = " << v1.max_size() << std::endl;
 	std::cout << "vector string max size = " << vs.max_size() << std::endl << std::endl;
 
+	// RESIZE OK TESTS
 	std::cout << "** RESIZE" << std::endl;
 	test_resize(v1, 5);
 	test_resize(v1, 10);
-	test_resize(v1, 0);
+	test_resize(vs, 0);
 	test_resize(vs, 12);
 	test_resize(vs, 10);
 	test_resize(vs, 20);
 	test_resize(vs, 5);
 	test_resize(vs, 0);
-	test_resize(vs, -1);
-	test_resize(vs, 2147483647);
 
+	// RESIZE THROWING EXCEPTION TESTS
+	if (!SANITIZE)
+	{
+		test_resize(vs, -1);
+		test_resize(vs, 2147483647);
+	}
+
+	// EMPTY TESTS
 	std::cout << "** EMPTY" << std::endl;
 	v1.resize(0);
 	if (!v1.empty())
@@ -178,7 +185,7 @@ int main()
 		std::cout << "TEST KO : vector should not be empty";
 	else
 		std::cout << "TEST OK" << std::endl;
-	std::cout << std::endl;*/
+	std::cout << std::endl;
 
 	/****************************** ACCESSORS ****************************/
 
@@ -186,19 +193,16 @@ int main()
 	std::cout << std::endl << "** AT" << std::endl;
 
 	// OK TESTS
-	vector<int> vtmp(10);
-	for (int i = 0; i < 10; i++)
-		vtmp[i] = i;
-	test_at(vtmp, 0);
-	test_at(vtmp, 9);
+	test_at(v2, 0);
+	test_at(v2, 9);
 
 	// FAILING THROWING EXCEPTION TESTS
 	if (!SANITIZE)
 	{
-		test_at(vtmp, 10);
-		test_at(vtmp, 20);
-		test_at(vtmp, 2147483647);
-		test_at(vtmp, -1);
+		test_at(v2, 10);
+		test_at(v2, 20);
+		test_at(v2, 2147483647);
+		test_at(v2, -1);
 	}
 	std::cout << std::endl;
 

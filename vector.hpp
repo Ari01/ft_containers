@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/17 10:09:41 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:09:10 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,11 @@ namespace ft
 
 			/* COPY : copies another vector
 			** @param x : vector to copy */
-			vector (const vector& x)
+			vector (const vector& x) : _alloc(x._alloc)
 			{
 				size_type	len;
 
 				len = x.size();
-				_alloc = x._alloc;
 				_begin = _alloc.allocate(len);
 				_end = _begin;
 				_capacity = len;
@@ -172,6 +171,7 @@ namespace ft
 
 				len = size();
 				tmp = _begin;
+
 				if (n > _capacity)
 				{
 					if (_capacity * 2 >= n)
@@ -188,8 +188,6 @@ namespace ft
 				while (len++ < n)
 					_alloc.construct(_end++, val);
 			}
-
-
 
 			/* CAPACITY : returns number of space currently allocated for the vector */
 			size_type	capacity() const
@@ -208,92 +206,133 @@ namespace ft
 			** @param n : capacity size request */
 			void reserve (size_type n)
 			{
-				pointer	begin;
-				pointer end;
-				pointer	tmp;
+				pointer	old_begin;
+				pointer	old_end;
+				size_t	len;
 
-				begin = _begin;
-				tmp = begin;
-				end = _end;
+				old_begin = _begin;
+				old_end = _end;
+				len = size();
 				if (n > max_size())
 					throw std::length_error("vector::_M_fill_insert");
 				if (n > _capacity)
 				{
-					while (_begin != _end)
-						_alloc.destroy(_begin++);
 					_begin = _alloc.allocate(n);
+					while (old_begin != old_end)
+						_alloc.destroy(old_begin++);
 					_end = _begin;
 					_capacity = n;
-					while (tmp != end)
-						_alloc.construct(_end++, *tmp++);
-					_alloc.deallocate(begin, end - begin);
+					old_begin -= len;
+					while (old_begin != old_end)
+						_alloc.construct(_end++, *old_begin++);
+					old_begin -= len;
+					_alloc.deallocate(old_begin, old_end - old_begin);
 				}
 			}
 
 			/********************************** ACCESSORS ********************************/
-
+			/* operator[] : returns reference on element n
+			** @param n : index of element to return
+			** undefined behaviour if n is out of range */
 			reference	operator[] (size_type n) const
 			{
-				reference ret = *(_begin + n);
-				return (ret);
+				return (*(_begin + n));
 			}
 
+			/* at : same as operator[] but throws out of range exception if n is out of bounds
+			** @param n : index of element to return */
 			reference	at(size_type n)
 			{
-				std::string	tmp;
-				size_t		len;
-
-				len = size();
-				if (n >= len || n < 0)
+				if (n >= size() || n < 0)
 					throw std::out_of_range("vector::_M_range_check");
 				return (*(_begin + n));
 			}
 
+			/* const at : returns const reference on element n
+			** @param n : index of element to return */
 			const_reference	at(size_type n) const
 			{
-				const_reference	ret = *(_begin + n);
-
 				if (n >= size() || n < 0)
 					throw std::out_of_range("vector::_M_range_check");
-				return (ret);
+				return (*(_begin + n));
+			}
+
+			/* front : returns reference to first elem in vector
+			** calling this function on empty vector causes undefined behaviour */
+			reference	front()
+			{
+				return (*_begin);
+			}
+
+			/* const front : returns const_reference to first elem in vector */
+			const_reference	front() const
+			{
+				return (*_begin);
+			}
+
+			/* back : returns reference to last elem in vector
+			** call on empty vector causes undefined behaviour */
+			reference	back()
+			{
+				return (*(_end - 1));
+			}
+
+			/* const back : returns const_reference to last elem in vector */
+			const_reference	back() const
+			{
+				return (*(_end - 1));
+			}
+
+			allocator_type get_allocator() const
+			{
+				return (_alloc);
 			}
 
 			/********************************** ITERATORS ********************************/
+			/* begin : returns iterator pointing on first elem in vector */
 			iterator	begin()
 			{
 				return (iterator(_begin));
 			}
 
+			/* const begin : returns const iterator pointing on first elem in vector */
 			const_iterator	begin() const
 			{
 				return (const_iterator(_begin));
 			}
 
+			/* end : returns iterator pointing on past the end in vector */
 			iterator	end()
 			{
 				return (iterator(_end));
 			}
 
+			/* const end : returns const iterator pointing on past the end in vector */
 			const_iterator	end() const
 			{
 				return (const_iterator(_end));
 			}
 
+			/* rbegin : returns reverse_iterator pointing on past the end - 1 in vector */
 			reverse_iterator	rbegin()
 			{
 				return (reverse_iterator(_end));
 			}
 
+			/* const rbegin : returns const reverse_iterator pointing past the end - 1 in vector */
 			const_reverse_iterator	rbegin() const
 			{
 				return (const_reverse_iterator (_end));
 			}
 
+			/* rend : returns reverse_iterator pointing on first elem in vector -1,
+			** which is past the end in the reverse iterator */
 			reverse_iterator	rend()
 			{
 				return (reverse_iterator(_begin));
 			}
-
+			/* const rend : returns const_reverse_iterator pointing on first elem in vector -1,
+			** which is past the end in the reverse iterator */
 			const_reverse_iterator	rend() const
 			{
 				return (const_reverse_iterator(_begin));
