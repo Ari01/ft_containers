@@ -6,18 +6,19 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 11:52:37 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:51:36 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TESTS_HPP
 #define TESTS_HPP
 
+#include "vector.hpp"
+#include "iterator.hpp"
+
 #if STD == 1
 	using namespace std;
 #else
-	#include "vector.hpp"
-	#include "iterator.hpp"
 	using namespace ft;
 #endif
 
@@ -310,7 +311,8 @@ void	print(vector<T> &v)
 	** prints all elems, size and capacity
 	** can throw bad alloc exception if a reallocation happened */
 	template <typename InputIterator>
-	void	test_assign(vector<int> &v, InputIterator first, InputIterator last)
+	void	test_assign(vector<int> &v, InputIterator first, InputIterator last,
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
 	{
 		InputIterator	ite;
 
@@ -322,10 +324,14 @@ void	print(vector<T> &v)
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.assign(first, last)" << std::endl;
-		v.assign(first, last);
-		print(v);
-		std::cout << "new capacity = " << v.capacity() << ", ";
-		std::cout << "new size = " << v.size() << std::endl << std::endl;
+		try {
+			v.assign(first, last);
+			print(v);
+			std::cout << "new capacity = " << v.capacity() << ", ";
+			std::cout << "new size = " << v.size() << std::endl << std::endl;
+		} catch (std::exception &e) {
+			std::cout << e.what() << std::endl;
+		}
 	}
 
 	template <typename T>
@@ -333,11 +339,15 @@ void	print(vector<T> &v)
 	{
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
-		std::cout << "v.assign(" << n << ", " << val << std::endl;
-		v.assign(n, val);
-		print(v);
-		std::cout << "new capacity = " << v.capacity() << ", ";
-		std::cout << "new size = " << v.size() << std::endl << std::endl;
+		std::cout << "v.assign(" << n << ", " << val << ")" << std::endl;
+		try {
+			v.assign(n, val);
+			print(v);
+			std::cout << "new capacity = " << v.capacity() << ", ";
+			std::cout << "new size = " << v.size() << std::endl << std::endl;
+		} catch (std::exception &e) {
+			std::cout << e.what() << std::endl;
+		}
 	}
 
 /************************ OPERATORS **************************/

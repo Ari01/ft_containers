@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 11:54:08 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:03:43 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,16 +211,24 @@ int main()
 	std::cout << "********** MODIFIER TESTS ************" << std::endl;
 	vector<int>	vtmp;
 
+	std::cout << std::endl << "** RANGE" << std::endl;
 	test_assign(vtmp, l.begin(), l.end());
 	test_assign(vtmp, v1.begin(), v1.end());
 	test_assign(vtmp, v1.begin(), v1.end() - 1);
 	test_assign(vtmp, v1.begin(), v1.begin() + 1);
 	test_assign(vtmp, v1.begin(), v1.begin());
 
+	std::cout << "** VALUES" << std::endl; 
+	// OK TESTS
 	test_assign(vtmp, 10, 0);
 	test_assign(vtmp, 20, 9);
-	test_assign(vtmp, 2147483647, 1);
-	test_assign(vtmp, vtmp.max_size(), 1);
+
+	// EXCEPTION THROWING TESTS
+	if (!SANITIZE)
+	{
+		test_assign(vtmp, 2147483647, 1);
+		test_assign(vtmp, vtmp.max_size(), 1);
+	}
 
 	/****************************** OPERATORS ****************************/
 

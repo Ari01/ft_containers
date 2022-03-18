@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 11:50:32 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:59:07 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <memory>
 #include "iterator.hpp"
+#include "utils.hpp"
 
 namespace ft
 {
@@ -286,7 +287,8 @@ namespace ft
 			/* ASSIGN : assigns new content to vector
 			** @param first and last : elements are constructed in range between first and last */
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last)
+			void assign (InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
 			{
 				size_type	len;
 				pointer		old_begin;
@@ -317,11 +319,27 @@ namespace ft
 			** @param n, val : n elements constructed and initialized to a copy of val */
 			void	assign (size_type n, const value_type &val)
 			{
-				value_type	array[n];
+				pointer		old_begin;
+				pointer		tmp;
 
-				for (size_type i = 0; i < n; i++)
-					array[i] = val;
-				assign(&array[0], &array[n]);
+				old_begin = _begin;
+				tmp = old_begin;
+				if (n > _capacity)
+				{
+					_begin = _alloc.allocate(n);
+					_capacity = n;
+					while (tmp != _end)
+						_alloc.destroy(tmp++);
+					_alloc.deallocate(old_begin, _end - old_begin);
+				}
+				else
+				{
+					while (tmp != _end)
+						_alloc.destroy(tmp++);
+				}
+				_end = _begin;
+				for (size_t i = 0; i < n; i++)
+					_alloc.construct(_end++, val);
 			}
 
 			void	clear()
