@@ -39,7 +39,7 @@ clean:
 			rm -rf $(OBJS)
 
 fclean:		clean
-			rm -rf $(NAME) .*.swp ft std sanitize stdout ftout time
+			rm -rf $(NAME) .*.swp ft std sanitize stdout ftout time diff_output
 
 re:			fclean all
 
