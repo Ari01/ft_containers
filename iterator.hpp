@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/15 09:46:16 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 10:11:58 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,18 @@ namespace ft
 			typedef Reference reference;
 			typedef Category  iterator_category;
 	};
+
+	/********************** DISTANCE **********************************/
+	template< class InputIt >
+	typename iterator_traits<InputIt>::difference_type distance( InputIt first, InputIt last )
+	{
+		typename iterator_traits<InputIt>::difference_type	ret;
+
+		ret = 0;
+		while (first++ != last)
+			ret++;
+		return (ret);
+	}
 
 	/********************** BIDIR ITERATOR  ***************************/
 	template <typename T>

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/17 17:07:46 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:54:08 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int main()
 	for (size_t i = 0; i < vs.size(); i++)
 		vs[i] = "";
 	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.end());
+	std::cout << "after clear vs.capacity = " << vs.capacity() << std::endl;
 	
 	// hw + i strings
 	std::string	stmp;
@@ -115,29 +116,18 @@ int main()
 
 	/****************************** ITERATORS ****************************/
 
+	const vector<int> cv(v1);
+
 	std::cout << "*********** ITERATOR TESTS*************" << std::endl;
 	// v filled with ints from 0 to 10
-	vector<int> v2(10);
-	std::cout << "v = ";
-	for (int i = 0; i < 10; i++)
-	{
-		v2[i] = i;
-		std::cout << v2[i] << " ";
-	}
-	std::cout << std::endl;
-	test_iterators(v2);
+	test_iterators(v1);
 
 	// v filled with strings hw + i
-	std::cout << "v = ";
-	for (int i = 0; i < 10; i++)
-	{
-		vs[i] = stmp + static_cast<char>(i + '0');
-		std::cout << vs[i] << " ";
-	}
-	std::cout << std::endl;
 	test_iterators(vs);
+	test_iterators(cv);
 
 	/**************************** REV ITERATORS **************************/
+
 	std::cout << "*********** REV ITERATOR TESTS*************" << std::endl;
 	std::cout << "** LIST 0-9" << std::endl;
 	test_bidir_rev_iterators(l);
@@ -147,6 +137,9 @@ int main()
 
 	std::cout << "** VECTOR 0-9" << std::endl;
 	test_random_rev_iterators(v1);
+
+	std::cout << "** CONST VECTOR 0-9" << std::endl;
+	test_random_rev_iterators(cv);
 
 	/**************************** CAPACITY **************************/
 
@@ -186,6 +179,9 @@ int main()
 	else
 		std::cout << "TEST OK" << std::endl;
 	std::cout << std::endl;
+	v1.resize(10);
+	for (int i = 0; i < 10; i++)
+		v1[i] = i;
 
 	/****************************** ACCESSORS ****************************/
 
@@ -193,18 +189,38 @@ int main()
 	std::cout << std::endl << "** AT" << std::endl;
 
 	// OK TESTS
-	test_at(v2, 0);
-	test_at(v2, 9);
+	test_at(v1, 0);
+	test_at(v1, 9);
 
 	// FAILING THROWING EXCEPTION TESTS
 	if (!SANITIZE)
 	{
-		test_at(v2, 10);
-		test_at(v2, 20);
-		test_at(v2, 2147483647);
-		test_at(v2, -1);
+		test_at(v1, 10);
+		test_at(v1, 20);
+		test_at(v1, 2147483647);
+		test_at(v1, -1);
 	}
 	std::cout << std::endl;
+
+	std::cout << std::endl << "** FRONT" << std::endl;
+	test_front_back(cv);
+	test_front_back(v1);
+	test_front_back(vs);
+
+	/****************************** MODIFIERS ****************************/
+	std::cout << "********** MODIFIER TESTS ************" << std::endl;
+	vector<int>	vtmp;
+
+	test_assign(vtmp, l.begin(), l.end());
+	test_assign(vtmp, v1.begin(), v1.end());
+	test_assign(vtmp, v1.begin(), v1.end() - 1);
+	test_assign(vtmp, v1.begin(), v1.begin() + 1);
+	test_assign(vtmp, v1.begin(), v1.begin());
+
+	test_assign(vtmp, 10, 0);
+	test_assign(vtmp, 20, 9);
+	test_assign(vtmp, 2147483647, 1);
+	test_assign(vtmp, vtmp.max_size(), 1);
 
 	/****************************** OPERATORS ****************************/
 

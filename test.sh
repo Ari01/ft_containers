@@ -33,7 +33,7 @@ fi
 echo ""
 
 # print output diff
-if diff -y stdout ftout
+if $(diff -y --suppress-common-lines stdout ftout > diff_output)
 then
 	echo "DIFF TEST OK"
 else

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/17 17:09:10 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:50:32 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,9 @@ namespace ft
 					const allocator_type& alloc = allocator_type()) :
 					_alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 			{
-				InputIterator	ite;
-
 				if (first != last)
 				{
-					for (ite = first; ite != last; ite++)
-						_capacity++;
+					_capacity = ft::distance(first, last);
 					_alloc = alloc;
 					_begin = _alloc.allocate(_capacity);
 					_end = _begin;
@@ -111,11 +108,7 @@ namespace ft
 			/* DESTRUCTOR : destroy all elements in vector and deallocate memory */
 			~vector ()
 			{
-				pointer	tmp;
-
-				tmp = _begin;
-				while (tmp != _end)
-					_alloc.destroy(tmp++);
+				clear();
 				_alloc.deallocate(_begin, _capacity);
 			}
 
@@ -173,12 +166,7 @@ namespace ft
 				tmp = _begin;
 
 				if (n > _capacity)
-				{
-					if (_capacity * 2 >= n)
-						reserve(_capacity * 2);
-					else
-						reserve(n);
-				}
+					_capacity *2 >= n ? reserve(_capacity * 2) : reserve(n);
 				else if (n < len)
 				{
 					while (tmp != _end)
@@ -234,7 +222,12 @@ namespace ft
 			/* operator[] : returns reference on element n
 			** @param n : index of element to return
 			** undefined behaviour if n is out of range */
-			reference	operator[] (size_type n) const
+			reference	operator[] (size_type n)
+			{
+				return (*(_begin + n));
+			}
+
+			const_reference	operator[] (size_type n) const
 			{
 				return (*(_begin + n));
 			}
@@ -283,9 +276,61 @@ namespace ft
 				return (*(_end - 1));
 			}
 
+			/* get_allocator : returns allocator */
 			allocator_type get_allocator() const
 			{
 				return (_alloc);
+			}
+
+			/********************************** MODIFIERS ********************************/
+			/* ASSIGN : assigns new content to vector
+			** @param first and last : elements are constructed in range between first and last */
+			template <class InputIterator>
+			void assign (InputIterator first, InputIterator last)
+			{
+				size_type	len;
+				pointer		old_begin;
+				pointer		tmp;
+
+				old_begin = _begin;
+				tmp = old_begin;
+				len = ft::distance(first, last);
+				if (len > _capacity)
+				{
+					_begin = _alloc.allocate(len);
+					_capacity = len;
+					while (tmp != _end)
+						_alloc.destroy(tmp++);
+					_alloc.deallocate(old_begin, _end - old_begin);
+				}
+				else
+				{
+					while (tmp != _end)
+						_alloc.destroy(tmp++);
+				}
+				_end = _begin;
+				while (first != last)
+					_alloc.construct(_end++, *first++);
+			}
+
+			/* ASSIGN : assigns new content to vector
+			** @param n, val : n elements constructed and initialized to a copy of val */
+			void	assign (size_type n, const value_type &val)
+			{
+				value_type	array[n];
+
+				for (size_type i = 0; i < n; i++)
+					array[i] = val;
+				assign(&array[0], &array[n]);
+			}
+
+			void	clear()
+			{
+				pointer	tmp;
+
+				tmp = _begin;
+				while (tmp != _end)
+					_alloc.destroy(tmp++);
 			}
 
 			/********************************** ITERATORS ********************************/

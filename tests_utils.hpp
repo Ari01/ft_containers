@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/17 17:06:53 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:52:37 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,17 +128,19 @@ void	print(vector<T> &v)
 	/* ITERATORS
 	** prints vector.begin(), end() and operators from a random access iterator
 	** @param v : the vector to get the iterators from */
-	template <typename T>
-	void	test_iterators(vector<T> v)
+	template <typename Container>
+	void	test_iterators(Container v)
 	{
-		typename vector<T>::iterator	begin;
-		typename vector<T>::iterator	end;
+		typename Container::iterator	begin;
+		typename Container::iterator	end;
 		size_t							tmp;
 		size_t							len;
 
 		len = v.size();
 		end = v.end();
 		tmp = len;
+
+		print(v);
 
 		std::cout << "TEST begin++" << std::endl;
 		for (begin = v.begin(); begin != end; begin++)
@@ -218,7 +220,7 @@ void	print(vector<T> &v)
 	/* RANDOM REVERSE ITERATORS
 	** same as bidir reverse iterators but with const reverse random access iterator */
 	template <typename Container>
-	void	test_random_rev_iterators(Container const container)
+	void	test_random_rev_iterators(Container container)
 	{
 		typedef typename Container::const_reverse_iterator	rev_iterator;
 		rev_iterator										rbegin(container.rbegin());
@@ -255,36 +257,88 @@ void	print(vector<T> &v)
 
 /************************ CAPACITY **************************/
 
-template <typename T>
-void	test_resize(vector<T> v, size_t n)
-{
-	print(v);
-	std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
-	std::cout << "v.resize(" << n << ")" << std::endl;
-	try {
-		v.resize(n);
+	/* RESIZE
+	** prints all elems, capcity and size
+	** can throw bad_alloc and length_error exceptions */
+	template <typename T>
+	void	test_resize(vector<T> v, size_t n)
+	{
 		print(v);
 		std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
-	} catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cout << "v.resize(" << n << ")" << std::endl;
+		try {
+			v.resize(n);
+			print(v);
+			std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
+		} catch (std::exception& e) {
+			std::cout << e.what() << std::endl;
+		}
+		std::cout << std::endl;
 	}
-	std::cout << std::endl;
-}
 
 /************************ ACCESSORS **************************/
-template <typename T>
-void	test_at(vector<T> v, size_t pos)
-{
-	try
+	/* AT
+	** prints elem at pos
+	** can throw out of range exception */
+	template <typename T>
+	void	test_at(vector<T> v, size_t pos)
 	{
-		std::cout << "v.at(" << pos << ") = " << v.at(pos);
+		try
+		{
+			std::cout << "v.at(" << pos << ") = " << v.at(pos);
+		}
+		catch (std::exception &e)
+		{
+			std::cout << "vector::_M_range_check";
+		}
+		std::cout << std::endl;
 	}
-	catch (std::exception &e)
+
+	/* FRONT AND BACK
+	** prints front and back elems */
+	template <typename T>
+	void	test_front_back(vector<T> v)
 	{
-		std::cout << "vector::_M_range_check";
+		print(v);
+		std::cout << "front = " << v.front() << ", ";
+		std::cout << "back = " << v.back() << std::endl << std::endl;
 	}
-	std::cout << std::endl;
-}
+
+/************************ MODIFIERS **************************/
+
+	/* ASSIGN
+	** prints all elems, size and capacity
+	** can throw bad alloc exception if a reallocation happened */
+	template <typename InputIterator>
+	void	test_assign(vector<int> &v, InputIterator first, InputIterator last)
+	{
+		InputIterator	ite;
+
+		std::cout << "range = ";
+		ite = first;
+		while (ite != last)
+			std::cout << *ite++ << " ";
+		std::cout << std::endl;
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		std::cout << "v.assign(first, last)" << std::endl;
+		v.assign(first, last);
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl << std::endl;
+	}
+
+	template <typename T>
+	void	test_assign(vector<int> &v, size_t n, const T& val)
+	{
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		std::cout << "v.assign(" << n << ", " << val << std::endl;
+		v.assign(n, val);
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl << std::endl;
+	}
 
 /************************ OPERATORS **************************/
 
