@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 14:59:07 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:54:38 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,48 @@ namespace ft
 					_alloc.construct(_end++, val);
 			}
 
+			/* PUSH_BACK : adds elem at end of vector
+			** @param : val, the elem to add
+			** if alloc.construct is not supported with val, it causes undefined behaviour */
+			void	push_back(const value_type &val)
+			{
+				if (size() + 1 > _capacity)
+					reserve (_capacity * 2);
+				_alloc.construct(_end++, val);
+			}
+
+			/* POP_BACK : destroys last elem in vector
+			** if vector is empty(), causes undefined behaviour */
+			void	pop_back()
+			{
+				_alloc.destroy(--_end);
+			}
+
+			/* INSERT (1) : insert single element in vector at position position
+			** @param position : the position to insert the elem in
+			** @param val : the element to insert
+			** @return : an iterator that points to the first elem newly inserted
+			** if position is invalid or if alloc.construct is not supported with val, this
+			** causes undefined behaviour */
+			iterator	insert(iterator position, const value_type &val)
+			{
+				iterator	ite;
+
+				if (size() + 1 > _capacity)
+				{
+					if (_capacity)
+						reserve(_capacity * 2);
+					else
+						reserve(1);
+				}
+				push_back(val);
+				for (ite = end() - 1; ite != position; ite--)
+					*ite = *(ite - 1);
+				*ite = val;
+				return (ite);
+			}
+
+			/* CLEAR : destroys all elems in vector */
 			void	clear()
 			{
 				pointer	tmp;

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 14:51:36 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:32:55 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,8 +307,8 @@ void	print(vector<T> &v)
 
 /************************ MODIFIERS **************************/
 
-	/* ASSIGN
-	** prints all elems, size and capacity
+	/* ASSIGN : assign elements from a range
+	** prints all vector elems, its new size and capacity
 	** can throw bad alloc exception if a reallocation happened */
 	template <typename InputIterator>
 	void	test_assign(vector<int> &v, InputIterator first, InputIterator last,
@@ -324,30 +324,86 @@ void	print(vector<T> &v)
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.assign(first, last)" << std::endl;
-		try {
+		try
+		{
 			v.assign(first, last);
 			print(v);
 			std::cout << "new capacity = " << v.capacity() << ", ";
 			std::cout << "new size = " << v.size() << std::endl << std::endl;
-		} catch (std::exception &e) {
+		}
+		catch (std::exception &e)
+		{
 			std::cout << e.what() << std::endl;
 		}
 	}
 
+	/* ASSIGN : same as before but assign n elements with value val instead of a range */
 	template <typename T>
-	void	test_assign(vector<int> &v, size_t n, const T& val)
+	void	test_assign(vector<T> &v, size_t n, const T& val)
 	{
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.assign(" << n << ", " << val << ")" << std::endl;
-		try {
+		try
+		{
 			v.assign(n, val);
 			print(v);
 			std::cout << "new capacity = " << v.capacity() << ", ";
 			std::cout << "new size = " << v.size() << std::endl << std::endl;
-		} catch (std::exception &e) {
+		}
+		catch (std::exception &e)
+		{
 			std::cout << e.what() << std::endl;
 		}
+	}
+
+	/* PUSH BACK : adds elem at end of vector
+	** prints the vector, its new size and capacity */
+	template <typename T>
+	void	test_push_back(vector<T> &v, const T& val)
+	{
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		try
+		{
+			v.push_back(val);
+			print(v);
+			std::cout << "new capacity = " << v.capacity() << ", ";
+			std::cout << "new size = " << v.size() << std::endl << std::endl;
+		}
+		catch (std::exception &e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+	}
+
+	/* POP BACK : destroys last elem in vector
+	** prints the vector, its new size and capacity */
+	template <typename T>
+	void	test_pop_back(vector<T> &v)
+	{
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		v.pop_back();
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl << std::endl;
+	}
+
+	/* INSERT (position, val) : inserts single elem before position position
+	** prints the vector, its new size and capacity */
+	template <typename T>
+	void	test_insert(vector<T> v, typename vector<T>::iterator position, const T& val)
+	{
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		v.insert(position, val);
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl << std::endl;
 	}
 
 /************************ OPERATORS **************************/

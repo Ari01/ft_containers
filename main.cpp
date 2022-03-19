@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 15:03:43 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:56:55 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int main()
 	gettimeofday(&begin, NULL);
 
 	/****************************** CONSTRUCTORS ****************************/
+	std::cout << "***********DEFAULT CONSTRUCT TESTS*************" << std::endl;
+	vector<int> empty_vector;
 
 	std::cout << "***********SIZE CONSTRUCT TESTS*************" << std::endl;
 
@@ -211,14 +213,15 @@ int main()
 	std::cout << "********** MODIFIER TESTS ************" << std::endl;
 	vector<int>	vtmp;
 
-	std::cout << std::endl << "** RANGE" << std::endl;
+	/** ASSIGN */
+	std::cout << std::endl << "** ASSIGN RANGE" << std::endl;
 	test_assign(vtmp, l.begin(), l.end());
 	test_assign(vtmp, v1.begin(), v1.end());
 	test_assign(vtmp, v1.begin(), v1.end() - 1);
 	test_assign(vtmp, v1.begin(), v1.begin() + 1);
 	test_assign(vtmp, v1.begin(), v1.begin());
 
-	std::cout << "** VALUES" << std::endl; 
+	std::cout << "** ASSIGN VALUES" << std::endl; 
 	// OK TESTS
 	test_assign(vtmp, 10, 0);
 	test_assign(vtmp, 20, 9);
@@ -229,6 +232,23 @@ int main()
 		test_assign(vtmp, 2147483647, 1);
 		test_assign(vtmp, vtmp.max_size(), 1);
 	}
+
+	/** PUSH_BACK AND POP_BACK */
+	std::cout << std::endl << "** PUSH_BACK, POP BACK" << std::endl;
+	test_push_back(vtmp, 0);
+	test_push_back(vtmp, 1);
+	test_pop_back(vtmp);
+	test_pop_back(vtmp);
+
+	/** INSERT */
+	std::cout << std::endl << "** INSERT(position, val)" << std::endl;
+	vector<int> vtmp2;
+	test_insert(vtmp2, vtmp2.begin(), 1);
+	/*test_insert(vtmp2, vtmp2.end(), 1);
+	test_insert(v1, v1.begin(), -1);
+	test_insert(v1, v1.end(), -1);
+	test_insert(v1, v1.begin() + 5, -1);*/
+
 
 	/****************************** OPERATORS ****************************/
 
@@ -249,47 +269,6 @@ int main()
 	test_affectation_operator(test1, test3);
 	test_affectation_operator(test1, test2);
 	test_affectation_operator(test1, test1);
-
-/*	std::list<int> l(10, 0);
-	std::list<int>::iterator begin;
-	std::list<int>::iterator end;
-
-	test_range_construct(begin, end);*/
-
-
-/*	int *a = new int(1);
-	std::vector<int *> v1;
-	v1.push_back(a);
-	std::vector<int *> v2(1);
-	v2[0] = a;
-	std::cout << *v2[0] << std::endl;
-	delete(a);
-	v1.clear();
-	std::cout << *v2[0] << std::endl;
-	std::cout << v2.size() << std::endl;
-	std::vector<char> myvector;
-	char c = 'a';
-
-	std::cout << "capacity = " << myvector.capacity() << std::endl;
-	std::cout << "size = " << myvector.size() << std::endl;
-	std::cout << "add char" << std::endl;
-	myvector.push_back(c);
-	std::cout << "capacity = " << myvector.capacity() << std::endl;
-	std::cout << "size = " << myvector.size() << std::endl;
-
-	for (int i = ' '; i < '~'; i++)
-	{
-		myvector.insert(myvector.end(), i);
-		std::cout << "capacity = " << myvector.capacity() << std::endl;
-		std::cout << "size = " << myvector.size() << std::endl;
-	}
-	for (size_t i = 0; i < myvector.size(); i++)
-	{
-		myvector.pop_back();
-		std::cout << "capacity = " << myvector.capacity() << std::endl;
-		std::cout << "size = " << myvector.size() << std::endl;
-
-	}*/
 
 	gettimeofday(&end, NULL);
 	if (TIME)
