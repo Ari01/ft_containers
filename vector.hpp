@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/19 13:54:38 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/20 01:02:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,20 +367,23 @@ namespace ft
 			** causes undefined behaviour */
 			iterator	insert(iterator position, const value_type &val)
 			{
-				iterator	ite;
+				value_type		tmp;
+				difference_type	dist;
+				iterator		ite;
 
-				if (size() + 1 > _capacity)
+				if (empty() || position == end())
+					push_back(val);
+				else
 				{
-					if (_capacity)
+					dist = position - begin();
+					tmp = back();
+					for (ite = end() - 1; ite != position; ite--)
+						*ite = (*ite - 1);
+					*ite = val;
+					if (size() + 1 > _capacity)
 						reserve(_capacity * 2);
-					else
-						reserve(1);
+					_alloc.construct(_end++, tmp);
 				}
-				push_back(val);
-				for (ite = end() - 1; ite != position; ite--)
-					*ite = *(ite - 1);
-				*ite = val;
-				return (ite);
 			}
 
 			/* CLEAR : destroys all elems in vector */

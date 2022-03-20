@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/19 13:56:55 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/20 00:05:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,17 +237,19 @@ int main()
 	std::cout << std::endl << "** PUSH_BACK, POP BACK" << std::endl;
 	test_push_back(vtmp, 0);
 	test_push_back(vtmp, 1);
+	test_push_back(empty_vector, -1);
 	test_pop_back(vtmp);
 	test_pop_back(vtmp);
 
 	/** INSERT */
 	std::cout << std::endl << "** INSERT(position, val)" << std::endl;
 	vector<int> vtmp2;
-	test_insert(vtmp2, vtmp2.begin(), 1);
-	/*test_insert(vtmp2, vtmp2.end(), 1);
-	test_insert(v1, v1.begin(), -1);
-	test_insert(v1, v1.end(), -1);
-	test_insert(v1, v1.begin() + 5, -1);*/
+	test_insert(vtmp2, vtmp2.begin(), -42);
+/*	test_insert(vtmp2, vtmp2.end(), -42);
+	test_insert(v1, v1.begin(), -42);
+	test_insert(v1, v1.end() - 1, -42);
+	test_insert(v1, v1.end(), -42);
+	test_insert(v1, v1.begin() + 5, -42);*/
 
 
 	/****************************** OPERATORS ****************************/

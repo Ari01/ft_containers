@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/19 13:32:55 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/19 17:31:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,7 +395,7 @@ void	print(vector<T> &v)
 	/* INSERT (position, val) : inserts single elem before position position
 	** prints the vector, its new size and capacity */
 	template <typename T>
-	void	test_insert(vector<T> v, typename vector<T>::iterator position, const T& val)
+	void	test_insert(vector<T> &v, typename vector<T>::iterator position, const T& val)
 	{
 		print(v);
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -403,7 +403,8 @@ void	print(vector<T> &v)
 		v.insert(position, val);
 		print(v);
 		std::cout << "new capacity = " << v.capacity() << ", ";
-		std::cout << "new size = " << v.size() << std::endl << std::endl;
+		std::cout << "new size = " << v.size() << std::endl;
+		std::cout << std::endl;
 	}
 
 /************************ OPERATORS **************************/
