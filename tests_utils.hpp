@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/19 17:31:17 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/21 16:18:01 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,14 +393,59 @@ void	print(vector<T> &v)
 	}
 
 	/* INSERT (position, val) : inserts single elem before position position
-	** prints the vector, its new size and capacity */
+	** prints the vector, its new size and capacity and the elems in vector starting from
+	** the iterator returned by insert */
 	template <typename T>
 	void	test_insert(vector<T> &v, typename vector<T>::iterator position, const T& val)
+	{
+		typename vector<T>::iterator	tmp;
+
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		std::cout << "v.insert(pos " << position - v.begin() << ", " << val << ")" << std::endl;
+		tmp = v.insert(position, val);
+		print(v);
+		std::cout << "v starting from iterator returned by insert : ";
+		while (tmp != v.end())
+			std::cout << *tmp++ << " ";
+		std::cout << std::endl << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl;
+		std::cout << std::endl;
+	}
+
+	template <typename T>
+	void	test_insert(vector<T> &v, typename vector<T>::iterator position, size_t n, const T& val)
 	{
 		print(v);
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
-		v.insert(position, val);
+		std::cout << "v.insert(pos " << position - v.begin();
+		std::cout << ", " << n << ", " << val << ")" << std::endl;
+		v.insert(position, n, val);
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl;
+		std::cout << std::endl;
+	}
+
+	template <typename T, typename InputIterator>
+	void	test_insert(vector<T> &v, typename vector<T>::iterator position,
+				InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
+	{
+		InputIterator	ite;
+
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		std::cout << "range = ";
+		for (ite = first; ite != last; ite++)
+			std::cout << *ite << " ";
+		std::cout << std::endl;
+
+		std::cout << "v.insert(pos " << position - v.begin() << ", " << ft::distance(first, last) << ")" << std::endl;
+		v.insert(position, first, last);
 		print(v);
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl;

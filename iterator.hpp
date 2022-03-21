@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/18 10:11:58 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:06:10 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,26 @@ namespace ft
 			friend difference_type	operator-(RandomIte const& lhs, RandomIte const& rhs)
 			{
 				return (lhs.val - rhs.val);
+			}
+
+			friend bool	operator<(RandomIte const& lhs, RandomIte const& rhs)
+			{
+				return (lhs.val < rhs.val);
+			}
+
+			friend bool	operator<=(RandomIte const& lhs, RandomIte const& rhs)
+			{
+				return (lhs.val <= rhs.val);
+			}
+
+			friend bool	operator>(RandomIte const& lhs, RandomIte const& rhs)
+			{
+				return (lhs.val > rhs.val);
+			}
+
+			friend bool	operator>=(RandomIte const& lhs, RandomIte const& rhs)
+			{
+				return (lhs.val >= rhs.val);
 			}
 	};
 

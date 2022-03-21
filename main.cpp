@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/20 00:05:01 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/21 15:56:40 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int main()
 	std::cout << "***********RANGE CONSTRUCT TESTS*************" << std::endl;
 
 	std::cout << std::endl << "** LIST TEST" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	// list filled with 0
 	std::list<int> l;
 	for (int i = 0; i < 10; i++)
@@ -63,6 +64,7 @@ int main()
 	test_range_construct<int, std::list<int>::iterator>(l.begin(), l.end());
 
 	std::cout << std::endl << "** VECTOR TEST" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	// empty strings
 	vector<std::string> vs(10);
 	for (size_t i = 0; i < vs.size(); i++)
@@ -79,6 +81,7 @@ int main()
 	test_range_construct<std::string, vector<std::string>::iterator>(vs.begin(), vs.begin());
 
 	std::cout << std::endl << "** POINTER TEST" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	// filled with 0
 	int *a = new int[10];
 	for (int i = 0; i < 10; i++)
@@ -99,6 +102,7 @@ int main()
 	std::cout << "*********** COPY TESTS*************" << std::endl;
 
 	std::cout << std::endl << "** Int tests" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	// FILLED WITH 0
 	vector<int> v1(10);
 	test_copy_construct(v1);
@@ -109,6 +113,7 @@ int main()
 	test_copy_construct(v1);
 
 	std::cout << std::endl << "** String tests" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	// EMPTY STRINGS
 	vector<std::string> vss(10);
 	test_copy_construct(vss);
@@ -147,11 +152,13 @@ int main()
 
 	std::cout << "********** CAPACITY TESTS ******************" << std::endl;
 	std::cout << "** MAX SIZE" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	std::cout << "vector int max size = " << v1.max_size() << std::endl;
 	std::cout << "vector string max size = " << vs.max_size() << std::endl << std::endl;
 
 	// RESIZE OK TESTS
 	std::cout << "** RESIZE" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	test_resize(v1, 5);
 	test_resize(v1, 10);
 	test_resize(vs, 0);
@@ -170,6 +177,7 @@ int main()
 
 	// EMPTY TESTS
 	std::cout << "** EMPTY" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	v1.resize(0);
 	if (!v1.empty())
 		std::cout << "TEST KO : vector should be empty" << std::endl;
@@ -189,6 +197,7 @@ int main()
 
 	std::cout << "************ ACCESSOR TESTS ************" << std::endl;
 	std::cout << std::endl << "** AT" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 
 	// OK TESTS
 	test_at(v1, 0);
@@ -202,55 +211,97 @@ int main()
 		test_at(v1, 2147483647);
 		test_at(v1, -1);
 	}
-	std::cout << std::endl;
 
 	std::cout << std::endl << "** FRONT" << std::endl;
+	std::cout << "_____________________________" << std::endl;
 	test_front_back(cv);
 	test_front_back(v1);
 	test_front_back(vs);
 
 	/****************************** MODIFIERS ****************************/
 	std::cout << "********** MODIFIER TESTS ************" << std::endl;
-	vector<int>	vtmp;
-
-	/** ASSIGN */
-	std::cout << std::endl << "** ASSIGN RANGE" << std::endl;
-	test_assign(vtmp, l.begin(), l.end());
-	test_assign(vtmp, v1.begin(), v1.end());
-	test_assign(vtmp, v1.begin(), v1.end() - 1);
-	test_assign(vtmp, v1.begin(), v1.begin() + 1);
-	test_assign(vtmp, v1.begin(), v1.begin());
-
-	std::cout << "** ASSIGN VALUES" << std::endl; 
-	// OK TESTS
-	test_assign(vtmp, 10, 0);
-	test_assign(vtmp, 20, 9);
-
-	// EXCEPTION THROWING TESTS
-	if (!SANITIZE)
 	{
-		test_assign(vtmp, 2147483647, 1);
-		test_assign(vtmp, vtmp.max_size(), 1);
+		vector<int>	vtmp;
+
+		/** ASSIGN */
+		std::cout << std::endl << "** ASSIGN RANGE" << std::endl;
+		std::cout << "_____________________________" << std::endl;
+		test_assign(vtmp, l.begin(), l.end());
+		test_assign(vtmp, v1.begin(), v1.end());
+		test_assign(vtmp, v1.begin(), v1.end() - 1);
+		test_assign(vtmp, v1.begin(), v1.begin() + 1);
+		test_assign(vtmp, v1.begin(), v1.begin());
+
+		std::cout << "** ASSIGN VALUES" << std::endl; 
+		std::cout << "_____________________________" << std::endl;
+		// OK TESTS
+		test_assign(vtmp, 10, 0);
+		test_assign(vtmp, 20, 9);
+
+		// EXCEPTION THROWING TESTS
+		if (!SANITIZE)
+		{
+			test_assign(vtmp, 2147483647, 1);
+			test_assign(vtmp, vtmp.max_size(), 1);
+		}
+
+		/** PUSH_BACK AND POP_BACK */
+		std::cout << std::endl << "** PUSH_BACK, POP BACK" << std::endl;
+		std::cout << "_____________________________" << std::endl;
+		test_push_back(vtmp, 0);
+		test_push_back(vtmp, 1);
+		test_push_back(empty_vector, -1);
+		test_pop_back(vtmp);
+		test_pop_back(vtmp);
+		test_pop_back(empty_vector);
+
+		/** INSERT */
+		std::cout << std::endl << "** INSERT SINGLE ELEM" << std::endl;
+		std::cout << "_____________________________" << std::endl;
+		vector<int> vtmp2;
+		test_insert(vtmp2, vtmp2.begin(), -42);
+		test_insert(vtmp2, vtmp2.end(), -42);
+		test_insert(v1, v1.begin(), -42);
+		test_insert(v1, v1.end() - 1, -42);
+		test_insert(v1, v1.end(), -42);
+		test_insert(v1, v1.begin() + 5, -42);
 	}
 
-	/** PUSH_BACK AND POP_BACK */
-	std::cout << std::endl << "** PUSH_BACK, POP BACK" << std::endl;
-	test_push_back(vtmp, 0);
-	test_push_back(vtmp, 1);
-	test_push_back(empty_vector, -1);
-	test_pop_back(vtmp);
-	test_pop_back(vtmp);
+	std::cout << "** INSERT N ELEMS" << std::endl;
+	std::cout << "_____________________________" << std::endl;
+	// empty vector
+	{
+		vector<int> vtmp;
+		test_insert(vtmp, vtmp.begin(), 2, -1);
+		test_insert(vtmp, vtmp.begin(), 10, -1);
+		test_insert(vtmp, vtmp.begin(), 2, -1);
 
-	/** INSERT */
-	std::cout << std::endl << "** INSERT(position, val)" << std::endl;
-	vector<int> vtmp2;
-	test_insert(vtmp2, vtmp2.begin(), -42);
-/*	test_insert(vtmp2, vtmp2.end(), -42);
-	test_insert(v1, v1.begin(), -42);
-	test_insert(v1, v1.end() - 1, -42);
-	test_insert(v1, v1.end(), -42);
-	test_insert(v1, v1.begin() + 5, -42);*/
+		// vector 0-9
+		v1.resize(0);
+		for (int i = 0; i < 10; i++)
+			v1.push_back(i);
+		test_insert(v1, v1.begin(), 5, -1);
+		test_insert(v1, v1.end(), 5, -1);
+		test_insert(v1, v1.end(), 5, -1);
+	}
+	std::cout << "** INSERT RANGE" << std::endl;
+	std::cout << "_____________________________" << std::endl;
+	{
+		vector<int>	vtmp;
 
+		vtmp.resize(0);
+		v1.resize(0);
+		for (int i = 0; i < 10; i++)
+			v1.push_back(i);
+
+		test_insert(vtmp, vtmp.begin(), v1.begin(), v1.end());
+		vtmp.resize(0);
+		test_insert(vtmp, vtmp.end(), v1.begin(), v1.end());
+		test_insert(vtmp, vtmp.end(), l.begin(), l.end());
+		test_insert(v1, v1.begin(), vtmp.begin(), vtmp.end());
+		test_insert(v1, v1.end(), vtmp.begin(), vtmp.end());
+		test_insert(v1, v1.begin() + 5, vtmp.begin(), vtmp.end());
+	}
 
 	/****************************** OPERATORS ****************************/
 

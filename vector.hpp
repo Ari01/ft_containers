@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/20 01:02:46 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/21 17:03:25 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ namespace ft
 				return (_alloc.max_size());
 			}
 
-			/* RESIZE : resizes the container so that it contains n elements
+			/* RESIZE : resizes the container so that it contains n elements initialized to val
 			** @param n : the new size of vector
 			** @param val : value to initialize elements with
 			** if n < vector.size(), destroys elements past n
@@ -167,7 +167,7 @@ namespace ft
 				tmp = _begin;
 
 				if (n > _capacity)
-					_capacity *2 >= n ? reserve(_capacity * 2) : reserve(n);
+					len * 2 >= n ? reserve(len * 2) : reserve(n);
 				else if (n < len)
 				{
 					while (tmp != _end)
@@ -348,7 +348,7 @@ namespace ft
 			void	push_back(const value_type &val)
 			{
 				if (size() + 1 > _capacity)
-					reserve (_capacity * 2);
+					_capacity ? reserve (_capacity * 2) : reserve(1);
 				_alloc.construct(_end++, val);
 			}
 
@@ -371,19 +371,73 @@ namespace ft
 				difference_type	dist;
 				iterator		ite;
 
+				dist = position - begin();
 				if (empty() || position == end())
 					push_back(val);
 				else
 				{
-					dist = position - begin();
 					tmp = back();
 					for (ite = end() - 1; ite != position; ite--)
-						*ite = (*ite - 1);
+						*ite = *(ite - 1);
 					*ite = val;
 					if (size() + 1 > _capacity)
 						reserve(_capacity * 2);
 					_alloc.construct(_end++, tmp);
 				}
+				return (&(operator[](dist)));
+			}
+
+			/* INSERT (2) : insert n elements initialized with value val before position position
+			** @param position : position to insert elems at
+			** @param n : number of elements to insert
+			** @param val : value to initialize new elems with */
+		    void insert (iterator position, size_type n, const value_type& val)
+			{
+				size_t		len;
+				size_t		dist;
+				iterator	ite;
+
+				dist = position - begin();
+				len = size();
+				resize(len + n, val);
+				position = begin() + dist;
+				if (len)
+				{
+					for (ite = end() - 1; ite - n >= position; ite--)
+						*ite = *(ite - n);
+					while (n--)
+						*ite-- = val;
+				}
+			}
+
+			/* INSERT (3) : insert elems in range from first to last before position position
+			** @param position : position to insert elems at
+			** @param first : begin of range
+			** @param last : end of range */
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
+			{
+				size_t		len;
+				size_t		pos_index;
+				size_t		n;
+				iterator	ite;
+
+				pos_index = position - begin();
+				n = ft::distance(first, last);
+				len = size();
+				resize(len + n);
+				position = begin() + pos_index;
+				if (len)
+				{
+					for (ite = end() - 1; ite - n >= position; ite--)
+						*ite = *(ite - n);
+					ite = position;
+				}
+				else
+					ite = begin();
+				while (first != last)
+					*ite++ = *first++;
 			}
 
 			/* CLEAR : destroys all elems in vector */
@@ -394,6 +448,7 @@ namespace ft
 				tmp = _begin;
 				while (tmp != _end)
 					_alloc.destroy(tmp++);
+				_end = _begin;
 			}
 
 			/********************************** ITERATORS ********************************/
