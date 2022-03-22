@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/21 16:18:01 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:25:40 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,7 @@ void	print(vector<T> &v)
 	** prints all vector elems, its new size and capacity
 	** can throw bad alloc exception if a reallocation happened */
 	template <typename InputIterator>
-	void	test_assign(vector<int> &v, InputIterator first, InputIterator last,
+	void	test_assign(vector<int> v, InputIterator first, InputIterator last,
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
 	{
 		InputIterator	ite;
@@ -414,6 +414,7 @@ void	print(vector<T> &v)
 		std::cout << std::endl;
 	}
 
+	/* INSERT (position, n, val) : inserts n elems before position postion */
 	template <typename T>
 	void	test_insert(vector<T> &v, typename vector<T>::iterator position, size_t n, const T& val)
 	{
@@ -429,6 +430,7 @@ void	print(vector<T> &v)
 		std::cout << std::endl;
 	}
 
+	/* INSERT (position, first, last) : inserts range from first to last before position position */
 	template <typename T, typename InputIterator>
 	void	test_insert(vector<T> &v, typename vector<T>::iterator position,
 				InputIterator first, InputIterator last,
@@ -450,6 +452,58 @@ void	print(vector<T> &v)
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl;
 		std::cout << std::endl;
+	}
+
+	/* ERASE (position) : erase elem at position position
+	** prints vector, its new capacity and size */
+	template <typename T>
+	void	test_erase(vector<T> v, size_t index)
+	{
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		std::cout << "v.erase(" << index << ")" << std::endl;
+		v.erase(v.begin() + index);
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl << std::endl;
+	}
+
+	/* ERASE (first, last) : erase range of elems from first to last
+	** prints vector, its new capacity and size */
+	template <typename T>
+	void	test_erase(vector<T> v, size_t start, size_t end)
+	{
+		print(v);
+		std::cout << "old capacity = " << v.capacity() << ", ";
+		std::cout << "old size = " << v.size() << std::endl;
+		std::cout << "v.erase(" << start << "-" << end << ")" << std::endl;
+		v.erase(v.begin() + start, v.begin() + end);
+		print(v);
+		std::cout << "new capacity = " << v.capacity() << ", ";
+		std::cout << "new size = " << v.size() << std::endl << std::endl;
+	}
+
+	/* SWAP : swap contents of two vectors
+	** prints the two vectors, their new cap and size */
+	template <typename T>
+	void	test_swap(vector<T> v1, vector<T> v2)
+	{
+		print(v1);
+		std::cout << "v1 old capacity = " << v1.capacity() << ", ";
+		std::cout << "v1 old size = " << v1.size() << std::endl;
+		print(v2);
+		std::cout << "v2 old capacity = " << v2.capacity() << ", ";
+		std::cout << "v2 old size = " << v2.size() << std::endl;
+	
+		std::cout << std::endl << "v1.swap(v2)" << std::endl;
+		v1.swap(v2);
+		print(v1);
+		std::cout << "v1 new capacity = " << v1.capacity() << ", ";
+		std::cout << "v1 new size = " << v1.size() << std::endl;
+		print(v2);
+		std::cout << "v2 new capacity = " << v2.capacity() << ", ";
+		std::cout << "v2 new size = " << v2.size() << std::endl << std::endl;
 	}
 
 /************************ OPERATORS **************************/

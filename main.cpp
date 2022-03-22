@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/21 15:56:40 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:26:18 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,22 +277,20 @@ int main()
 		test_insert(vtmp, vtmp.begin(), 2, -1);
 
 		// vector 0-9
-		v1.resize(0);
+		vector<int> v10(10);
 		for (int i = 0; i < 10; i++)
-			v1.push_back(i);
-		test_insert(v1, v1.begin(), 5, -1);
-		test_insert(v1, v1.end(), 5, -1);
-		test_insert(v1, v1.end(), 5, -1);
+			v10[i] = i;
+		test_insert(v10, v10.begin(), 5, -1);
+		test_insert(v10, v10.end(), 5, -1);
+		test_insert(v10, v10.end(), 5, -1);
 	}
 	std::cout << "** INSERT RANGE" << std::endl;
 	std::cout << "_____________________________" << std::endl;
 	{
 		vector<int>	vtmp;
-
-		vtmp.resize(0);
-		v1.resize(0);
+		vector<int> v1(10);
 		for (int i = 0; i < 10; i++)
-			v1.push_back(i);
+			v1[i] = i;
 
 		test_insert(vtmp, vtmp.begin(), v1.begin(), v1.end());
 		vtmp.resize(0);
@@ -301,6 +299,37 @@ int main()
 		test_insert(v1, v1.begin(), vtmp.begin(), vtmp.end());
 		test_insert(v1, v1.end(), vtmp.begin(), vtmp.end());
 		test_insert(v1, v1.begin() + 5, vtmp.begin(), vtmp.end());
+	}
+
+	{
+		std::cout << "** ERASE SINGLE ELEM" << std::endl;
+		std::cout << "_____________________________" << std::endl;
+		vector<int> v1(10);
+		for (int i = 0; i < 10; i++)
+			v1[i] = i;
+		test_erase(v1, 0);
+		test_erase(v1, 5);
+		test_erase(v1, 9);
+
+		std::cout << "** ERASE RANGE" << std::endl;
+		std::cout << "_____________________________" << std::endl;
+		test_erase(v1, 0, 0);
+		test_erase(v1, 0, 1);
+		test_erase(v1, 9, 10);
+		test_erase(v1, 0, 5);
+		test_erase(v1, 5, 10);
+
+		std::cout << "** SWAP" << std::endl;
+		std::cout << "_____________________________" << std::endl;
+		vector<int> v2(20);
+		vector<int> v3(5);
+		vector<int> v4(0);
+	
+		test_swap(v1, v2);
+		test_swap(v2, v1);
+		test_swap(v1, v3);
+		test_swap(v1, v4);
+		test_swap(v4, v1);
 	}
 
 	/****************************** OPERATORS ****************************/

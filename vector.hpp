@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/21 17:03:25 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:24:09 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,13 @@ namespace ft
 
 			/* COPY : copies another vector
 			** @param x : vector to copy */
-			vector (const vector& x) : _alloc(x._alloc)
+			vector (const vector& x) : _alloc(x._alloc), _begin(NULL), _end(NULL)
 			{
-				size_type	len;
+				size_type		len;
 
 				len = x.size();
-				_begin = _alloc.allocate(len);
+				if (len)
+					_begin = _alloc.allocate(len);
 				_end = _begin;
 				_capacity = len;
 				for (size_type i = 0; i < len; i++)
@@ -438,6 +439,60 @@ namespace ft
 					ite = begin();
 				while (first != last)
 					*ite++ = *first++;
+			}
+
+			/* ERASE (1) : removes the element at position
+			** @param position : the position of the element to remove 
+			** @return : an iterator pointing to the new pos of the element following the one removed
+			** invalid position causes undefined behaviour */
+			iterator	erase(iterator position)
+			{
+				pointer		pos_ptr;
+				iterator	ite;
+				iterator	end_ite;
+
+				pos_ptr = position.base();
+				end_ite = end();
+				_alloc.destroy(pos_ptr);
+				if (position + 1 != end_ite)
+				{
+					_alloc.construct(pos_ptr, *(position + 1));
+					for (ite = position + 1; ite < end_ite - 1; ite++)
+						*ite = *(ite + 1);
+					_alloc.destroy(ite.base());
+				}
+				_end--;
+				return (iterator(pos_ptr));
+			}
+
+			/* ERASE (2) : removes the range of elements from first to last */
+			iterator	erase(iterator first, iterator last)
+			{
+				iterator	i;
+				iterator	j;
+
+				for (i = first; i != last; i++)
+					_alloc.destroy(i.base());
+				i = first;
+				for (j = last; j != end(); j++, i++)
+					_alloc.construct(i.base(), *j);
+				_end -= last - first;
+				return (first);
+			}
+
+			/* SWAP : swap the elems of two vectors */
+			void	swap(vector &x)
+			{
+				pointer		begintmp = _begin;
+				pointer		endtmp = _end;
+				size_type	captmp = _capacity;
+
+				_begin = x._begin;
+				_end = x._end;
+				_capacity = x._capacity;
+				x._begin = begintmp;
+				x._end = endtmp;
+				x._capacity = captmp;
 			}
 
 			/* CLEAR : destroys all elems in vector */
