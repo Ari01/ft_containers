@@ -1,8 +1,9 @@
 NAME =		ft
 
-#SRC =		
+SRC =		MapTest.cpp \
+			main2.cpp
 
-#OBJS =		
+OBJS =		$(SRC:.cpp=.o)
 
 CC =		c++
 
@@ -12,6 +13,9 @@ all:		$(NAME)
 
 $(NAME):	main.cpp
 			$(CC) $(CFLAGS) -D STD=0 -D DEBUG=0 $^ -o $@
+
+map:		$(OBJS)
+			$(CC) $(CFLAGS) $(OBJS) -D STD=1 -D DEBUG=0 $^ -o $@
 
 std:		main.cpp
 			$(CC) $(CFLAGS) -D STD=1 -D DEBUG=0 $^ -o $@
@@ -32,14 +36,14 @@ time:		main.cpp
 #debug:		$(OBJS)
 #			$(CC) $(CFLAGS) -g -fsanitize=address $^ -o $@
 
-#.cpp.o:
-#			$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
+.cpp.o:
+			$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
 
 clean:
 			rm -rf $(OBJS)
 
 fclean:		clean
-			rm -rf $(NAME) .*.swp ft std sanitize stdout ftout time diff_output
+			rm -rf $(NAME) .*.swp ft std map sanitize stdout ftout time diff_output
 
 re:			fclean all
 
