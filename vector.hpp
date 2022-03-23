@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/22 18:24:09 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:55:48 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,56 @@ namespace ft
 				for (size_t i = 0; i < xlen; i++)
 					_alloc.construct(_end++, x[i]);
 				return (*this);
+			}
+
+			/********************************** ITERATORS ********************************/
+			/* begin : returns iterator pointing on first elem in vector */
+			iterator	begin()
+			{
+				return (iterator(_begin));
+			}
+
+			/* const begin : returns const iterator pointing on first elem in vector */
+			const_iterator	begin() const
+			{
+				return (const_iterator(_begin));
+			}
+
+			/* end : returns iterator pointing on past the end in vector */
+			iterator	end()
+			{
+				return (iterator(_end));
+			}
+
+			/* const end : returns const iterator pointing on past the end in vector */
+			const_iterator	end() const
+			{
+				return (const_iterator(_end));
+			}
+
+			/* rbegin : returns reverse_iterator pointing on past the end - 1 in vector */
+			reverse_iterator	rbegin()
+			{
+				return (reverse_iterator(_end));
+			}
+
+			/* const rbegin : returns const reverse_iterator pointing past the end - 1 in vector */
+			const_reverse_iterator	rbegin() const
+			{
+				return (const_reverse_iterator (_end));
+			}
+
+			/* rend : returns reverse_iterator pointing on first elem in vector -1,
+			** which is past the end in the reverse iterator */
+			reverse_iterator	rend()
+			{
+				return (reverse_iterator(_begin));
+			}
+			/* const rend : returns const_reverse_iterator pointing on first elem in vector -1,
+			** which is past the end in the reverse iterator */
+			const_reverse_iterator	rend() const
+			{
+				return (const_reverse_iterator(_begin));
 			}
 
 
@@ -506,57 +556,47 @@ namespace ft
 				_end = _begin;
 			}
 
-			/********************************** ITERATORS ********************************/
-			/* begin : returns iterator pointing on first elem in vector */
-			iterator	begin()
+			/********************************** NON MEMBER ********************************/
+			/* OPERATOR== : if lhs.size == rhs.size, compares each elements in both container using equal
+			** returns false at the first mismatch, otherwhise returns true */
+			friend bool operator== (const vector& lhs, const vector& rhs)
 			{
-				return (iterator(_begin));
+				if (lhs.size() != rhs.size())
+					return (false);
+				return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 			}
 
-			/* const begin : returns const iterator pointing on first elem in vector */
-			const_iterator	begin() const
+			friend bool operator!= (const vector& lhs, const vector& rhs)
 			{
-				return (const_iterator(_begin));
+				return (!(lhs == rhs));
 			}
 
-			/* end : returns iterator pointing on past the end in vector */
-			iterator	end()
+			/* OPERATOR< : lexicographical compare between lhs and rhs elements */ 
+			friend bool operator< (const vector& lhs, const vector& rhs)
 			{
-				return (iterator(_end));
+				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 			}
 
-			/* const end : returns const iterator pointing on past the end in vector */
-			const_iterator	end() const
+			friend bool operator<= (const vector& lhs, const vector& rhs)
 			{
-				return (const_iterator(_end));
+				return (!(rhs < lhs));
 			}
 
-			/* rbegin : returns reverse_iterator pointing on past the end - 1 in vector */
-			reverse_iterator	rbegin()
+			friend bool operator> (const vector& lhs, const vector& rhs)
 			{
-				return (reverse_iterator(_end));
+				return (rhs < lhs);
 			}
 
-			/* const rbegin : returns const reverse_iterator pointing past the end - 1 in vector */
-			const_reverse_iterator	rbegin() const
+			friend bool operator>= (const vector& lhs, const vector& rhs)
 			{
-				return (const_reverse_iterator (_end));
+				return (!(lhs < rhs));
 			}
 
-			/* rend : returns reverse_iterator pointing on first elem in vector -1,
-			** which is past the end in the reverse iterator */
-			reverse_iterator	rend()
+			/* SWAP : swaps elements from x and y */
+			friend void swap (vector& x, vector& y)
 			{
-				return (reverse_iterator(_begin));
+				x.swap(y);
 			}
-			/* const rend : returns const_reverse_iterator pointing on first elem in vector -1,
-			** which is past the end in the reverse iterator */
-			const_reverse_iterator	rend() const
-			{
-				return (const_reverse_iterator(_begin));
-			}
-
-			/********************************** OPERATORS ********************************/
 	};
 }
 

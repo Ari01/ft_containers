@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/22 18:25:40 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/23 15:03:42 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 #endif
 
 template <typename T>
-void	print(vector<T> &v)
+void	print(vector<T> &v, std::string name)
 {
-	std::cout << "vector : ";
+	std::cout << name << " : ";
 	for (size_t i = 0; i < v.size(); i++)
 		std::cout << v[i] << " ";
 	std::cout << std::endl;
@@ -124,6 +124,43 @@ void	print(vector<T> &v)
 		std::cout << std::endl << std::endl;
 	}
 
+	/* OPERATOR= : prints vector, new size and cap */
+	template <typename T>
+	void	test_affectation_operator(vector<T> src, vector<T> dst)
+	{
+		size_t	i;
+
+		std::cout << "src = ";
+		for (i = 0; i < src.size(); i++)
+			std::cout << src[i] << " ";
+		std::cout << std::endl;
+
+		std::cout << "dst = ";
+		for (i = 0; i < dst.size(); i++)
+			std::cout << dst[i] << " ";
+		std::cout << std::endl;
+
+		std::cout << "dst capacity = " << dst.capacity() << std::endl;
+		std::cout << "dst size = " << dst.size() << std::endl;
+		std::cout << "dst = src" << std::endl;
+		dst = src;
+		std::cout << "dst capacity = " << dst.capacity() << std::endl;
+		std::cout << "dst size = " << dst.size() << std::endl;
+
+		std::cout << "final dst = ";
+		for (i = 0; i < dst.size(); i++)
+		{
+			if (dst[i] != src[i])
+			{
+				std::cout << "TEST KO : dst[" << i << "] = " << dst[i] << " != " << src[i] << std::endl;
+				break ;
+			}
+			else
+				std::cout << dst[i] << " ";
+		}
+		std::cout << std::endl << std::endl;
+	}
+
 /********************************* ITERATORS *********************************/
 
 	/* ITERATORS
@@ -141,7 +178,7 @@ void	print(vector<T> &v)
 		end = v.end();
 		tmp = len;
 
-		print(v);
+		print(v, "v");
 
 		std::cout << "TEST begin++" << std::endl;
 		for (begin = v.begin(); begin != end; begin++)
@@ -264,12 +301,12 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_resize(vector<T> v, size_t n)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
 		std::cout << "v.resize(" << n << ")" << std::endl;
 		try {
 			v.resize(n);
-			print(v);
+			print(v, "v");
 			std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
 		} catch (std::exception& e) {
 			std::cout << e.what() << std::endl;
@@ -300,7 +337,7 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_front_back(vector<T> v)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "front = " << v.front() << ", ";
 		std::cout << "back = " << v.back() << std::endl << std::endl;
 	}
@@ -327,7 +364,7 @@ void	print(vector<T> &v)
 		try
 		{
 			v.assign(first, last);
-			print(v);
+			print(v, "v");
 			std::cout << "new capacity = " << v.capacity() << ", ";
 			std::cout << "new size = " << v.size() << std::endl << std::endl;
 		}
@@ -347,7 +384,7 @@ void	print(vector<T> &v)
 		try
 		{
 			v.assign(n, val);
-			print(v);
+			print(v, "v");
 			std::cout << "new capacity = " << v.capacity() << ", ";
 			std::cout << "new size = " << v.size() << std::endl << std::endl;
 		}
@@ -362,13 +399,13 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_push_back(vector<T> &v, const T& val)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		try
 		{
 			v.push_back(val);
-			print(v);
+			print(v, "v");
 			std::cout << "new capacity = " << v.capacity() << ", ";
 			std::cout << "new size = " << v.size() << std::endl << std::endl;
 		}
@@ -383,11 +420,11 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_pop_back(vector<T> &v)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		v.pop_back();
-		print(v);
+		print(v, "v");
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl << std::endl;
 	}
@@ -400,12 +437,12 @@ void	print(vector<T> &v)
 	{
 		typename vector<T>::iterator	tmp;
 
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.insert(pos " << position - v.begin() << ", " << val << ")" << std::endl;
 		tmp = v.insert(position, val);
-		print(v);
+		print(v, "v");
 		std::cout << "v starting from iterator returned by insert : ";
 		while (tmp != v.end())
 			std::cout << *tmp++ << " ";
@@ -418,13 +455,13 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_insert(vector<T> &v, typename vector<T>::iterator position, size_t n, const T& val)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.insert(pos " << position - v.begin();
 		std::cout << ", " << n << ", " << val << ")" << std::endl;
 		v.insert(position, n, val);
-		print(v);
+		print(v, "v");
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl;
 		std::cout << std::endl;
@@ -438,7 +475,7 @@ void	print(vector<T> &v)
 	{
 		InputIterator	ite;
 
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "range = ";
@@ -448,7 +485,7 @@ void	print(vector<T> &v)
 
 		std::cout << "v.insert(pos " << position - v.begin() << ", " << ft::distance(first, last) << ")" << std::endl;
 		v.insert(position, first, last);
-		print(v);
+		print(v, "v");
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl;
 		std::cout << std::endl;
@@ -459,12 +496,12 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_erase(vector<T> v, size_t index)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.erase(" << index << ")" << std::endl;
 		v.erase(v.begin() + index);
-		print(v);
+		print(v, "v");
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl << std::endl;
 	}
@@ -474,12 +511,12 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_erase(vector<T> v, size_t start, size_t end)
 	{
-		print(v);
+		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
 		std::cout << "v.erase(" << start << "-" << end << ")" << std::endl;
 		v.erase(v.begin() + start, v.begin() + end);
-		print(v);
+		print(v, "v");
 		std::cout << "new capacity = " << v.capacity() << ", ";
 		std::cout << "new size = " << v.size() << std::endl << std::endl;
 	}
@@ -489,59 +526,54 @@ void	print(vector<T> &v)
 	template <typename T>
 	void	test_swap(vector<T> v1, vector<T> v2)
 	{
-		print(v1);
+		print(v1, "v1");
 		std::cout << "v1 old capacity = " << v1.capacity() << ", ";
 		std::cout << "v1 old size = " << v1.size() << std::endl;
-		print(v2);
+		print(v2, "v2");
 		std::cout << "v2 old capacity = " << v2.capacity() << ", ";
 		std::cout << "v2 old size = " << v2.size() << std::endl;
 	
 		std::cout << std::endl << "v1.swap(v2)" << std::endl;
 		v1.swap(v2);
-		print(v1);
+		print(v1, "v1");
 		std::cout << "v1 new capacity = " << v1.capacity() << ", ";
 		std::cout << "v1 new size = " << v1.size() << std::endl;
-		print(v2);
+		print(v2, "v2");
 		std::cout << "v2 new capacity = " << v2.capacity() << ", ";
 		std::cout << "v2 new size = " << v2.size() << std::endl << std::endl;
 	}
 
-/************************ OPERATORS **************************/
-
-template <typename T>
-void	test_affectation_operator(vector<T> src, vector<T> dst)
-{
-	size_t	i;
-
-	std::cout << "src = ";
-	for (i = 0; i < src.size(); i++)
-		std::cout << src[i] << " ";
-	std::cout << std::endl;
-
-	std::cout << "dst = ";
-	for (i = 0; i < dst.size(); i++)
-		std::cout << dst[i] << " ";
-	std::cout << std::endl;
-
-	std::cout << "dst capacity = " << dst.capacity() << std::endl;
-	std::cout << "dst size = " << dst.size() << std::endl;
-	std::cout << "dst = src" << std::endl;
-	dst = src;
-	std::cout << "dst capacity = " << dst.capacity() << std::endl;
-	std::cout << "dst size = " << dst.size() << std::endl;
-
-	std::cout << "final dst = ";
-	for (i = 0; i < dst.size(); i++)
+/************************ NON MEMBER **************************/
+	/* OPERATORS : prints v1 and v2 and the result of comparing the containers */
+	template <typename T>
+	void	test_operators(vector<T> v1, vector<T> v2)
 	{
-		if (dst[i] != src[i])
-		{
-			std::cout << "TEST KO : dst[" << i << "] = " << dst[i] << " != " << src[i] << std::endl;
-			break ;
-		}
-		else
-			std::cout << dst[i] << " ";
+		print(v1, "v1");
+		print(v2, "v2");
+		std::cout << "v1 == v2 ? " << (v1 == v2) << std::endl;
+		std::cout << "v1 != v2 ? " << (v1 != v2) << std::endl;
+		std::cout << "v1 < v2 ? " << (v1 < v2) << std::endl;
+		std::cout << "v1 <= v2 ? " << (v1 <= v2) << std::endl;
+		std::cout << "v1 > v2 ? " << (v1 > v2) << std::endl;
+		std::cout << "v1 >= v2 ? " << (v1 >= v2) << std::endl << std::endl;
 	}
-	std::cout << std::endl << std::endl;
-}
+
+	/* SWAP : swaps elems from v1 and v2
+	** prints v1 and v2, their new cap and new size*/
+	template <typename T>
+	void	test_swap_non_member(vector<T> v1, vector<T> v2)
+	{
+		print(v1, "v1");
+		std::cout << "old cap = " << v1.capacity() << ", old size = " << v1.size() << std::endl;
+		print(v2, "v2");
+		std::cout << "old cap = " << v2.capacity() << ", old size = " << v2.size() << std::endl;
+		std::cout << "swap(v1, v2)" << std::endl;
+		swap(v1, v2);
+		print(v1, "v1");
+		std::cout << "new cap = " << v1.capacity() << ", new size = " << v1.size() << std::endl;
+		print(v2, "v2");
+		std::cout << "new cap = " << v2.capacity() << ", new size = " << v2.size() << std::endl;
+		std::cout << std::endl;
+	}
 
 #endif

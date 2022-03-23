@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/22 18:26:18 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/23 15:02:28 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,24 @@ int main()
 
 	// STRINGS WITH HW + i
 	test_copy_construct(vs);
+
+	std::cout << "** OPERATOR =" << std::endl;
+	std::cout << "_____________________________" << std::endl;
+	vector<int> test1(5);
+	for (int i = 0; i < 5; i++)
+		test1[i] = 5;
+
+	vector<int> test2(20);
+	for (int i = 0; i < 20; i++)
+		test2[i] = 20;
+
+	vector<int> test3(10);
+	for (int i = 0; i < 10; i++)
+		test3[i] = 10;
+
+	test_affectation_operator(test1, test3);
+	test_affectation_operator(test1, test2);
+	test_affectation_operator(test1, test1);
 
 	/****************************** ITERATORS ****************************/
 
@@ -332,25 +350,30 @@ int main()
 		test_swap(v4, v1);
 	}
 
-	/****************************** OPERATORS ****************************/
+	/****************************** NON MEMBER ****************************/
 
-	std::cout << "*********** OPERATOR TESTS*************" << std::endl;
-	std::cout << "** OPERATOR =" << std::endl;
-	vector<int> test1(5);
-	for (int i = 0; i < 5; i++)
-		test1[i] = 5;
+	{
+		std::cout << "*********** OPERATOR TESTS*************" << std::endl;
+		int a[10] = { 0,1,2,3,4,5,6,7,8,9 };
+		vector<int> v1(a, a + 10);
+		vector<int> v2(a, a + 10);
+		vector<int> v3(a, a + 5);
+		vector<int> v4(a + 5, a + 10);
 
-	vector<int> test2(20);
-	for (int i = 0; i < 20; i++)
-		test2[i] = 20;
+		test_operators(v1, v2);
+		test_operators(v2, v1);
+		test_operators(v1, v3);
+		test_operators(v3, v1);
+		test_operators(v1, v4);
+		test_operators(v4, v1);
+		test_operators(v3, v4);
+		test_operators(v4, v3);
 
-	vector<int> test3(10);
-	for (int i = 0; i < 10; i++)
-		test3[i] = 10;
-
-	test_affectation_operator(test1, test3);
-	test_affectation_operator(test1, test2);
-	test_affectation_operator(test1, test1);
+		std::cout << "*********** SWAP TESTS*************" << std::endl;
+		test_swap_non_member(v1, v2);
+		test_swap_non_member(v1, v3);
+		test_swap_non_member(v1, v4);
+	}
 
 	gettimeofday(&end, NULL);
 	if (TIME)
