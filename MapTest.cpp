@@ -6,28 +6,59 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:35:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/23 17:16:25 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:10:13 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <map>
-#include "MapTest.hpp"
 #include "iterator.hpp"
-#include "vector.hpp"
+#include "MapTest.hpp"
 
 #if STD == 1
 	using namespace std;
+	#include <map>
+	#include <vector>
 #else
 	using namespace ft;
+	#include "vector.hpp"
 #endif
+
+// PRINT MAP
+template <typename T1, typename T2>
+void	printMap(map<T1, T2> m, std::string name)
+{
+	typename map<T1, T2>::iterator	ite;
+
+	std::cout << name << " : " << std::endl;
+	for (ite = m.begin(); ite != m.end(); ite++)
+		std::cout << "(" << ite->first << ", " << ite->second << ")" << std::endl;
+	std::cout << std::endl;
+}
+
+// MAP TEST INIT
+MapTest::MapTest()
+{
+	std::string	s = "a";
+
+	for (int i = 0; i < 10; i++, s[0]++)
+		v10.push_back(pair<std::string, int>(s, i));
+	m10.insert(v10.begin(), v10.end());
+}
 
 // CONSTRUCTORS
 void	MapTest::testConstructor()
 {
-	vector<int>	v(10);
-	map<std::string, int> m;
-	map<std::string, int> m(v.begin(), v.end());
+	map<std::string, int> empty;
+	printMap(empty, "empty map");
+
+	map<std::string, int> range(v10.begin(), v10.end());
+	printMap(range, "range from vector");
+
+	map<std::string, int> range2(range.begin(), range.end());
+	printMap(range2, "range from map");
+
+	map<std::string, int> copy(range);
+	printMap(copy, "copy from range");
 }
 
 void	MapTest::testAffect()

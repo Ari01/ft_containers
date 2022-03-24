@@ -3,30 +3,24 @@
 # compile exec FT and STD
 make fclean
 
-if [ "$1" = 'debug' ]
+if [ "$1" = 'time' ]
 then
-	make debug
+	make time
 	./ft > ftout
 	./std > stdout
-	else if [ "$1" = 'time' ]
+	else if [ "$1" = 'sanitize' ]
 	then
-		make time
+		make sanitize
+		valgrind ./ft > ftout
+		valgrind ./std > stdout
+	else
+		make fclean
+		make
 		./ft > ftout
-		./std > stdout
-		else if [ "$1" = 'sanitize' ]
-		then
-			make sanitize
-			valgrind ./ft > ftout
-			valgrind ./std > stdout
-		else
-			make fclean
-			make
-			./ft > ftout
 
-			make clean
-			make std
-			./std > stdout
-		fi
+		make clean
+		make std
+		./std > stdout
 	fi
 fi
 

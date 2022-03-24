@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main2.cpp                                          :+:      :+:    :+:   */
+/*   VectorTest.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 16:57:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/23 16:58:17 by dchheang         ###   ########.fr       */
+/*   Created: 2022/03/24 15:06:35 by dchheang          #+#    #+#             */
+/*   Updated: 2022/03/24 15:06:55 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MapTest.hpp"
+#ifndef VECTOR_TEST
+#define VECTOR_TEST
 
-int	main()
-{
-	MapTest::run();
-}
+void	run_vector_tests();
+
+#endif

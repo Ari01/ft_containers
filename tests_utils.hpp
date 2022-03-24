@@ -6,24 +6,25 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 16:21:46 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/23 15:03:42 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:16:40 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TESTS_HPP
 #define TESTS_HPP
 
-#include "vector.hpp"
+#include "utils.hpp"
 #include "iterator.hpp"
 
 #if STD == 1
-	using namespace std;
+	namespace ns = std;
 #else
-	using namespace ft;
+	namespace ns = ft;
+	#include "vector.hpp"
 #endif
 
 template <typename T>
-void	print(vector<T> &v, std::string name)
+void	print(ns::vector<T> &v, std::string name)
 {
 	std::cout << name << " : ";
 	for (size_t i = 0; i < v.size(); i++)
@@ -42,7 +43,7 @@ void	print(vector<T> &v, std::string name)
 	{
 		std::cout << "TEST vector(" << n << ")" << std::endl;
 		try {
-			vector<T> v(n);
+			ns::vector<T> v(n);
 			std::cout << "v.size = " << v.size() << ", v.capacity = " << v.capacity() << std::endl;
 		} catch (std::bad_alloc &e) {
 			std::cout << e.what() << std::endl;
@@ -60,7 +61,7 @@ void	print(vector<T> &v, std::string name)
 	template <typename T, typename iterator>
 	void	test_range_construct(iterator begin, iterator end)
 	{
-		vector<T>	v(begin, end);
+		ns::vector<T>	v(begin, end);
 		iterator	ite;
 		size_t		i = 0;
 
@@ -90,9 +91,9 @@ void	print(vector<T> &v, std::string name)
 	** same as range const but copies elements from another vector instead of a range
 	** @param v1 : the vector to copy */
 	template <typename T>
-	void	test_copy_construct(vector<T> v1)
+	void	test_copy_construct(ns::vector<T> v1)
 	{
-		vector<T>	v2(v1);
+		ns::vector<T>	v2(v1);
 		size_t		len1;
 		size_t		len2;
 		size_t		capacity1;
@@ -126,7 +127,7 @@ void	print(vector<T> &v, std::string name)
 
 	/* OPERATOR= : prints vector, new size and cap */
 	template <typename T>
-	void	test_affectation_operator(vector<T> src, vector<T> dst)
+	void	test_affectation_operator(ns::vector<T> src, ns::vector<T> dst)
 	{
 		size_t	i;
 
@@ -237,9 +238,9 @@ void	print(vector<T> &v, std::string name)
 	void	test_bidir_rev_iterators(Container container)
 	{
 		typedef typename Container::iterator	iterator;
-		reverse_iterator<iterator>				rbegin(container.end());
-		reverse_iterator<iterator>				rend(container.begin());
-		reverse_iterator<iterator>				rtmp(rbegin);
+		ns::reverse_iterator<iterator>				rbegin(container.end());
+		ns::reverse_iterator<iterator>				rend(container.begin());
+		ns::reverse_iterator<iterator>				rtmp(rbegin);
 
 		std::cout << "**init dereferencing and operator++" << std::endl;
 		while (rtmp != rend)
@@ -299,7 +300,7 @@ void	print(vector<T> &v, std::string name)
 	** prints all elems, capcity and size
 	** can throw bad_alloc and length_error exceptions */
 	template <typename T>
-	void	test_resize(vector<T> v, size_t n)
+	void	test_resize(ns::vector<T> v, size_t n)
 	{
 		print(v, "v");
 		std::cout << "capacity = " << v.capacity() << ", size = " << v.size() << std::endl;
@@ -319,7 +320,7 @@ void	print(vector<T> &v, std::string name)
 	** prints elem at pos
 	** can throw out of range exception */
 	template <typename T>
-	void	test_at(vector<T> v, size_t pos)
+	void	test_at(ns::vector<T> v, size_t pos)
 	{
 		try
 		{
@@ -335,7 +336,7 @@ void	print(vector<T> &v, std::string name)
 	/* FRONT AND BACK
 	** prints front and back elems */
 	template <typename T>
-	void	test_front_back(vector<T> v)
+	void	test_front_back(ns::vector<T> v)
 	{
 		print(v, "v");
 		std::cout << "front = " << v.front() << ", ";
@@ -348,7 +349,7 @@ void	print(vector<T> &v, std::string name)
 	** prints all vector elems, its new size and capacity
 	** can throw bad alloc exception if a reallocation happened */
 	template <typename InputIterator>
-	void	test_assign(vector<int> v, InputIterator first, InputIterator last,
+	void	test_assign(ns::vector<int> v, InputIterator first, InputIterator last,
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
 	{
 		InputIterator	ite;
@@ -376,7 +377,7 @@ void	print(vector<T> &v, std::string name)
 
 	/* ASSIGN : same as before but assign n elements with value val instead of a range */
 	template <typename T>
-	void	test_assign(vector<T> &v, size_t n, const T& val)
+	void	test_assign(ns::vector<T> &v, size_t n, const T& val)
 	{
 		std::cout << "old capacity = " << v.capacity() << ", ";
 		std::cout << "old size = " << v.size() << std::endl;
@@ -397,7 +398,7 @@ void	print(vector<T> &v, std::string name)
 	/* PUSH BACK : adds elem at end of vector
 	** prints the vector, its new size and capacity */
 	template <typename T>
-	void	test_push_back(vector<T> &v, const T& val)
+	void	test_push_back(ns::vector<T> &v, const T& val)
 	{
 		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -418,7 +419,7 @@ void	print(vector<T> &v, std::string name)
 	/* POP BACK : destroys last elem in vector
 	** prints the vector, its new size and capacity */
 	template <typename T>
-	void	test_pop_back(vector<T> &v)
+	void	test_pop_back(ns::vector<T> &v)
 	{
 		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -433,9 +434,9 @@ void	print(vector<T> &v, std::string name)
 	** prints the vector, its new size and capacity and the elems in vector starting from
 	** the iterator returned by insert */
 	template <typename T>
-	void	test_insert(vector<T> &v, typename vector<T>::iterator position, const T& val)
+	void	test_insert(ns::vector<T> &v, typename ns::vector<T>::iterator position, const T& val)
 	{
-		typename vector<T>::iterator	tmp;
+		typename ns::vector<T>::iterator	tmp;
 
 		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -453,7 +454,7 @@ void	print(vector<T> &v, std::string name)
 
 	/* INSERT (position, n, val) : inserts n elems before position postion */
 	template <typename T>
-	void	test_insert(vector<T> &v, typename vector<T>::iterator position, size_t n, const T& val)
+	void	test_insert(ns::vector<T> &v, typename ns::vector<T>::iterator position, size_t n, const T& val)
 	{
 		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -469,7 +470,7 @@ void	print(vector<T> &v, std::string name)
 
 	/* INSERT (position, first, last) : inserts range from first to last before position position */
 	template <typename T, typename InputIterator>
-	void	test_insert(vector<T> &v, typename vector<T>::iterator position,
+	void	test_insert(ns::vector<T> &v, typename ns::vector<T>::iterator position,
 				InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
 	{
@@ -494,7 +495,7 @@ void	print(vector<T> &v, std::string name)
 	/* ERASE (position) : erase elem at position position
 	** prints vector, its new capacity and size */
 	template <typename T>
-	void	test_erase(vector<T> v, size_t index)
+	void	test_erase(ns::vector<T> v, size_t index)
 	{
 		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -509,7 +510,7 @@ void	print(vector<T> &v, std::string name)
 	/* ERASE (first, last) : erase range of elems from first to last
 	** prints vector, its new capacity and size */
 	template <typename T>
-	void	test_erase(vector<T> v, size_t start, size_t end)
+	void	test_erase(ns::vector<T> v, size_t start, size_t end)
 	{
 		print(v, "v");
 		std::cout << "old capacity = " << v.capacity() << ", ";
@@ -524,7 +525,7 @@ void	print(vector<T> &v, std::string name)
 	/* SWAP : swap contents of two vectors
 	** prints the two vectors, their new cap and size */
 	template <typename T>
-	void	test_swap(vector<T> v1, vector<T> v2)
+	void	test_swap(ns::vector<T> v1, ns::vector<T> v2)
 	{
 		print(v1, "v1");
 		std::cout << "v1 old capacity = " << v1.capacity() << ", ";
@@ -546,7 +547,7 @@ void	print(vector<T> &v, std::string name)
 /************************ NON MEMBER **************************/
 	/* OPERATORS : prints v1 and v2 and the result of comparing the containers */
 	template <typename T>
-	void	test_operators(vector<T> v1, vector<T> v2)
+	void	test_operators(ns::vector<T> v1, ns::vector<T> v2)
 	{
 		print(v1, "v1");
 		print(v2, "v2");
@@ -561,7 +562,7 @@ void	print(vector<T> &v, std::string name)
 	/* SWAP : swaps elems from v1 and v2
 	** prints v1 and v2, their new cap and new size*/
 	template <typename T>
-	void	test_swap_non_member(vector<T> v1, vector<T> v2)
+	void	test_swap_non_member(ns::vector<T> v1, ns::vector<T> v2)
 	{
 		print(v1, "v1");
 		std::cout << "old cap = " << v1.capacity() << ", old size = " << v1.size() << std::endl;

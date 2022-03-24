@@ -6,17 +6,33 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:26:18 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/23 17:11:54 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:09:51 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAPTEST
 #define MAPTEST
 
+#if STD == 1
+	namespace ns = std;
+	#include <vector>
+	#include <map>
+#else
+	namespace ns = ft;
+	#include "vector.hpp"
+#endif
+
 class MapTest
 {
+	private:
+		ns::vector<ns::pair<std::string, int> >		empty_vector;
+		ns::vector<ns::pair<std::string, int> >		v10;
+		ns::map<std::string, int>					empty_map;
+		ns::map<std::string, int>					m10;
+
 	public:
-		virtual ~MapTest() = 0;
+		MapTest();
+		~MapTest() {}
 
 		// CONSTRUCTORS
 		void	testConstructor();
@@ -49,7 +65,7 @@ class MapTest
 		void	testEqualRange();
 
 		// RUN
-		static void	run();
+		void	run();
 };
 
 #endif

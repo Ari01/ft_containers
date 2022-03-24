@@ -1,9 +1,13 @@
 NAME =		ft
+STD =		std
 
-SRC =		MapTest.cpp \
-			main2.cpp
+SRCS =		MapTest.cpp \
+			VectorTest.cpp \
+			main.cpp
 
-OBJS =		$(SRC:.cpp=.o)
+STDOBJS =	$(SRCS:.cpp=.o)
+
+FTOBJS =	$(addprefix ft, $(STDOBJS))
 
 CC =		c++
 
@@ -11,36 +15,32 @@ CFLAGS =	-Wall -Wextra -Werror -std=c++98
 
 all:		$(NAME)
 
-$(NAME):	main.cpp
-			$(CC) $(CFLAGS) -D STD=0 -D DEBUG=0 $^ -o $@
+$(NAME):	$(FTOBJS)
+			$(CC) $(CFLAGS) -D STD=0 $^ -o $@
 
-map:		$(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) -D STD=1 -D DEBUG=0 $^ -o $@
+$(STD):		$(STDOBJS)
+			$(CC) $(CFLAGS) -D STD=1 $^ -o $@
 
-std:		main.cpp
-			$(CC) $(CFLAGS) -D STD=1 -D DEBUG=0 $^ -o $@
+$(STDOBJS):	$(SRCS)
+			$(CC) $(CFLAGS) -D STD=1 -c $^
 
-debug:		main.cpp
-			$(CC) $(CFLAGS) -D STD=0 -D DEBUG=1 $^ -o $(NAME)
-			$(CC) $(CFLAGS) -D STD=1 -D DEBUG=1 $^ -o std
+$(FTOBJS):	$(SRCS)
+			$(CC) $(CFLAGS) -D STD=0 -c $^
 
-sanitize:	main.cpp
+sanitize:	main.cpp $(STDOBJS) $(FTOBJS)
 			$(CC) $(CFLAGS) -D STD=0 -g -D SANITIZE=1 $^ -o $(NAME)
-			$(CC) $(CFLAGS) -D STD=1 -g -D SANITIZE=1 $^ -o std
+			$(CC) $(CFLAGS) -D STD=1 -g -D SANITIZE=1 $^ -o $(STD)
 
-time:		main.cpp
+time:		main.cpp $(STDOBJS) $(FTOBJS)
 			$(CC) $(CFLAGS) -D STD=0 -D TIME=1 $^ -o $(NAME)
-			$(CC) $(CFLAGS) -D STD=1 -D TIME=1 $^ -o std
+			$(CC) $(CFLAGS) -D STD=1 -D TIME=1 $^ -o $(STD)
 
 
 #debug:		$(OBJS)
 #			$(CC) $(CFLAGS) -g -fsanitize=address $^ -o $@
 
-.cpp.o:
-			$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
-
 clean:
-			rm -rf $(OBJS)
+			rm -rf $(STDOBJS) $(FTOBJS)
 
 fclean:		clean
 			rm -rf $(NAME) .*.swp ft std map sanitize stdout ftout time diff_output
