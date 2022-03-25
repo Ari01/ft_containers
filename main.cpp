@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/24 15:59:29 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:44:13 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int main()
 	run_vector_tests();
 
 	// MAP TESTS
-	MapTest	maptest;
-	maptest.run();
+/*	MapTest	maptest;
+	maptest.run();*/
 
 	gettimeofday(&end, NULL);
 	if (TIME)

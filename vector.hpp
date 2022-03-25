@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/23 14:55:48 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/25 19:42:15 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ namespace ft
 				old_end = _end;
 				len = size();
 				if (n > max_size())
-					throw std::length_error("vector::_M_fill_insert");
+					throw std::length_error("vector::_M_default_append");
 				if (n > _capacity)
 				{
 					_begin = _alloc.allocate(n);

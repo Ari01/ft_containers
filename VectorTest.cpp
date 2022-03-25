@@ -6,14 +6,14 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:03:22 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/24 15:11:45 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:42:30 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <vector>
 #include <list>
-#include "tests_utils.hpp"
+#include "VectorTest.hpp"
 
 #if STD == 1
 	namespace ns=std;

@@ -5,22 +5,28 @@ make fclean
 
 if [ "$1" = 'time' ]
 then
-	make time
-	./ft > ftout
+	make CFLAGS="-Wall -Wextra -Werror -D STD=1 -D TIME=1" std
 	./std > stdout
+
+	make clean
+	make CFLAGS="-Wall -Wextra -Werror -D STD=0 -D TIME=1" ft
+	./ft > ftout
+
 	else if [ "$1" = 'sanitize' ]
 	then
-		make sanitize
-		valgrind ./ft > ftout
+		make CFLAGS="-Wall -Wextra -Werror -D STD=1 -D SANITIZE=1" std
 		valgrind ./std > stdout
-	else
-		make fclean
-		make
-		./ft > ftout
 
 		make clean
-		make std
+		make CFLAGS="-Wall -Wextra -Werror -D STD=0 -D SANITIZE=1" ft
+		valgrind ./ft > ftout
+	else
+		make CFLAGS="-Wall -Wextra -Werror -D STD=1" std
 		./std > stdout
+
+		make clean
+		make CFLAGS="-Wall -Wextra -Werror -D STD=0" ft
+		./ft > ftout
 	fi
 fi
 

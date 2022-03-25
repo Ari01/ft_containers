@@ -6,13 +6,13 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:26:18 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/24 16:09:51 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:45:37 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAPTEST
 #define MAPTEST
-
+/*
 #if STD == 1
 	namespace ns = std;
 	#include <vector>
@@ -66,6 +66,6 @@ class MapTest
 
 		// RUN
 		void	run();
-};
+};*/
 
 #endif
