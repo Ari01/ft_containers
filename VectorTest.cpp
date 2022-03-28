@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:03:22 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/25 15:42:30 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/28 16:34:08 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	run_vector_tests()
 	for (size_t i = 0; i < vs.size(); i++)
 		vs[i] = "";
 	test_range_construct<std::string, ns::vector<std::string>::iterator>(vs.begin(), vs.end());
-	std::cout << "after clear vs.capacity = " << vs.capacity() << std::endl;
 	
 	// hw + i strings
 	std::string	stmp;

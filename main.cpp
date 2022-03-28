@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/25 15:44:13 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/03/28 16:30:49 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int main()
 	struct timeval end;
 	gettimeofday(&begin, NULL);
 
-	//	VECTOR TESTS
+	std::cout << "**********************" << std::endl;
+	std::cout << "**** VECTOR TESTS ****" << std::endl;
+	std::cout << "**********************" << std::endl << std::endl;
 	run_vector_tests();
 
-	// MAP TESTS
-/*	MapTest	maptest;
-	maptest.run();*/
+	std::cout << "**********************" << std::endl;
+	std::cout << "***** MAP TESTS ******" << std::endl;
+	std::cout << "**********************" << std::endl << std::endl;
+	MapTest	maptest;
+	maptest.run();
 
 	gettimeofday(&end, NULL);
 	if (TIME)

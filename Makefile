@@ -14,13 +14,13 @@ CFLAGS =	-Wall -Wextra -Werror -std=c++98
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) $^ -o $@
+			$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 
 $(STD):		$(OBJS)
-			$(CC) $(CFLAGS) $^ -o $@
+			$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 
 .cpp.o:
-			$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
+			$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $(<:.cpp=.o)
 
 clean:
 			rm -rf $(OBJS)
