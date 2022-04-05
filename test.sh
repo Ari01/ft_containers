@@ -10,6 +10,7 @@ then
 elif [ "$1" = 'ft' ]
 then
 	make CPPFLAGS="-D STD=0" ft
+	./ft > ftout
 else
 	if [ "$1" = 'time' ]
 	then

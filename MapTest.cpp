@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:35:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/28 18:05:58 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/05 15:18:34 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #endif
 
 // PRINT MAP
-/*template <typename T1, typename T2>
+template <typename T1, typename T2>
 void	printMap(map<T1, T2> m, std::string name)
 {
 	typename map<T1, T2>::iterator	ite;
@@ -36,7 +36,7 @@ void	printMap(map<T1, T2> m, std::string name)
 	for (ite = m.begin(); ite != m.end(); ite++)
 		std::cout << "(" << ite->first << ", " << ite->second << ")" << std::endl;
 	std::cout << std::endl;
-}*/
+}
 
 // MAP TEST INIT
 MapTest::MapTest()
@@ -45,7 +45,7 @@ MapTest::MapTest()
 
 	for (int i = 0; i < 10; i++, s[0]++)
 		v10.push_back(pair<std::string, int>(s, i));
-//	m10.insert(v10.begin(), v10.end());
+	m10.insert(v10.begin(), v10.end());
 }
 
 // PAIR TESTS
@@ -107,7 +107,7 @@ void	MapTest::testOperators()
 // CONSTRUCTORS
 void	MapTest::testConstructor()
 {
-	/*map<std::string, int> empty;
+	map<std::string, int> empty;
 	printMap(empty, "empty map");
 
 	map<std::string, int> range(v10.begin(), v10.end());
@@ -117,7 +117,7 @@ void	MapTest::testConstructor()
 	printMap(range2, "range from map");
 
 	map<std::string, int> copy(range);
-	printMap(copy, "copy from range");*/
+	printMap(copy, "copy from range");
 }
 
 void	MapTest::testAffect()
