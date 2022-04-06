@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:01:44 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/05 15:44:32 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:55:23 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ namespace ft
 			// nested class function to compare elements (see value_comp)
 			class value_compare : public std::binary_function<value_type, value_type, bool>
 			{
+				friend class map;
 				protected:
 					key_compare		comp;
 					value_compare	(key_compare c) : comp(c) {}
@@ -59,11 +60,14 @@ namespace ft
 			BinaryTree<value_type, value_compare>	tree;
 
 		public:
-			// CONSTRUCTORS
+			/************ CONSTRUCTORS **********/
 			/* default */
 			explicit map (const key_compare& comp = key_compare(),
 							const allocator_type& alloc = allocator_type()) :
-							tree(value_compare(comp)) {}
+							tree(value_compare(comp))
+							{
+								(void)alloc;	
+							}
 
 			/* range */
 			template <class InputIterator>
@@ -72,13 +76,66 @@ namespace ft
 				const allocator_type& alloc = allocator_type()) :
 				tree(value_compare(comp))
 			{
-				insert(first, last);
+				(void)alloc;
+				InputIterator	ite;
+
+				for (ite = first; ite != last; ite++)
+					tree.insert(*ite);
 			}
 
 			/* copy */
 			map (const map& x) : tree(value_compare(key_compare()))
 			{
-				insert(x.begin(), x.last());
+				const_iterator	ite;
+
+				for (ite = x.begin(); ite != x.end(); ite++)
+					tree.insert(*ite);
+			}
+
+			/************ ITERATORS **********/
+			iterator	begin()
+			{
+				return (iterator(tree.min(tree.getRoot())));
+			}
+
+			const_iterator	begin() const
+			{
+				return (const_iterator(tree.min(tree.getRoot())));
+			}
+
+			iterator	end()
+			{
+				return (iterator());
+			}
+
+			const_iterator	end() const
+			{
+				return (const_iterator());
+			}
+
+			/************ MODIFIERS **********/
+			/* INSERT (val) */
+			pair<iterator, bool> insert (const value_type& val)
+			{
+				pair<Node<value_type>*, bool>	tmp(tree.insert(val));
+
+				return (make_pair(iterator(tmp.first), tmp.second));
+			}
+
+			/* INSERT (hint) */
+			iterator insert (iterator position, const value_type& val)
+			{
+				return (iterator(tree.insert(position->base(), val)));
+			}
+
+			/* INSERT (range) */
+			template <class InputIterator>
+			void insert (InputIterator first, InputIterator last)
+			{
+				InputIterator	ite;
+
+				for (ite = first; ite != last; ite++)
+					tree.insert(*ite);
 			}
 	};
 }

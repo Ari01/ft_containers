@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:19:20 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/05 15:45:55 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/06 11:07:57 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,93 +55,6 @@ struct Node
 	}
 };
 
-/***** TREE ITERATOR ********/
-template <typename T>
-class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
-{
-	friend class BinaryTree;
-
-	public:
-		typedef Node<T>*																	node_pointer;
-		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::value_type		value_type;
-		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::difference_type	difference_type;
-		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::pointer			pointer;
-		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::reference			reference;
-		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
-
-	protected:
-		node_pointer node;
-
-	public:
-		// CONSTS DESTS
-		TreeIte() : node(NULL) {}
-		TreeIte(node_pointer p) : node(p) {}
-		TreeIte(TreeIte const& other) : node(other.node) {}
-		TreeIte &operator=(TreeIte const& other)
-		{
-			if (this != &other)
-				node = other.node;
-			return (*this);
-		}
-		~TreeIte() {}
-
-		// ACCESSORS
-		node_pointer	base() const
-		{
-			return (node);
-		}
-
-		// MEMBER OPERATORS
-		reference	operator*()
-		{
-			return (node->val);
-		}
-
-		node_pointer	operator->()
-		{
-			return (node);
-		}
-
-		TreeIte &operator++()
-		{
-			node = succesor(node);
-			return (*this);
-		}
-
-		TreeIte operator++(int)
-		{
-			TreeIte tmp(*this);
-
-			node = successor(node);
-			return (tmp);
-		}
-
-		TreeIte &operator--()
-		{
-			node = predecessor(node);
-			return (*this);
-		}
-
-		TreeIte operator--(int)
-		{
-			TreeIte tmp(*this);
-
-			node = predecessor(node);
-			return (tmp);
-		}
-
-		// NON MEMBER OPERATORS
-		friend bool operator==(TreeIte const& lhs, TreeIte const& rhs)
-		{
-			return (lhs.node == rhs.node);
-		}
-
-		friend bool operator!=(TreeIte const& lhs, TreeIte const& rhs)
-		{
-			return (lhs.node != rhs.node);
-		}
-};
-
 /***** BINARY TREE *****/
 template <class T, class Compare = std::less<T>, 
 			class Node = Node<T>, class Alloc = std::allocator<Node> >
@@ -170,12 +83,6 @@ class BinaryTree
 					const allocator_type& a = allocator_type())
 					: root(NULL), comp(c), alloc(a) {}
 
-		// copy const
-		BinaryTree(const BinaryTree& x) : alloc(x.alloc), comp(x.comp)
-		{
-			
-		}
-
 		// destructor
 		~BinaryTree()
 		{
@@ -183,7 +90,7 @@ class BinaryTree
 		}
 
 		// accessors
-		pointer	getRoot()
+		pointer	getRoot() const
 		{
 			return (root);
 		}
@@ -208,11 +115,11 @@ class BinaryTree
 			return (NULL);
 		}
 
-		/* insert : uses function comp to insert an element at the right position in the tree
+		/* insert (val) : uses function comp to insert an element at the right position in the tree
 		** @param val : the value to insert
 		** @return : if the key of the elem to insert already exists in the tree, returns NULL
 		** otherwhise, returns a pointer to the new element inserted */
-		pointer	insert(const value_type& val)
+		ft::pair<pointer, bool>	insert(const value_type& val)
 		{
 			pointer	x = root;
 			pointer y = NULL;
@@ -225,7 +132,7 @@ class BinaryTree
 				else if (comp(x->val, val))
 					x = x->right;
 				else
-					return (NULL);
+					return (ft::make_pair(x, false));
 			}
 			x = alloc.allocate(1);
 			alloc.construct(x, Node(val, y));
@@ -235,11 +142,31 @@ class BinaryTree
 				y->left = x;
 			else
 				y->right = x;
-			return (x);
+			return (ft::make_pair(x, true));
+		}
+
+		pointer	insert(pointer position, const value_type& val)
+		{
+			pointer	ret;
+
+			if (comp(val, position->val))
+				return (insert(val).first);
+			else if (comp(position->val, val))
+			{
+				if (!position->right || comp(val, position->right))
+				{
+					ret = alloc.allocate(1);
+					alloc.construct(ret, Node(val, position, NULL, position->right));
+					position->right = ret;
+				}
+				else
+					return (insert(val).first);
+			}
+			return (position);
 		}
 
 		/* min : returns min key found in tree or NULL if no key was found */
-		pointer	min(pointer x)
+		pointer	min(pointer x) const
 		{
 			while (x->left != NULL)
 				x = x->left;
@@ -342,6 +269,94 @@ class BinaryTree
 				alloc.destroy(root);
 				alloc.deallocate(root, 1);
 			}
+		}
+};
+
+
+/***** TREE ITERATOR ********/
+template <typename T>
+class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
+{
+	friend class BinaryTree<T>;
+
+	public:
+		typedef Node<T>*																	node_pointer;
+		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::value_type		value_type;
+		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::difference_type	difference_type;
+		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::pointer			pointer;
+		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::reference			reference;
+		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
+
+	protected:
+		node_pointer node;
+
+	public:
+		// CONSTS DESTS
+		TreeIte() : node(NULL) {}
+		TreeIte(node_pointer p) : node(p) {}
+		TreeIte(TreeIte const& other) : node(other.node) {}
+		TreeIte &operator=(TreeIte const& other)
+		{
+			if (this != &other)
+				node = other.node;
+			return (*this);
+		}
+		~TreeIte() {}
+
+		// ACCESSORS
+		node_pointer	base() const
+		{
+			return (node);
+		}
+
+		// MEMBER OPERATORS
+		reference	operator*()
+		{
+			return (node->val);
+		}
+
+		pointer	operator->()
+		{
+			return (&(operator*()));
+		}
+
+		TreeIte &operator++()
+		{
+			node = successor(node);
+			return (*this);
+		}
+
+		TreeIte operator++(int)
+		{
+			TreeIte tmp(*this);
+
+			node = successor(node);
+			return (tmp);
+		}
+
+		TreeIte &operator--()
+		{
+			node = predecessor(node);
+			return (*this);
+		}
+
+		TreeIte operator--(int)
+		{
+			TreeIte tmp(*this);
+
+			node = predecessor(node);
+			return (tmp);
+		}
+
+		// NON MEMBER OPERATORS
+		friend bool operator==(TreeIte const& lhs, TreeIte const& rhs)
+		{
+			return (lhs.node == rhs.node);
+		}
+
+		friend bool operator!=(TreeIte const& lhs, TreeIte const& rhs)
+		{
+			return (lhs.node != rhs.node);
 		}
 };
 
