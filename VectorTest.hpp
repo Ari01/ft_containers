@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:06:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/25 19:41:24 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/17 15:26:44 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,9 +239,9 @@ void	print(ns::vector<T> &v, std::string name)
 	void	test_bidir_rev_iterators(Container container)
 	{
 		typedef typename Container::iterator	iterator;
-		ns::reverse_iterator<iterator>				rbegin(container.end());
-		ns::reverse_iterator<iterator>				rend(container.begin());
-		ns::reverse_iterator<iterator>				rtmp(rbegin);
+		ns::reverse_iterator<iterator>			rbegin(container.end());
+		ns::reverse_iterator<iterator>			rend(container.begin());
+		ns::reverse_iterator<iterator>			rtmp(rbegin);
 
 		std::cout << "**init dereferencing and operator++" << std::endl;
 		while (rtmp != rend)

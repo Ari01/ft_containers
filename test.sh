@@ -5,11 +5,11 @@ make fclean
 
 if [ "$1" = 'std' ]
 then
-	make CPPFLAGS="-D STD=1" std
+	make CPPFLAGS="-D STD=1 -D TIME=1" std
 	./std > stdout
 elif [ "$1" = 'ft' ]
 then
-	make CPPFLAGS="-D STD=0" ft
+	make CPPFLAGS="-D STD=0 -D TIME=1" ft
 	./ft > ftout
 else
 	if [ "$1" = 'time' ]

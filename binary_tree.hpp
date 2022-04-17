@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:19:20 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/06 11:07:57 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:41:26 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,83 @@ class BinaryTree
 		pointer			root;
 		value_compare	comp;
 		allocator_type	alloc;
+		size_type		_size;
 
 	public:
 		// default const
 		BinaryTree(const value_compare& c = value_compare(),
 					const allocator_type& a = allocator_type())
-					: root(NULL), comp(c), alloc(a) {}
+					: root(NULL), comp(c), alloc(a), _size(0) {}
+
+		BinaryTree(BinaryTree const& x) : root(NULL), comp(x.comp), alloc(x.alloc), _size(0)
+		{
+			*this = x;
+		}
+
+		// operator=
+		BinaryTree	&operator=(BinaryTree const& x)
+		{
+			pointer		i;
+			pointer		j;
+			pointer		tmp;
+			
+			if (this != &x)
+			{
+				i = min(x.root);
+				j = min(root);
+				tmp = j;
+				while (i && j)
+				{
+					tmp = j;
+					alloc.destroy(j);
+					alloc.construct(j, Node(i->val, tmp->parent, tmp->left, tmp->right));
+					j = successor(tmp);
+					i = successor(i);
+				}
+				while (i)
+				{
+					tmp = insert(tmp, i->val);
+					i = successor(i);
+				}
+				if (j)
+				{
+					tmp->left = NULL;
+					tmp->right = NULL;
+					destroy(&j);
+				}
+				_size = x._size;
+			}
+			return (*this);
+		}
 
 		// destructor
 		~BinaryTree()
 		{
-			destroy(root);	
+			destroy(&root);	
 		}
 
 		// accessors
+		/* root */
 		pointer	getRoot() const
 		{
 			return (root);
+		}
+
+		/* alloc */
+		allocator_type	getAlloc() const
+		{
+			return (alloc);
+		}
+
+		/* size */
+		size_type	size() const
+		{
+			return (_size);
+		}
+
+		void	setSize(size_type n)
+		{
+			_size = n;
 		}
 
 		/* find : uses function comp to search if a key is present in the tree
@@ -136,6 +196,7 @@ class BinaryTree
 			}
 			x = alloc.allocate(1);
 			alloc.construct(x, Node(val, y));
+			_size++;
 			if (y == NULL)
 				root = x;
 			else if (comp(val, y->val))
@@ -145,19 +206,26 @@ class BinaryTree
 			return (ft::make_pair(x, true));
 		}
 
+		/* insert (position) : if position precedes the new elem to insert, it is inserted after pos
+		** else calls insert(val)
+		** @param position : the position to insert the elem after 
+		** @param val : the elem to insert
+		** @return : a pointer to the newly inserted elem or to the existing elem if it existed */
 		pointer	insert(pointer position, const value_type& val)
 		{
 			pointer	ret;
 
-			if (comp(val, position->val))
+			if (!position || comp(val, position->val))
 				return (insert(val).first);
 			else if (comp(position->val, val))
 			{
-				if (!position->right || comp(val, position->right))
+				if (!position->right || comp(val, position->right->val))
 				{
 					ret = alloc.allocate(1);
 					alloc.construct(ret, Node(val, position, NULL, position->right));
 					position->right = ret;
+					_size++;
+					return (ret);
 				}
 				else
 					return (insert(val).first);
@@ -166,24 +234,24 @@ class BinaryTree
 		}
 
 		/* min : returns min key found in tree or NULL if no key was found */
-		pointer	min(pointer x) const
+		static pointer	min(pointer x)
 		{
-			while (x->left != NULL)
+			while (x != NULL && x->left != NULL)
 				x = x->left;
 			return (x);
 		}
 
 		/* max : same as min but returns max key */
-		pointer	max(pointer x)
+		static pointer	max(pointer x)
 		{
-			while (x->right != NULL)
+			while (x != NULL && x->right != NULL)
 				x = x->right;
 			return (x);
 		}
 
 		/* predecessor
 		**@return : a pointer to the elem in the tree with the largest key smaller than x's key */
-		pointer	predecessor(pointer x)
+		static pointer	predecessor(pointer x)
 		{
 			pointer y;
 
@@ -199,7 +267,7 @@ class BinaryTree
 		}
 
 		/* successor : same as predecessor but returns the smallest key greater than x's key */
-		pointer	successor(pointer x)
+		static pointer	successor(pointer x)
 		{
 			pointer	y;
 
@@ -258,16 +326,41 @@ class BinaryTree
 			}
 			alloc.destroy(del);
 			alloc.deallocate(del, 1);
+			_size--;
 		}
 
-		void	destroy(pointer root)
+		void	swap(BinaryTree &x)
 		{
-			if (root)
+			pointer		ptrtmp;
+			size_type	sizetmp;
+
+			ptrtmp = root;
+			sizetmp = _size;
+			root = x.root;
+			_size = x._size;
+			x.root = ptrtmp;
+			x._size = sizetmp;
+		}
+
+		/* destroy (void) : destroys and deallocates all ndoes from the tree, size left at 0 */
+		void	destroy()
+		{
+			destroy(&root);
+		}
+
+		/* destroy (pointer) 
+		** destroys and deallocates all nodes from the subtree pointed by node 
+		** modifies size accordingly */
+		void	destroy(pointer *node)
+		{
+			if (*node != NULL)
 			{
-				destroy(root->left);
-				destroy(root->right);
-				alloc.destroy(root);
-				alloc.deallocate(root, 1);
+				destroy(&(*node)->left);
+				destroy(&(*node)->right);
+				alloc.destroy(*node);
+				alloc.deallocate(*node, 1);
+				*node = NULL;
+				_size--;
 			}
 		}
 };
@@ -275,10 +368,8 @@ class BinaryTree
 
 /***** TREE ITERATOR ********/
 template <typename T>
-class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
+class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 {
-	friend class BinaryTree<T>;
-
 	public:
 		typedef Node<T>*																	node_pointer;
 		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::value_type		value_type;
@@ -288,17 +379,34 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
 		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category	iterator_category;
 
 	protected:
-		node_pointer node;
+		node_pointer	node;
+		node_pointer	root;
 
 	public:
-		// CONSTS DESTS
-		TreeIte() : node(NULL) {}
-		TreeIte(node_pointer p) : node(p) {}
-		TreeIte(TreeIte const& other) : node(other.node) {}
+		// default const
+		TreeIte() : node(NULL), root(NULL) {}
+
+		// node const
+		TreeIte(void *n, void *r)
+		{
+			if (!n)
+				node = NULL;
+			else
+				node = reinterpret_cast<node_pointer>(n);
+			root = reinterpret_cast<node_pointer>(r);
+		}
+
+		// copy const
+		TreeIte(TreeIte const& other) : node(other.node), root(other.root) {}
+
+		// operator=
 		TreeIte &operator=(TreeIte const& other)
 		{
 			if (this != &other)
+			{
 				node = other.node;
+				root = other.root;
+			}
 			return (*this);
 		}
 		~TreeIte() {}
@@ -322,7 +430,7 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
 
 		TreeIte &operator++()
 		{
-			node = successor(node);
+			node = BinaryTree<T>::successor(node);
 			return (*this);
 		}
 
@@ -330,13 +438,16 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
 		{
 			TreeIte tmp(*this);
 
-			node = successor(node);
+			operator++();
 			return (tmp);
 		}
 
 		TreeIte &operator--()
 		{
-			node = predecessor(node);
+			if (!node)
+				node = BinaryTree<T>::max(root);
+			else
+				node = BinaryTree<T>::predecessor(node);
 			return (*this);
 		}
 
@@ -344,7 +455,7 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag,T>
 		{
 			TreeIte tmp(*this);
 
-			node = predecessor(node);
+			operator--();
 			return (tmp);
 		}
 
