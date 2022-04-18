@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:01:44 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/17 18:37:50 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:04:43 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,12 @@ namespace ft
 			}
 
 			/************ ACCESSORS **********/
+			/* ALLOCATOR */
+			allocator_type get_allocator() const
+			{
+				return (allocator_type());
+			}
+
 			/* OPERATOR [] */
 			mapped_type& operator[] (const key_type& k)
 			{
@@ -279,7 +285,67 @@ namespace ft
 			}
 
 			/* COUNT */
-			
+			size_type	count(const key_type& k) const
+			{
+				if (tree.find(ft::make_pair(k, mapped_type())))
+					return (1);
+				return (0);
+			}
+
+			/* LOWER BOUND */
+			iterator lower_bound (const key_type& k)
+			{
+				iterator	ite = begin();
+				key_compare	comp = key_comp();
+
+				while (ite != end() && comp(ite->first, k))
+					ite++;
+				return (ite);
+			}
+
+			/* CONST LOWER BOUND */
+			const_iterator	lower_bound(const key_type& k) const
+			{
+				const_iterator	ite = begin();
+				key_compare		comp = key_comp();
+
+				while (ite != end() && comp()(ite->first, k))
+					ite++;
+				return (ite);
+			}
+
+			/* UPPER BOUND */
+			iterator upper_bound (const key_type& k)
+			{
+				iterator		ite = begin();
+				key_compare		comp = key_comp();
+
+				while (ite != end() && !comp(k, ite->first))
+					ite++;
+				return (ite);
+			}
+
+			/* CONST UPPER_BOUND */
+			const_iterator upper_bound (const key_type& k) const
+			{
+				const_iterator	ite = begin();
+				key_compare		comp = key_comp();
+
+				while (ite != end() && !comp(k, ite->first))
+					ite++;
+				return (ite);
+			}
+
+			/* CONST EQUAL_RANGE */
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			{
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
+
+			pair<iterator,iterator>	equal_range (const key_type& k)
+			{
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
 	};
 }
 

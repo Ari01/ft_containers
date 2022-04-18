@@ -3,6 +3,7 @@ STD =		std
 
 SRCS =		MapTest.cpp \
 			VectorTest.cpp \
+			StackTest.cpp \
 			main.cpp
 
 OBJS =		$(SRCS:.cpp=.o)

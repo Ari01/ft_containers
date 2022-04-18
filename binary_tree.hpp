@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:19:20 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/17 17:41:26 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/18 13:03:05 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ class BinaryTree
 		** @param : k, the key to find
 		** @return : a pointer to the elem whose key match k if it exists
 		** otherwhise, returns NULL */
-		pointer	find(const value_type &val)
+		pointer	find(const value_type &val) const
 		{
 			pointer x = root;
 

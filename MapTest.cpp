@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:35:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/17 18:48:11 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:22:09 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,27 +340,89 @@ void	MapTest::testFind()
 
 	std::cout << "m10.find(j) : ";
 	ite = m10.find("j");
-	std::cout << ite->first << " found" << std::endl;
+	std::cout << ite->first << " found\n\n";
 }
 
 void	MapTest::testCount()
 {
+	size_t	found;
+	
+	std::cout << "** COUNT\n";
+	std::cout << "-------------------" << std::endl;
 
+	std::cout << "empty.count(a) : ";
+	found = empty_map.count("a");
+	std::cout << found << std::endl;
+
+	std::cout << "m10.count(z) : ";
+	found = m10.count("z");
+	std::cout << found << std::endl;
+
+	std::cout << "m10.count(j) : ";
+	found = m10.count("j");
+	std::cout << found << std::endl << std::endl;
 }
 
 void	MapTest::testLowerBound()
 {
+	map<std::string, int>::iterator	ite;
 
+	std::cout << "** LOWER BOUND\n";
+	std::cout << "-------------------" << std::endl;
+
+	for (ite = m10.begin(); ite != m10.end(); ite++)
+	{
+		std::cout << "lower_bound(" << ite->first << ") = " << m10.lower_bound(ite->first)->first;
+		std::cout << std::endl;
+	}
+	std::cout << "lower_bound(k) = ";
+	ite = m10.lower_bound("k");
+	ite == m10.end() ? std::cout << "NULL" : std::cout << ite->first;
+	std::cout << std::endl << std::endl;
 }
 
 void	MapTest::testUpperBound()
 {
+	map<std::string, int>::iterator	ite;
+	map<std::string, int>::iterator	upperbound;
 
+	std::cout << "** UPPER BOUND\n";
+	std::cout << "-------------------" << std::endl;
+
+	for (ite = m10.begin(); ite != m10.end(); ite++)
+	{
+		upperbound = m10.upper_bound(ite->first);
+		std::cout << "upper_bound(" << ite->first << ") = "; 
+		if (upperbound == m10.end())
+			std::cout << "NULL";
+		else
+			std::cout << m10.upper_bound(ite->first)->first;
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
 }
 
 void	MapTest::testEqualRange()
 {
+	typedef map<std::string, int>::iterator	iterator;
+	pair<iterator, iterator>				range;
 
+	std::cout << "** RANGE EQUAL\n";
+	std::cout << "-------------------" << std::endl;
+	for (iterator ite = m10.begin(); ite != m10.end(); ite++)
+	{
+		range = m10.equal_range(ite->first);
+		std::cout << "range_equal(" << ite->first << ") = ";
+		range.first == m10.end() ? std::cout << "NULL, " : std::cout << range.first->first << ", ";
+		range.second == m10.end() ? std::cout << "NULL" : std::cout << range.second->first;
+		std::cout << std::endl;
+	}
+	range = m10.equal_range("k");
+	std::cout << "range_equal(k) = ";
+	range.first == m10.end() ? std::cout << "NULL, " : std::cout << range.first->first << ", ";
+	range.second == m10.end() ? std::cout << "NULL" : std::cout << range.second->first;
+	std::cout << std::endl << std::endl;
 }
 
 // RUN

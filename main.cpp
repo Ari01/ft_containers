@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/04 10:00:12 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:07:03 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/time.h>
 #include "VectorTest.hpp"
 #include "MapTest.hpp"
+#include "StackTest.hpp"
 
 #ifndef TIME
 # define TIME 0
@@ -35,6 +36,12 @@ int main()
 	std::cout << "**********************" << std::endl << std::endl;
 	MapTest	maptest;
 	maptest.run();
+
+	std::cout << "**********************" << std::endl;
+	std::cout << "***** STACK TESTS ******" << std::endl;
+	std::cout << "**********************" << std::endl << std::endl;
+	StackTest stacktest;
+	stacktest.run();
 
 	gettimeofday(&end, NULL);
 	if (TIME)
