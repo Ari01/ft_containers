@@ -11,6 +11,10 @@ elif [ "$1" = 'ft' ]
 then
 	make CPPFLAGS="-D STD=0 -D TIME=1" ft
 	./ft > ftout
+elif [ "$1" = 'provided' ]
+then
+		make provided
+		./provided 1
 else
 	if [ "$1" = 'time' ]
 	then

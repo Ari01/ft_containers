@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 15:25:00 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/18 16:37:02 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:01:32 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 			typedef Container						container_type;
 			typedef typename Container::size_type	size_type;
 		
-		private:
+		protected:
 			container_type	c;
 
 		public:

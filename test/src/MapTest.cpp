@@ -6,11 +6,12 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:35:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/18 16:22:09 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:50:28 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <stdlib.h>
 #include "iterator.hpp"
 #include "MapTest.hpp"
 #include "utils.hpp"
@@ -211,6 +212,18 @@ void	MapTest::testInsert()
 	std::cout << "\ninsert (m10.begin, m10.end)" << std::endl;
 	m.insert(m10.begin(), m10.end());
 	printMap(m, "abcdefghijst");
+
+	// large entry rand for performance testing
+	int						BUFFER_SIZE = 100000;
+	map<int, int>			intmap;
+	map<int, int>::iterator	intite;
+
+	std::cout << "large entry rand insert\n";
+	srand(time(NULL));
+	for (int i = 0; i < BUFFER_SIZE; i++)
+	{
+		intmap.insert(ns::make_pair(rand(), rand()));
+	}
 }
 
 void	MapTest::testErase()
