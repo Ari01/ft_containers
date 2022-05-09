@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:35:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/19 17:50:28 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:38:15 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	MapTest::testIterator()
 	map<std::string, int> m(m10);
 
 	std::cout << "********* REVERSE ITERATORS *********\n";
-	ns::reverse_iterator<typename map<std::string, int>::iterator>	rbegin(m.end());
-	ns::reverse_iterator<typename map<std::string, int>::iterator>	rend(m.begin());
-	ns::reverse_iterator<typename map<std::string, int>::iterator>	rtmp(rbegin);
+	ns::reverse_iterator<map<std::string, int>::iterator>	rbegin(m.end());
+	ns::reverse_iterator<map<std::string, int>::iterator>	rend(m.begin());
+	ns::reverse_iterator<map<std::string, int>::iterator>	rtmp(rbegin);
 
 	std::cout << "** iterator++\n";
 	std::cout << "-------------------" << std::endl;
@@ -214,7 +214,7 @@ void	MapTest::testInsert()
 	printMap(m, "abcdefghijst");
 
 	// large entry rand for performance testing
-	int						BUFFER_SIZE = 100000;
+	/*int						BUFFER_SIZE = 100000;
 	map<int, int>			intmap;
 	map<int, int>::iterator	intite;
 
@@ -223,7 +223,7 @@ void	MapTest::testInsert()
 	for (int i = 0; i < BUFFER_SIZE; i++)
 	{
 		intmap.insert(ns::make_pair(rand(), rand()));
-	}
+	}*/
 }
 
 void	MapTest::testErase()
@@ -255,11 +255,11 @@ void	MapTest::testErase()
 
 void	MapTest::testSwap()
 {	
-	typedef typename map<std::string, int>::iterator	iterator;
-	iterator											begin1, begin2, end1, end2;
-	map<std::string, int>								m1(m10);
-	map<std::string, int>								m2;
-	std::string											stmp;
+	typedef map<std::string, int>::iterator		iterator;
+	iterator									begin1, begin2, end1, end2;
+	map<std::string, int>						m1(m10);
+	map<std::string, int>						m2;
+	std::string									stmp;
 
 	std::cout << "** SWAP\n";
 	std::cout << "-------------------" << std::endl;
