@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:01:44 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/18 15:04:43 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:00:48 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ namespace ft
 				const_iterator	ite = begin();
 				key_compare		comp = key_comp();
 
-				while (ite != end() && comp()(ite->first, k))
+				while (ite != end() && comp(ite->first, k))
 					ite++;
 				return (ite);
 			}
@@ -345,6 +345,39 @@ namespace ft
 			pair<iterator,iterator>	equal_range (const key_type& k)
 			{
 				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
+
+			/* NON MEMBER RELATIONAL OPERATORS */
+			friend bool operator== ( const map& lhs, const map& rhs )
+			{
+				if (lhs.size() != rhs.size())
+					return (false);
+				return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			}
+
+			friend bool operator!= ( const map& lhs, const map& rhs )
+			{
+				return (!(lhs == rhs));
+			}
+
+			friend bool operator< ( const map& lhs, const map& rhs )
+			{
+				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			}
+
+			friend bool operator<= ( const map& lhs, const map& rhs )
+			{
+				return (!(rhs < lhs));
+			}
+
+			friend bool operator> ( const map& lhs, const map& rhs )
+			{
+				return (rhs < lhs);
+			}
+
+			friend bool operator>= ( const map& lhs, const map& rhs )
+			{
+				return (!(lhs < rhs));
 			}
 	};
 }

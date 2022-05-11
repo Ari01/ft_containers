@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:03:22 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/28 16:34:08 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:44:21 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	run_vector_tests()
 
 	std::cout << "***********SIZE CONSTRUCT TESTS*************" << std::endl;
 
-	if (!SANITIZE)
+	if (SANITIZE)
 	{
 		std::cout << std::endl << "** FAILING CONSTRUCT TESTS" << std::endl;
 		test_size_construct<int>(-1);
@@ -247,7 +247,7 @@ void	run_vector_tests()
 		test_assign(vtmp, 20, 9);
 
 		// EXCEPTION THROWING TESTS
-		if (!SANITIZE)
+		if (SANITIZE)
 		{
 			test_assign(vtmp, 2147483647, 1);
 			test_assign(vtmp, vtmp.max_size(), 1);
