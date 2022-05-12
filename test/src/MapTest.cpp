@@ -6,12 +6,13 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:35:35 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/09 10:38:15 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/12 08:54:01 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <stdlib.h>
+#include <list>
 #include "iterator.hpp"
 #include "MapTest.hpp"
 #include "utils.hpp"
@@ -46,9 +47,18 @@ MapTest::MapTest()
 {
 	std::string	s = "a";
 
+	// vector
 	for (int i = 0; i < 10; i++, s[0]++)
 		v10.push_back(pair<std::string, int>(s, i));
+
+	// map
 	m10.insert(v10.begin(), v10.end());
+
+	// list
+	l.push_back(ns::make_pair("a",0));
+	l.push_back(ns::make_pair("z",1));
+	l.push_back(ns::make_pair("b",2));
+	l.push_back(ns::make_pair("c",3));
 }
 
 // CONSTRUCTORS
@@ -57,21 +67,28 @@ void	MapTest::testConstructor()
 	std::cout << "********* CONSTRUCTORS *********" << std::endl;
 	std::cout << "** DEFAULT" << std::endl;
 	std::cout << "-------------------" << std::endl;
+
 	map<std::string, int> empty;
 	printMap(empty, "empty map");
 
-	std::cout << "** RANGE" << std::endl;
+	std::cout << "** ORDERED RANGE" << std::endl;
 	std::cout << "-------------------" << std::endl;
 	map<std::string, int> range(v10.begin(), v10.end());
 	printMap(range, "range from vector");
-
 	map<std::string, int> range2(range.begin(), range.end());
 	printMap(range2, "range from map");
+
+	std::cout << "** UNORDERED RANGE " << std::endl;
+	std::cout << "-------------------" << std::endl;
+	map<std::string, int>	unordered_range(l.begin(), l.end());
+	printMap(unordered_range, "unordered_range");
 
 	std::cout << "** COPY" << std::endl;
 	std::cout << "-------------------" << std::endl;
 	map<std::string, int> copy(range);
-	printMap(copy, "copy from map");
+	map<std::string, int> unordered_copy(unordered_range);
+	printMap(copy, "copy from ordered range");
+	printMap(unordered_range, "copy from unordered range");
 }
 
 void	MapTest::testAffect()
@@ -208,10 +225,22 @@ void	MapTest::testInsert()
 	ite = m.insert(m.begin(), pair<std::string, int>("a", 0));
 	ite->first == "a" ? std::cout << "TEST OK\n" : std::cout << "TEST KO\n";
 
-	// insert (begin = a, end = j)
+	// insert ordered range (begin = a, end = j)
 	std::cout << "\ninsert (m10.begin, m10.end)" << std::endl;
 	m.insert(m10.begin(), m10.end());
 	printMap(m, "abcdefghijst");
+
+	// insert unordered range (begin = a, end = j)
+	map<std::string, int>	unordered;
+	unordered.insert(l.begin(), l.end());
+	printMap(unordered, "abcz");
+
+	map<std::string, int>	unordered2;
+	unordered2.insert(ns::make_pair("a", 0));
+	unordered2.insert(ns::make_pair("z", 1));
+	unordered2.insert(ns::make_pair("b", 2));
+	unordered2.insert(ns::make_pair("c", 3));
+	printMap(unordered2, "abcz");
 
 	// large entry rand for performance testing
 	/*int						BUFFER_SIZE = 100000;

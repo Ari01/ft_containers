@@ -6,12 +6,14 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:26:18 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/05 15:18:15 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/12 08:47:06 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAPTEST
 #define MAPTEST
+
+#include <list>
 
 #if STD == 1
 	namespace ns = std;
@@ -30,6 +32,7 @@ class MapTest
 		ns::vector<ns::pair<std::string, int> >		v10;
 		ns::map<std::string, int>					empty_map;
 		ns::map<std::string, int>					m10;
+		std::list<ns::pair<std::string, int> >		l;
 
 	public:
 		MapTest();

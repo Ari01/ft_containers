@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:19:20 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/11 14:48:19 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/12 10:32:34 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,6 @@ class BinaryTree
 				{
 					tmp = insert(tmp, i->val);
 					i = successor(i);
-				}
-				if (j)
-				{
-					tmp->left = NULL;
-					tmp->right = NULL;
-					destroy(&j);
 				}
 				_size = x._size;
 			}
@@ -231,6 +225,7 @@ class BinaryTree
 					{
 						alloc.construct(ret, Node(val, successor_ptr->parent, NULL, successor_ptr));
 						successor_ptr->parent->right = ret;
+						successor_ptr->parent = ret;
 					}
 					_size++;
 
@@ -360,7 +355,7 @@ class BinaryTree
 		** modifies size accordingly */
 		void	destroy(pointer *node)
 		{
-			if (*node != NULL)
+			if (node && *node != NULL)
 			{
 				destroy(&(*node)->left);
 				destroy(&(*node)->right);

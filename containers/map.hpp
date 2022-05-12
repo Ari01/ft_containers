@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:01:44 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/11 13:00:48 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/12 10:07:50 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,8 @@ namespace ft
 
 			/* INSERT (range) */
 			template <class InputIterator>
-			void insert (InputIterator first, InputIterator last)
+			void insert (InputIterator first, InputIterator last,
+						typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
 			{
 				InputIterator	ite;
 
@@ -378,6 +379,12 @@ namespace ft
 			friend bool operator>= ( const map& lhs, const map& rhs )
 			{
 				return (!(lhs < rhs));
+			}
+
+			/* NON MEMBER SWAP */
+			friend void swap (map& x, map& y)
+			{
+				x.swap(y);
 			}
 	};
 }

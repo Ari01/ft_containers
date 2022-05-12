@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/11 07:04:05 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:07:15 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define VECTOR_HPP
 
 #include <memory>
+#include <stdexcept>
 #include "iterator.hpp"
 #include "utils.hpp"
 
@@ -125,10 +126,10 @@ namespace ft
 
 				xlen = x.size();
 				ite = _begin;
+				while (ite != _end)
+					_alloc.destroy(ite++);
 				if (xlen > _capacity)
 				{
-					while (ite != _end)
-						_alloc.destroy(ite++);
 					_alloc.deallocate(_begin, _capacity);
 					_capacity = xlen;
 					_begin = _alloc.allocate(xlen);
@@ -216,7 +217,7 @@ namespace ft
 				pointer		tmp;
 
 				len = size();
-				tmp = _begin;
+				tmp = _begin + n;
 
 				if (n > _capacity)
 					len * 2 >= n ? reserve(len * 2) : reserve(n);
@@ -259,15 +260,15 @@ namespace ft
 				if (n > _capacity)
 				{
 					_begin = _alloc.allocate(n);
-					while (old_begin != old_end)
-						_alloc.destroy(old_begin++);
 					_end = _begin;
 					_capacity = n;
-					old_begin -= len;
 					while (old_begin != old_end)
-						_alloc.construct(_end++, *old_begin++);
+					{
+						_alloc.construct(_end++, *old_begin);
+						_alloc.destroy(old_begin++);
+					}
 					old_begin -= len;
-					_alloc.deallocate(old_begin, old_end - old_begin);
+					_alloc.deallocate(old_begin, len);
 				}
 			}
 

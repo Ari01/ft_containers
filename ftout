@@ -1,0 +1,1421 @@
+**********************
+**** VECTOR TESTS ****
+**********************
+
+***********DEFAULT CONSTRUCT TESTS*************
+***********SIZE CONSTRUCT TESTS*************
+** OK CONSTRUCT TESTS
+TEST vector(0)
+v.size = 0, v.capacity = 0
+
+TEST vector(150)
+v.size = 150, v.capacity = 150
+
+***********RANGE CONSTRUCT TESTS*************
+
+** LIST TEST
+_____________________________
+range = 0 1 2 3 4 5 6 7 8 9 
+vector = 0 1 2 3 4 5 6 7 8 9 
+capacity = 10, size = 10
+
+
+** VECTOR TEST
+_____________________________
+range =           
+vector =           
+capacity = 10, size = 10
+
+range = hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+vector = hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+
+range = 
+vector = 
+capacity = 0, size = 0
+
+
+** POINTER TEST
+_____________________________
+range = 0 0 0 0 0 0 0 0 0 0 
+vector = 0 0 0 0 0 0 0 0 0 0 
+capacity = 10, size = 10
+
+range = 0 1 2 3 4 5 6 7 8 9 
+vector = 0 1 2 3 4 5 6 7 8 9 
+capacity = 10, size = 10
+
+
+** NULL ITERATORS
+range = 
+vector = 
+capacity = 0, size = 0
+
+*********** COPY TESTS*************
+
+** Int tests
+_____________________________
+size1 = 10, size2 = 10
+capacity1 = 10, capacity2 = 10
+0 0 0 0 0 0 0 0 0 0 
+
+size1 = 10, size2 = 10
+capacity1 = 10, capacity2 = 10
+0 1 2 3 4 5 6 7 8 9 
+
+
+** String tests
+_____________________________
+size1 = 10, size2 = 10
+capacity1 = 10, capacity2 = 10
+          
+
+size1 = 10, size2 = 10
+capacity1 = 10, capacity2 = 10
+hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+
+** OPERATOR =
+_____________________________
+src = 5 5 5 5 5 
+dst = 10 10 10 10 10 10 10 10 10 10 
+dst capacity = 10
+dst size = 10
+dst = src
+dst capacity = 10
+dst size = 5
+final dst = 5 5 5 5 5 
+
+src = 5 5 5 5 5 
+dst = 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 
+dst capacity = 20
+dst size = 20
+dst = src
+dst capacity = 20
+dst size = 5
+final dst = 5 5 5 5 5 
+
+src = 5 5 5 5 5 
+dst = 5 5 5 5 5 
+dst capacity = 5
+dst size = 5
+dst = src
+dst capacity = 5
+dst size = 5
+final dst = 5 5 5 5 5 
+
+*********** ITERATOR TESTS*************
+v : 0 1 2 3 4 5 6 7 8 9 
+TEST begin++
+0 1 2 3 4 5 6 7 8 9 
+
+TEST begin = 1 + begin
+0 1 2 3 4 5 6 7 8 9 
+
+TEST begin = begin + 1
+0 1 2 3 4 5 6 7 8 9 
+
+TEST begin += 1
+0 1 2 3 4 5 6 7 8 9 
+
+TEST --begin
+9 8 7 6 5 4 3 2 1 0 
+
+TEST begin = begin - 1
+9 8 7 6 5 4 3 2 1 0 
+
+TEST begin -= 1
+9 8 7 6 5 4 3 2 1 0 
+
+TEST begin == begin
+TEST OK
+
+TEST begin[i]
+begin[0] = 0
+begin[1] = 1
+begin[2] = 2
+begin[3] = 3
+begin[4] = 4
+begin[5] = 5
+begin[6] = 6
+begin[7] = 7
+begin[8] = 8
+begin[9] = 9
+
+
+TEST begin->val
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+TEST begin++
+hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+
+TEST begin = 1 + begin
+hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+
+TEST begin = begin + 1
+hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+
+TEST begin += 1
+hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+
+TEST --begin
+hw9 hw8 hw7 hw6 hw5 hw4 hw3 hw2 hw1 hw0 
+
+TEST begin = begin - 1
+hw9 hw8 hw7 hw6 hw5 hw4 hw3 hw2 hw1 hw0 
+
+TEST begin -= 1
+hw9 hw8 hw7 hw6 hw5 hw4 hw3 hw2 hw1 hw0 
+
+TEST begin == begin
+TEST OK
+
+TEST begin[i]
+begin[0] = hw0
+begin[1] = hw1
+begin[2] = hw2
+begin[3] = hw3
+begin[4] = hw4
+begin[5] = hw5
+begin[6] = hw6
+begin[7] = hw7
+begin[8] = hw8
+begin[9] = hw9
+
+
+TEST begin->val
+v : 0 1 2 3 4 5 6 7 8 9 
+TEST begin++
+0 1 2 3 4 5 6 7 8 9 
+
+TEST begin = 1 + begin
+0 1 2 3 4 5 6 7 8 9 
+
+TEST begin = begin + 1
+0 1 2 3 4 5 6 7 8 9 
+
+TEST begin += 1
+0 1 2 3 4 5 6 7 8 9 
+
+TEST --begin
+9 8 7 6 5 4 3 2 1 0 
+
+TEST begin = begin - 1
+9 8 7 6 5 4 3 2 1 0 
+
+TEST begin -= 1
+9 8 7 6 5 4 3 2 1 0 
+
+TEST begin == begin
+TEST OK
+
+TEST begin[i]
+begin[0] = 0
+begin[1] = 1
+begin[2] = 2
+begin[3] = 3
+begin[4] = 4
+begin[5] = 5
+begin[6] = 6
+begin[7] = 7
+begin[8] = 8
+begin[9] = 9
+
+
+TEST begin->val
+*********** REV ITERATOR TESTS*************
+** LIST 0-9
+**init dereferencing and operator++
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+
+** operator--
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+** VECTOR hw0-9
+**init dereferencing and operator++
+hw9
+hw8
+hw7
+hw6
+hw5
+hw4
+hw3
+hw2
+hw1
+hw0
+
+** operator--
+hw0
+hw1
+hw2
+hw3
+hw4
+hw5
+hw6
+hw7
+hw8
+hw9
+
+** operator+=
+hw9
+hw8
+hw7
+hw6
+hw5
+hw4
+hw3
+hw2
+hw1
+hw0
+
+** operator-=
+hw0
+hw1
+hw2
+hw3
+hw4
+hw5
+hw6
+hw7
+hw8
+hw9
+
+** operator+
+*(rtmp + 1) = hw8
+*(1 + rtmp) = hw8
+
+** operator-
+*(rtmp - 1) = hw9
+
+rbegin - rend = -10
+rend - rbegin = 10
+
+** VECTOR 0-9
+**init dereferencing and operator++
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+
+** operator--
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+** operator+=
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+
+** operator-=
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+** operator+
+*(rtmp + 1) = 8
+*(1 + rtmp) = 8
+
+** operator-
+*(rtmp - 1) = 9
+
+rbegin - rend = -10
+rend - rbegin = 10
+
+** CONST VECTOR 0-9
+**init dereferencing and operator++
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+
+** operator--
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+** operator+=
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+
+** operator-=
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+** operator+
+*(rtmp + 1) = 8
+*(1 + rtmp) = 8
+
+** operator-
+*(rtmp - 1) = 9
+
+rbegin - rend = -10
+rend - rbegin = 10
+
+********** CAPACITY TESTS ******************
+** MAX SIZE
+_____________________________
+vector int max size = 4611686018427387903
+vector string max size = 576460752303423487
+
+** RESIZE
+_____________________________
+v : 0 1 2 3 4 5 6 7 8 9 
+capacity = 10, size = 10
+v.resize(5)
+v : 0 1 2 3 4 
+capacity = 10, size = 5
+
+v : 0 1 2 3 4 5 6 7 8 9 
+capacity = 10, size = 10
+v.resize(10)
+v : 0 1 2 3 4 5 6 7 8 9 
+capacity = 10, size = 10
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+v.resize(0)
+v : 
+capacity = 10, size = 0
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+v.resize(12)
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9   
+capacity = 20, size = 12
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+v.resize(10)
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+v.resize(20)
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9           
+capacity = 20, size = 20
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+v.resize(5)
+v : hw0 hw1 hw2 hw3 hw4 
+capacity = 10, size = 5
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+capacity = 10, size = 10
+v.resize(0)
+v : 
+capacity = 10, size = 0
+
+** EMPTY
+_____________________________
+TEST OK
+TEST OK
+
+************ ACCESSOR TESTS ************
+
+** AT
+_____________________________
+v.at(0) = 0
+v.at(9) = 9
+
+** FRONT
+_____________________________
+v : 0 1 2 3 4 5 6 7 8 9 
+front = 0, back = 9
+
+v : 0 1 2 3 4 5 6 7 8 9 
+front = 0, back = 9
+
+v : hw0 hw1 hw2 hw3 hw4 hw5 hw6 hw7 hw8 hw9 
+front = hw0, back = hw9
+
+********** MODIFIER TESTS ************
+
+** ASSIGN RANGE
+_____________________________
+range = 0 1 2 3 4 5 6 7 8 9 
+old capacity = 0, old size = 0
+v.assign(first, last)
+v : 0 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 10
+
+range = 0 1 2 3 4 5 6 7 8 9 
+old capacity = 0, old size = 0
+v.assign(first, last)
+v : 0 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 10
+
+range = 0 1 2 3 4 5 6 7 8 
+old capacity = 0, old size = 0
+v.assign(first, last)
+v : 0 1 2 3 4 5 6 7 8 
+new capacity = 9, new size = 9
+
+range = 0 
+old capacity = 0, old size = 0
+v.assign(first, last)
+v : 0 
+new capacity = 1, new size = 1
+
+range = 
+old capacity = 0, old size = 0
+v.assign(first, last)
+v : 
+new capacity = 0, new size = 0
+
+** ASSIGN VALUES
+_____________________________
+old capacity = 0, old size = 0
+v.assign(10, 0)
+v : 0 0 0 0 0 0 0 0 0 0 
+new capacity = 10, new size = 10
+
+old capacity = 10, old size = 10
+v.assign(20, 9)
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+new capacity = 20, new size = 20
+
+
+** PUSH_BACK, POP BACK
+_____________________________
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+old capacity = 20, old size = 20
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 0 
+new capacity = 40, new size = 21
+
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 0 
+old capacity = 40, old size = 21
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 0 1 
+new capacity = 40, new size = 22
+
+v : 
+old capacity = 0, old size = 0
+v : -1 
+new capacity = 1, new size = 1
+
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 0 1 
+old capacity = 40, old size = 22
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 0 
+new capacity = 40, new size = 21
+
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 0 
+old capacity = 40, old size = 21
+v : 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+new capacity = 40, new size = 20
+
+v : -1 
+old capacity = 1, old size = 1
+v : 
+new capacity = 1, new size = 0
+
+
+** INSERT SINGLE ELEM
+_____________________________
+v : 
+old capacity = 0, old size = 0
+v.insert(pos 0, -42)
+v : -42 
+v starting from iterator returned by insert : -42 
+new capacity = 1, new size = 1
+
+v : -42 
+old capacity = 1, old size = 1
+v.insert(pos 1, -42)
+v : -42 -42 
+v starting from iterator returned by insert : -42 
+new capacity = 2, new size = 2
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.insert(pos 0, -42)
+v : -42 0 1 2 3 4 5 6 7 8 9 
+v starting from iterator returned by insert : -42 0 1 2 3 4 5 6 7 8 9 
+new capacity = 20, new size = 11
+
+v : -42 0 1 2 3 4 5 6 7 8 9 
+old capacity = 20, old size = 11
+v.insert(pos 10, -42)
+v : -42 0 1 2 3 4 5 6 7 8 -42 9 
+v starting from iterator returned by insert : -42 9 
+new capacity = 20, new size = 12
+
+v : -42 0 1 2 3 4 5 6 7 8 -42 9 
+old capacity = 20, old size = 12
+v.insert(pos 12, -42)
+v : -42 0 1 2 3 4 5 6 7 8 -42 9 -42 
+v starting from iterator returned by insert : -42 
+new capacity = 20, new size = 13
+
+v : -42 0 1 2 3 4 5 6 7 8 -42 9 -42 
+old capacity = 20, old size = 13
+v.insert(pos 5, -42)
+v : -42 0 1 2 3 -42 4 5 6 7 8 -42 9 -42 
+v starting from iterator returned by insert : -42 4 5 6 7 8 -42 9 -42 
+new capacity = 20, new size = 14
+
+** INSERT N ELEMS
+_____________________________
+v : 
+old capacity = 0, old size = 0
+v.insert(pos 0, 2, -1)
+v : -1 -1 
+new capacity = 2, new size = 2
+
+v : -1 -1 
+old capacity = 2, old size = 2
+v.insert(pos 0, 10, -1)
+v : -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 
+new capacity = 12, new size = 12
+
+v : -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 
+old capacity = 12, old size = 12
+v.insert(pos 0, 2, -1)
+v : -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 
+new capacity = 24, new size = 14
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.insert(pos 0, 5, -1)
+v : -1 -1 -1 -1 -1 0 1 2 3 4 5 6 7 8 9 
+new capacity = 20, new size = 15
+
+v : -1 -1 -1 -1 -1 0 1 2 3 4 5 6 7 8 9 
+old capacity = 20, old size = 15
+v.insert(pos 15, 5, -1)
+v : -1 -1 -1 -1 -1 0 1 2 3 4 5 6 7 8 9 -1 -1 -1 -1 -1 
+new capacity = 20, new size = 20
+
+v : -1 -1 -1 -1 -1 0 1 2 3 4 5 6 7 8 9 -1 -1 -1 -1 -1 
+old capacity = 20, old size = 20
+v.insert(pos 20, 5, -1)
+v : -1 -1 -1 -1 -1 0 1 2 3 4 5 6 7 8 9 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 
+new capacity = 40, new size = 25
+
+** INSERT RANGE
+_____________________________
+v : 
+old capacity = 0, old size = 0
+range = 0 1 2 3 4 5 6 7 8 9 
+v.insert(pos 0, 10)
+v : 0 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 10
+
+v : 
+old capacity = 10, old size = 0
+range = 0 1 2 3 4 5 6 7 8 9 
+v.insert(pos 0, 10)
+v : 0 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 10
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+range = 0 1 2 3 4 5 6 7 8 9 
+v.insert(pos 10, 10)
+v : 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+new capacity = 20, new size = 20
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+range = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+v.insert(pos 0, 20)
+v : 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+new capacity = 30, new size = 30
+
+v : 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+old capacity = 30, old size = 30
+range = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+v.insert(pos 30, 20)
+v : 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+new capacity = 60, new size = 50
+
+v : 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+old capacity = 60, old size = 50
+range = 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+v.insert(pos 5, 20)
+v : 0 1 2 3 4 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 
+new capacity = 100, new size = 70
+
+** ERASE SINGLE ELEM
+_____________________________
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(0)
+v : 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 9
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(5)
+v : 0 1 2 3 4 6 7 8 9 
+new capacity = 10, new size = 9
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(9)
+v : 0 1 2 3 4 5 6 7 8 
+new capacity = 10, new size = 9
+
+** ERASE RANGE
+_____________________________
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(0-0)
+v : 0 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 10
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(0-1)
+v : 1 2 3 4 5 6 7 8 9 
+new capacity = 10, new size = 9
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(9-10)
+v : 0 1 2 3 4 5 6 7 8 
+new capacity = 10, new size = 9
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(0-5)
+v : 5 6 7 8 9 
+new capacity = 10, new size = 5
+
+v : 0 1 2 3 4 5 6 7 8 9 
+old capacity = 10, old size = 10
+v.erase(5-10)
+v : 0 1 2 3 4 
+new capacity = 10, new size = 5
+
+** SWAP
+_____________________________
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v1 old capacity = 10, v1 old size = 10
+v2 : 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+v2 old capacity = 20, v2 old size = 20
+
+v1.swap(v2)
+v1 : 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+v1 new capacity = 20, v1 new size = 20
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v2 new capacity = 10, v2 new size = 10
+
+v1 : 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+v1 old capacity = 20, v1 old size = 20
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v2 old capacity = 10, v2 old size = 10
+
+v1.swap(v2)
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v1 new capacity = 10, v1 new size = 10
+v2 : 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+v2 new capacity = 20, v2 new size = 20
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v1 old capacity = 10, v1 old size = 10
+v2 : 0 0 0 0 0 
+v2 old capacity = 5, v2 old size = 5
+
+v1.swap(v2)
+v1 : 0 0 0 0 0 
+v1 new capacity = 5, v1 new size = 5
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v2 new capacity = 10, v2 new size = 10
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v1 old capacity = 10, v1 old size = 10
+v2 : 
+v2 old capacity = 0, v2 old size = 0
+
+v1.swap(v2)
+v1 : 
+v1 new capacity = 0, v1 new size = 0
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v2 new capacity = 10, v2 new size = 10
+
+v1 : 
+v1 old capacity = 0, v1 old size = 0
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v2 old capacity = 10, v2 old size = 10
+
+v1.swap(v2)
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v1 new capacity = 10, v1 new size = 10
+v2 : 
+v2 new capacity = 0, v2 new size = 0
+
+*********** OPERATOR TESTS*************
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v1 == v2 ? 1
+v1 != v2 ? 0
+v1 < v2 ? 0
+v1 <= v2 ? 1
+v1 > v2 ? 0
+v1 >= v2 ? 1
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v1 == v2 ? 1
+v1 != v2 ? 0
+v1 < v2 ? 0
+v1 <= v2 ? 1
+v1 > v2 ? 0
+v1 >= v2 ? 1
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v2 : 0 1 2 3 4 
+v1 == v2 ? 0
+v1 != v2 ? 1
+v1 < v2 ? 0
+v1 <= v2 ? 0
+v1 > v2 ? 1
+v1 >= v2 ? 1
+
+v1 : 0 1 2 3 4 
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v1 == v2 ? 0
+v1 != v2 ? 1
+v1 < v2 ? 1
+v1 <= v2 ? 1
+v1 > v2 ? 0
+v1 >= v2 ? 0
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+v2 : 5 6 7 8 9 
+v1 == v2 ? 0
+v1 != v2 ? 1
+v1 < v2 ? 1
+v1 <= v2 ? 1
+v1 > v2 ? 0
+v1 >= v2 ? 0
+
+v1 : 5 6 7 8 9 
+v2 : 0 1 2 3 4 5 6 7 8 9 
+v1 == v2 ? 0
+v1 != v2 ? 1
+v1 < v2 ? 0
+v1 <= v2 ? 0
+v1 > v2 ? 1
+v1 >= v2 ? 1
+
+v1 : 0 1 2 3 4 
+v2 : 5 6 7 8 9 
+v1 == v2 ? 0
+v1 != v2 ? 1
+v1 < v2 ? 1
+v1 <= v2 ? 1
+v1 > v2 ? 0
+v1 >= v2 ? 0
+
+v1 : 5 6 7 8 9 
+v2 : 0 1 2 3 4 
+v1 == v2 ? 0
+v1 != v2 ? 1
+v1 < v2 ? 0
+v1 <= v2 ? 0
+v1 > v2 ? 1
+v1 >= v2 ? 1
+
+*********** SWAP TESTS*************
+v1 : 0 1 2 3 4 5 6 7 8 9 
+old cap = 10, old size = 10
+v2 : 0 1 2 3 4 5 6 7 8 9 
+old cap = 10, old size = 10
+swap(v1, v2)
+v1 : 0 1 2 3 4 5 6 7 8 9 
+new cap = 10, new size = 10
+v2 : 0 1 2 3 4 5 6 7 8 9 
+new cap = 10, new size = 10
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+old cap = 10, old size = 10
+v2 : 0 1 2 3 4 
+old cap = 5, old size = 5
+swap(v1, v2)
+v1 : 0 1 2 3 4 
+new cap = 5, new size = 5
+v2 : 0 1 2 3 4 5 6 7 8 9 
+new cap = 10, new size = 10
+
+v1 : 0 1 2 3 4 5 6 7 8 9 
+old cap = 10, old size = 10
+v2 : 5 6 7 8 9 
+old cap = 5, old size = 5
+swap(v1, v2)
+v1 : 5 6 7 8 9 
+new cap = 5, new size = 5
+v2 : 0 1 2 3 4 5 6 7 8 9 
+new cap = 10, new size = 10
+
+**********************
+***** MAP TESTS ******
+**********************
+
+********* CONSTRUCTORS *********
+** DEFAULT
+-------------------
+empty map : 
+size = 0
+
+** ORDERED RANGE
+-------------------
+range from vector : 
+size = 10
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+range from map : 
+size = 10
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+** UNORDERED RANGE 
+-------------------
+unordered_range : 
+size = 4
+(a, 0)
+(b, 2)
+(c, 3)
+(z, 1)
+
+** COPY
+-------------------
+copy from ordered range : 
+size = 10
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+copy from unordered range : 
+size = 4
+(a, 0)
+(b, 2)
+(c, 3)
+(z, 1)
+
+** OPERATOR=
+-------------------
+test = emptyMap : 
+size = 0
+
+test = m10 : 
+size = 10
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+dst = other m10 : 
+size = 10
+(k, 0)
+(l, 1)
+(m, 2)
+(n, 3)
+(o, 4)
+(p, 5)
+(q, 6)
+(r, 7)
+(s, 8)
+(t, 9)
+
+********* REVERSE ITERATORS *********
+** iterator++
+-------------------
+j
+i
+h
+g
+f
+e
+d
+c
+b
+a
+
+** iterator--
+-------------------
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+
+********* CAPACITY *********
+** EMPTY
+-------------------
+TEST 1 OK
+TEST 2 OK
+TEST 2 OK
+
+** MAX SIZE
+-------------------
+max size = 256204778801521550
+
+********* ELEMENT ACCESS *********
+m[b] = 1
+m[z] = 0
+abcdefghijz : 
+size = 11
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+(z, 0)
+
+********* MODIFIERS *********
+** INSERT
+-------------------
+insert (s, -1)
+s inserted
+
+insert (s, 0)
+s already exists
+
+insert (m.begin, pair(s, 5))
+TEST OK
+
+insert (m.begin, pair(t, 0))
+TEST OK
+
+insert (m.begin, pair(a, 0))
+TEST OK
+
+insert (m10.begin, m10.end)
+abcdefghijst : 
+size = 12
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+(s, -1)
+(t, 0)
+
+abcz : 
+size = 4
+(a, 0)
+(b, 2)
+(c, 3)
+(z, 1)
+
+abcz : 
+size = 4
+(a, 0)
+(b, 2)
+(c, 3)
+(z, 1)
+
+** ERASE
+-------------------
+empty map
+erase(a) = 0
+
+m = abcdefghij
+erase(z) = 0
+erase(d) = 1
+
+erase(m.begin)
+bcefghij : 
+size = 8
+(b, 1)
+(c, 2)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+erase(m.begin, m.end)
+empty : 
+size = 0
+
+** SWAP
+-------------------
+m1 : 
+size = 10
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+m2 : 
+size = 20
+(k, 0)
+(l, 1)
+(m, 2)
+(n, 3)
+(o, 4)
+(p, 5)
+(q, 6)
+(r, 7)
+(s, 8)
+(t, 9)
+(u, 10)
+(v, 11)
+(w, 12)
+(x, 13)
+(y, 14)
+(z, 15)
+({, 16)
+(|, 17)
+(}, 18)
+(~, 19)
+
+m1.swap(m2)
+m1 : 
+size = 20
+(k, 0)
+(l, 1)
+(m, 2)
+(n, 3)
+(o, 4)
+(p, 5)
+(q, 6)
+(r, 7)
+(s, 8)
+(t, 9)
+(u, 10)
+(v, 11)
+(w, 12)
+(x, 13)
+(y, 14)
+(z, 15)
+({, 16)
+(|, 17)
+(}, 18)
+(~, 19)
+
+m2 : 
+size = 10
+(a, 0)
+(b, 1)
+(c, 2)
+(d, 3)
+(e, 4)
+(f, 5)
+(g, 6)
+(h, 7)
+(i, 8)
+(j, 9)
+
+** CLEAR
+-------------------
+empty : 
+size = 0
+
+m10 : 
+size = 0
+
+********* OBSERVERS *********
+** key_compare()
+-------------------
+a
+b
+c
+d
+e
+f
+g
+h
+i
+
+** value_compare()
+-------------------
+a
+b
+c
+d
+e
+f
+g
+h
+i
+
+********* OPERATIONS *********
+** FIND
+-------------------
+empty.find(a) : TEST OK
+m10.find(z) : TEST OK
+m10.find(j) : j found
+
+** COUNT
+-------------------
+empty.count(a) : 0
+m10.count(z) : 0
+m10.count(j) : 1
+
+** LOWER BOUND
+-------------------
+lower_bound(a) = a
+lower_bound(b) = b
+lower_bound(c) = c
+lower_bound(d) = d
+lower_bound(e) = e
+lower_bound(f) = f
+lower_bound(g) = g
+lower_bound(h) = h
+lower_bound(i) = i
+lower_bound(j) = j
+lower_bound(k) = NULL
+
+** UPPER BOUND
+-------------------
+upper_bound(a) = b
+upper_bound(b) = c
+upper_bound(c) = d
+upper_bound(d) = e
+upper_bound(e) = f
+upper_bound(f) = g
+upper_bound(g) = h
+upper_bound(h) = i
+upper_bound(i) = j
+upper_bound(j) = NULL
+
+** RANGE EQUAL
+-------------------
+range_equal(a) = a, b
+range_equal(b) = b, c
+range_equal(c) = c, d
+range_equal(d) = d, e
+range_equal(e) = e, f
+range_equal(f) = f, g
+range_equal(g) = g, h
+range_equal(h) = h, i
+range_equal(i) = i, j
+range_equal(j) = j, NULL
+range_equal(k) = NULL, NULL
+
+**********************
+***** STACK TESTS ******
+**********************
+
+********* CONSTRUCTOR *********
+empty(0) : 
+vector stack(10) : 9 8 7 6 5 4 3 2 1 0 
+list stack(10) : 9 8 7 6 5 4 3 2 1 0 
+deque stack(10) : 9 8 7 6 5 4 3 2 1 0 
+
+********* PUSH *********
+dflt(10) : 9 8 7 6 5 4 3 2 1 0 
+vs(10) : 9 8 7 6 5 4 3 2 1 0 
+ls(10) : 9 8 7 6 5 4 3 2 1 0 
+ds(10) : 9 8 7 6 5 4 3 2 1 0 
+
+********* OPERATORS *********
+** EMPTY STACKS
+-------------------
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+** SAME STACKS
+-------------------
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+s1 == s2 ? 1
+s1 != s2 ? 0
+s1 < s2 ? 0
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 1
+
+** STACK s1 < STACK s2
+-------------------
+s1 == s2 ? 0
+s1 != s2 ? 1
+s1 < s2 ? 1
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 0
+
+s1 == s2 ? 0
+s1 != s2 ? 1
+s1 < s2 ? 1
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 0
+
+s1 == s2 ? 0
+s1 != s2 ? 1
+s1 < s2 ? 1
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 0
+
+s1 == s2 ? 0
+s1 != s2 ? 1
+s1 < s2 ? 1
+s1 <= s2 ? 1
+s1 > s2 ? 0
+s1 >= s2 ? 0
+
