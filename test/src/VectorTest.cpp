@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:03:22 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/12 08:56:11 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/20 13:44:30 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,6 @@ void	run_vector_tests()
 	{
 		ns::vector<int> vtmp;
 		test_insert(vtmp, vtmp.begin(), 2, -1);
-		test_insert(vtmp, vtmp.begin(), 10, -1);
 		test_insert(vtmp, vtmp.begin(), 2, -1);
 
 		// vector 0-9
@@ -292,6 +291,7 @@ void	run_vector_tests()
 		test_insert(v10, v10.end(), 5, -1);
 		test_insert(v10, v10.end(), 5, -1);
 	}
+
 	std::cout << "** INSERT RANGE" << std::endl;
 	std::cout << "_____________________________" << std::endl;
 	{

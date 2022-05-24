@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 10:19:30 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/18 16:07:03 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/23 13:24:24 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 int main()
 {
-	struct timeval begin;
-	struct timeval end;
+	struct	timeval begin;
+	struct	timeval end;
 	gettimeofday(&begin, NULL);
 
 	std::cout << "**********************" << std::endl;

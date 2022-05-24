@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 13:01:40 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/12 12:07:15 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:36:33 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,24 +420,61 @@ namespace ft
 			** causes undefined behaviour */
 			iterator	insert(iterator position, const value_type &val)
 			{
-				value_type		tmp;
+				size_type		len;
 				difference_type	dist;
 				iterator		ite;
 
+				len = size();
 				dist = position - begin();
-				if (empty() || position == end())
+				if (position == end())
 					push_back(val);
 				else
 				{
-					tmp = back();
+					resize(len + 1);
+					position = begin() + dist;
 					for (ite = end() - 1; ite != position; ite--)
 						*ite = *(ite - 1);
 					*ite = val;
-					if (size() + 1 > _capacity)
-						reserve(_capacity * 2);
-					_alloc.construct(_end++, tmp);
 				}
-				return (&(operator[](dist)));
+				return (begin() + dist);
+
+			/*	pointer			tmp;
+				difference_type	dist;
+				size_type		len;
+				pointer			old_begin;
+				pointer			old_end;
+
+				old_begin = _begin;
+				old_end = _end;
+				dist = position - begin();
+				len = size();
+				if (empty() || position == end())
+					push_back(val);
+				else if (len + 1 > _capacity)
+				{
+					tmp = _begin;
+					_capacity *= 2;
+					_begin = _alloc.allocate(_capacity);
+					_end = _begin;
+					while (tmp != old_end)
+					{
+						if (tmp == old_begin + dist)
+							_alloc.construct(_end++, val);
+						_alloc.construct(_end++, *tmp);
+						_alloc.destroy(tmp++);
+					}
+					_alloc.deallocate(old_begin, len);
+				}
+				else
+				{
+					_alloc.construct(_end, *(_end - 1));
+					_end++;
+					for (iterator ite = end() - 2; ite != position; ite--)
+						*ite = *(ite - 1);
+					*position = val;
+					return (position);
+				}
+				return (begin() + dist);*/
 			}
 
 			/* INSERT (2) : insert n elements initialized with value val before position position
@@ -446,21 +483,18 @@ namespace ft
 			** @param val : value to initialize new elems with */
 		    void insert (iterator position, size_type n, const value_type& val)
 			{
-				size_t		len;
-				size_t		dist;
-				iterator	ite;
+				size_type		len;
+				iterator		ite;
+				difference_type	dist;
 
-				dist = position - begin();
 				len = size();
-				resize(len + n, val);
+				dist = position - begin();
+				resize(len + n);
 				position = begin() + dist;
-				if (len)
-				{
-					for (ite = end() - 1; ite - n >= position; ite--)
-						*ite = *(ite - n);
-					while (n--)
-						*ite-- = val;
-				}
+				for (ite = end() - 1; ite >= position + n; ite--)
+					*ite = *(ite - n);
+				while (ite >= position)
+					*ite-- = val;
 			}
 
 			/* INSERT (3) : insert elems in range from first to last before position position
@@ -499,35 +533,37 @@ namespace ft
 			** invalid position causes undefined behaviour */
 			iterator	erase(iterator position)
 			{
-				pointer		pos_ptr;
-				iterator	ite;
+				iterator	ret;
 				iterator	end_ite;
 
-				pos_ptr = position.base();
 				end_ite = end();
-				_alloc.destroy(pos_ptr);
-				if (position + 1 != end_ite)
+				ret = position;
+				while (position < end_ite - 1)
 				{
-					_alloc.construct(pos_ptr, *(position + 1));
-					for (ite = position + 1; ite < end_ite - 1; ite++)
-						*ite = *(ite + 1);
-					_alloc.destroy(ite.base());
+					*position = *(position + 1);
+					position++;
 				}
+				_alloc.destroy(position.base());
 				_end--;
-				return (iterator(pos_ptr));
+				return (ret);
 			}
 
 			/* ERASE (2) : removes the range of elements from first to last */
 			iterator	erase(iterator first, iterator last)
 			{
-				iterator	i;
-				iterator	j;
+				iterator		ite;
+				iterator		tmp;
+				iterator		end_ite;
 
-				for (i = first; i != last; i++)
-					_alloc.destroy(i.base());
-				i = first;
-				for (j = last; j != end(); j++, i++)
-					_alloc.construct(i.base(), *j);
+				end_ite = end();
+				tmp = last;
+				for (ite = first; ite != end_ite; ite++)
+				{
+					if (tmp != end_ite)
+						*ite = *tmp++;
+					else
+						_alloc.destroy(ite.base());
+				}
 				_end -= last - first;
 				return (first);
 			}
