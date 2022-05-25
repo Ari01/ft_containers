@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/03/21 12:06:10 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/11 08:15:26 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ namespace ft
 	}
 
 	/********************** BIDIR ITERATOR  ***************************/
-	template <typename T>
+/*	template <typename T>
 	class BidirIte : public iterator<bidirectional_iterator_tag, T>
 	{
 		public:
@@ -124,6 +124,36 @@ namespace ft
 			}
 			~BidirIte() {}
 
+			};*/
+
+	/********************** RANDOM ITERATOR  ***************************/
+	template <typename T>
+	class RandomIte : public iterator<random_access_iterator_tag, T>
+	{
+		public:
+			typedef typename iterator<random_access_iterator_tag, T>::value_type		value_type;
+			typedef typename iterator<random_access_iterator_tag, T>::difference_type	difference_type;
+			typedef typename iterator<random_access_iterator_tag, T>::pointer			pointer;
+			typedef typename iterator<random_access_iterator_tag, T>::reference			reference;
+			typedef typename iterator<random_access_iterator_tag, T>::iterator_category	iterator_category;
+
+		private:
+			pointer	val;
+
+		public:
+
+			// CONSTS DESTS
+			RandomIte() : val(NULL) {}
+			RandomIte(pointer p) : val(p) {}
+			
+			template <typename TT>
+			RandomIte(RandomIte<TT> const& other)
+			{
+				this->val = other.base();
+			}
+
+			~RandomIte() {}
+
 			// ACCESSORS
 			pointer	base() const
 			{
@@ -141,70 +171,33 @@ namespace ft
 				return (val);
 			}
 
-			BidirIte &operator++()
+			RandomIte &operator++()
 			{
 				++val;
 				return (*this);
 			}
 
-			BidirIte operator++(int)
+			RandomIte operator++(int)
 			{
-				BidirIte tmp(*this);
+				RandomIte tmp(*this);
 
 				++val;
 				return (tmp);
 			}
 
-			BidirIte &operator--()
+			RandomIte &operator--()
 			{
 				--val;
 				return (*this);
 			}
 
-			BidirIte operator--(int)
+			RandomIte operator--(int)
 			{
-				BidirIte tmp(*this);
+				RandomIte tmp(*this);
 
 				--val;
 				return (tmp);
 			}
-
-			// NON MEMBER OPERATORS
-			friend bool operator==(BidirIte const& lhs, BidirIte const& rhs)
-			{
-				return (lhs.val == rhs.val);
-			}
-
-			friend bool operator!=(BidirIte const& lhs, BidirIte const& rhs)
-			{
-				return (lhs.val != rhs.val);
-			}
-	};
-
-	/********************** RANDOM ITERATOR  ***************************/
-	template <typename T>
-	class RandomIte : public BidirIte<T>
-	{
-		public:
-			typedef typename iterator<random_access_iterator_tag, T>::value_type		value_type;
-			typedef typename iterator<random_access_iterator_tag, T>::difference_type	difference_type;
-			typedef typename iterator<random_access_iterator_tag, T>::pointer			pointer;
-			typedef typename iterator<random_access_iterator_tag, T>::reference			reference;
-			typedef typename iterator<random_access_iterator_tag, T>::iterator_category	iterator_category;
-
-		public:
-
-			// CONSTS DESTS
-			RandomIte() : BidirIte<T>() {}
-
-			template <typename TT>
-			RandomIte(RandomIte<TT> const& other)
-			{
-				this->val = other.base();
-			}
-
-			RandomIte(pointer p) : BidirIte<T>(p) {}
-			~RandomIte() {}
 
 			// MEMBER OPERATORS
 			RandomIte	&operator+=(difference_type n)
@@ -225,6 +218,28 @@ namespace ft
 			}
 
 			// NON MEMBER OPERATORS
+			friend bool operator==(RandomIte<T> const& lhs, RandomIte<T> const& rhs)
+			{
+				return (lhs.base() == rhs.base());
+			}
+
+			template <typename T2>
+			friend bool operator==(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() == rhs.base());
+			}
+
+			friend bool operator!=(RandomIte<T> const& lhs, RandomIte<T> const& rhs)
+			{
+				return (lhs.base() != rhs.base());
+			}
+
+			template <typename T2>
+			friend bool operator!=(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() != rhs.base());
+			}
+
 			friend RandomIte	operator+(RandomIte const& lhs, difference_type n)
 			{
 				RandomIte	tmp(lhs);
@@ -254,14 +269,32 @@ namespace ft
 				return (lhs.val - rhs.val);
 			}
 
+			template <typename T2>
+			friend difference_type	operator-(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() - rhs.base());
+			}
+
 			friend bool	operator<(RandomIte const& lhs, RandomIte const& rhs)
 			{
 				return (lhs.val < rhs.val);
 			}
 
+			template <typename T2>
+			friend bool	operator<(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() < rhs.base());
+			}
+
 			friend bool	operator<=(RandomIte const& lhs, RandomIte const& rhs)
 			{
-				return (lhs.val <= rhs.val);
+				return (lhs.base() <= rhs.base());
+			}
+
+			template <typename T2>
+			friend bool	operator<=(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() <= rhs.base());
 			}
 
 			friend bool	operator>(RandomIte const& lhs, RandomIte const& rhs)
@@ -269,9 +302,21 @@ namespace ft
 				return (lhs.val > rhs.val);
 			}
 
+			template <typename T2>
+			friend bool	operator>(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() > rhs.base());
+			}
+
 			friend bool	operator>=(RandomIte const& lhs, RandomIte const& rhs)
 			{
 				return (lhs.val >= rhs.val);
+			}
+
+			template <typename T2>
+			friend bool	operator>=(RandomIte<T> const& lhs, RandomIte<T2> const& rhs)
+			{
+				return (lhs.base() >= rhs.base());
 			}
 	};
 
@@ -374,7 +419,7 @@ namespace ft
 				return (&(operator*()));
 			}
 
-			reference operator[] (difference_type n) const
+			reference operator[] (difference_type n)
 			{
 				return (ite[-n - 1]);
 			}
@@ -385,9 +430,21 @@ namespace ft
 				return (lhs.ite == rhs.ite);
 			}
 
+			template <typename IteType>
+			friend bool operator== (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (lhs.base() == rhs.base());
+			}
+
 			friend bool operator!= (const reverse_iterator& lhs, const reverse_iterator& rhs)
 			{
 				return (lhs.ite != rhs.ite);
+			}
+
+			template <typename IteType>
+			friend bool operator!= (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (lhs.base() != rhs.base());
 			}
 
 			friend bool operator<  (const reverse_iterator& lhs, const reverse_iterator& rhs)
@@ -395,9 +452,21 @@ namespace ft
 				return (lhs.ite > rhs.ite);
 			}
 
+			template <typename IteType>
+			friend bool operator<  (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (lhs.base() > rhs.base());
+			}
+
 			friend bool operator<= (const reverse_iterator& lhs, const reverse_iterator& rhs)
 			{
 				return (lhs.ite >= rhs.ite);
+			}
+
+			template <typename IteType>
+			friend bool operator<= (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (lhs.base() >= rhs.base());
 			}
 
 			friend bool operator>  (const reverse_iterator& lhs, const reverse_iterator& rhs)
@@ -405,9 +474,21 @@ namespace ft
 				return (lhs.ite < rhs.ite);
 			}
 
+			template <typename IteType>
+			friend bool operator>  (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (lhs.base() < rhs.base());
+			}
+
 			friend bool operator>= (const reverse_iterator& lhs, const reverse_iterator& rhs)
 			{
 				return (lhs.ite <= rhs.ite);
+			}
+
+			template <typename IteType>
+			friend bool operator>= (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (lhs.base() <= rhs.base());
 			}
 
 			friend reverse_iterator operator+ (difference_type n, const reverse_iterator& rev_it)
@@ -418,6 +499,12 @@ namespace ft
 			friend difference_type operator- (const reverse_iterator& lhs, const reverse_iterator& rhs)
 			{
 				return (rhs.ite - lhs.ite);
+			}
+
+			template <typename IteType>
+			friend difference_type operator- (const reverse_iterator& lhs, const reverse_iterator<IteType>& rhs)
+			{
+				return (rhs.base() - lhs.base());
 			}
 	};
 }

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:19:20 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/18 13:03:05 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:46:36 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ class BinaryTree
 					tmp = insert(tmp, i->val);
 					i = successor(i);
 				}
-				if (j)
+				while (j)
 				{
-					tmp->left = NULL;
-					tmp->right = NULL;
-					destroy(&j);
+					tmp = successor(j);
+					erase(j);
+					j = tmp;
 				}
 				_size = x._size;
 			}
@@ -214,23 +214,31 @@ class BinaryTree
 		pointer	insert(pointer position, const value_type& val)
 		{
 			pointer	ret;
+			pointer	successor_ptr;
 
-			if (!position || comp(val, position->val))
-				return (insert(val).first);
-			else if (comp(position->val, val))
+			if (position && comp(position->val, val))
 			{
-				if (!position->right || comp(val, position->right->val))
+				successor_ptr = successor(position);
+				if (!successor_ptr || comp(val, successor_ptr->val))
 				{
 					ret = alloc.allocate(1);
-					alloc.construct(ret, Node(val, position, NULL, position->right));
-					position->right = ret;
+					if (!successor_ptr)
+					{
+						alloc.construct(ret, Node(val, position));
+						position->right = ret;
+					}
+					else
+					{
+						alloc.construct(ret, Node(val, successor_ptr->parent, NULL, successor_ptr));
+						successor_ptr->parent->right = ret;
+						successor_ptr->parent = ret;
+					}
 					_size++;
+
 					return (ret);
 				}
-				else
-					return (insert(val).first);
 			}
-			return (position);
+			return (insert(val).first);
 		}
 
 		/* min : returns min key found in tree or NULL if no key was found */
@@ -353,7 +361,7 @@ class BinaryTree
 		** modifies size accordingly */
 		void	destroy(pointer *node)
 		{
-			if (*node != NULL)
+			if (node && *node != NULL)
 			{
 				destroy(&(*node)->left);
 				destroy(&(*node)->right);
@@ -397,7 +405,12 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 		}
 
 		// copy const
-		TreeIte(TreeIte const& other) : node(other.node), root(other.root) {}
+		template <typename TT>
+		TreeIte(TreeIte<TT> const& other)
+		{
+			node = reinterpret_cast<node_pointer>(other.base());
+			root = reinterpret_cast<node_pointer>(other.get_root());
+		}
 
 		// operator=
 		TreeIte &operator=(TreeIte const& other)
@@ -409,6 +422,8 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 			}
 			return (*this);
 		}
+
+		// destructor
 		~TreeIte() {}
 
 		// ACCESSORS
@@ -417,13 +432,18 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 			return (node);
 		}
 
+		node_pointer	get_root() const
+		{
+			return (root);
+		}
+
 		// MEMBER OPERATORS
-		reference	operator*()
+		reference	operator*() const
 		{
 			return (node->val);
 		}
 
-		pointer	operator->()
+		pointer	operator->() const
 		{
 			return (&(operator*()));
 		}
@@ -465,9 +485,21 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 			return (lhs.node == rhs.node);
 		}
 
+		template <typename T2>
+		friend bool operator==(TreeIte<T> const& lhs, TreeIte<T2> const& rhs)
+		{
+			return (lhs.base() == reinterpret_cast<node_pointer>(rhs.base()));
+		}
+
 		friend bool operator!=(TreeIte const& lhs, TreeIte const& rhs)
 		{
 			return (lhs.node != rhs.node);
+		}
+
+		template <typename T2>
+		friend bool operator!=(TreeIte<T> const& lhs, TreeIte<T2> const& rhs)
+		{
+			return (lhs.base() != reinterpret_cast<node_pointer>(rhs.base()));
 		}
 };
 
