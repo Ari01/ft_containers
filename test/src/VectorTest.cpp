@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:03:22 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/20 13:44:30 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:59:56 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	run_vector_tests()
 
 	std::cout << "***********SIZE CONSTRUCT TESTS*************" << std::endl;
 
-	if (!SANITIZE)
+	/*if (!SANITIZE)
 	{
 		std::cout << std::endl << "** FAILING CONSTRUCT TESTS" << std::endl;
 		test_size_construct<int>(-1);
 		test_size_construct<int>(2147483647);
-	}
+	}*/
 
 	std::cout << "** OK CONSTRUCT TESTS" << std::endl;
 	test_size_construct<int>(0);
@@ -177,11 +177,11 @@ void	run_vector_tests()
 	test_resize(vs, 0);
 
 	// RESIZE THROWING EXCEPTION TESTS
-	if (!SANITIZE)
+/*	if (!SANITIZE)
 	{
 		test_resize(vs, -1);
 		test_resize(vs, 2147483647);
-	}
+	}*/
 
 	// EMPTY TESTS
 	std::cout << "** EMPTY" << std::endl;
@@ -212,13 +212,13 @@ void	run_vector_tests()
 	test_at(v1, 9);
 
 	// FAILING THROWING EXCEPTION TESTS
-	if (!SANITIZE)
+/*	if (!SANITIZE)
 	{
 		test_at(v1, 10);
 		test_at(v1, 20);
 		test_at(v1, 2147483647);
 		test_at(v1, -1);
-	}
+	}*/
 
 	std::cout << std::endl << "** FRONT" << std::endl;
 	std::cout << "_____________________________" << std::endl;
@@ -247,11 +247,11 @@ void	run_vector_tests()
 		test_assign(vtmp, 20, 9);
 
 		// EXCEPTION THROWING TESTS
-		if (!SANITIZE)
+		/*if (!SANITIZE)
 		{
 			test_assign(vtmp, 2147483647, 1);
 			test_assign(vtmp, vtmp.max_size(), 1);
-		}
+		}*/
 
 		/** PUSH_BACK AND POP_BACK */
 		std::cout << std::endl << "** PUSH_BACK, POP BACK" << std::endl;
