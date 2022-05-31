@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:01:44 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/12 10:07:50 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:41:58 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,14 @@ namespace ft
 
 			const_iterator	begin() const
 			{
-				Node<value_type> *root;
+				Node<value_type> 		*root;
+				Node<const value_type>	*new_root;
+				Node<const value_type>	*new_node;
 
 				root = tree.getRoot();
-				return (const_iterator(tree.min(root), root));
+				new_root = reinterpret_cast<Node<const value_type>* >(root);
+				new_node = reinterpret_cast<Node<const value_type>* >(tree.min(root));
+				return (const_iterator(new_node, new_root));
 			}
 
 			iterator	end()
@@ -121,7 +125,10 @@ namespace ft
 
 			const_iterator	end() const
 			{
-				return (const_iterator(NULL, tree.getRoot()));
+				Node<const value_type>	*root;
+
+				root = reinterpret_cast<Node<const value_type>* >(tree.getRoot());
+				return (const_iterator(NULL, root));
 			}
 
 			reverse_iterator rbegin()
