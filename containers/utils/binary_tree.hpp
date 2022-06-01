@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 21:19:20 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/25 16:46:36 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/06/01 08:17:28 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,11 +375,11 @@ class BinaryTree
 
 
 /***** TREE ITERATOR ********/
-template <typename T>
+template <typename T, typename node_type>
 class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 {
 	public:
-		typedef Node<T>*																	node_pointer;
+		typedef node_type*																	node_pointer;
 		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::value_type		value_type;
 		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::difference_type	difference_type;
 		typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::pointer			pointer;
@@ -395,25 +395,26 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 		TreeIte() : node(NULL), root(NULL) {}
 
 		// node const
-		TreeIte(void *n, void *r)
+		TreeIte(node_pointer n, node_pointer r)
 		{
-			if (!n)
-				node = NULL;
-			else
-				node = reinterpret_cast<node_pointer>(n);
-			root = reinterpret_cast<node_pointer>(r);
+			node = n;
+			root = r;
+		}
+
+		// implicit conversion from T to const T
+		operator TreeIte<const T, node_type>() const
+		{
+			return (TreeIte<const T, node_type>(node, root));
 		}
 
 		// copy const
-		template <typename TT>
-		TreeIte(TreeIte<TT> const& other)
+		TreeIte(TreeIte const& other)
 		{
-			node = reinterpret_cast<node_pointer>(other.base());
-			root = reinterpret_cast<node_pointer>(other.get_root());
+			*this = other;
 		}
 
 		// operator=
-		TreeIte &operator=(TreeIte const& other)
+		TreeIte &operator=(const TreeIte& other)
 		{
 			if (this != &other)
 			{
@@ -422,6 +423,14 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 			}
 			return (*this);
 		}
+
+/*		template <typename T2>
+		TreeIte	&operator=(TreeIte<T2, node_type> const& other)
+		{
+			node = other.node;
+			root = other.root;
+			return (*this);
+		}*/
 
 		// destructor
 		~TreeIte() {}
@@ -450,7 +459,7 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 
 		TreeIte &operator++()
 		{
-			node = BinaryTree<T>::successor(node);
+			node = BinaryTree<T, std::less<T>, node_type>::successor(node);
 			return (*this);
 		}
 
@@ -465,9 +474,9 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 		TreeIte &operator--()
 		{
 			if (!node)
-				node = BinaryTree<T>::max(root);
+				node = BinaryTree<T, std::less<T>, node_type>::max(root);
 			else
-				node = BinaryTree<T>::predecessor(node);
+				node = BinaryTree<T, std::less<T>, node_type>::predecessor(node);
 			return (*this);
 		}
 
@@ -480,26 +489,26 @@ class TreeIte : public ft::iterator<ft::bidirectional_iterator_tag, T>
 		}
 
 		// NON MEMBER OPERATORS
-		friend bool operator==(TreeIte const& lhs, TreeIte const& rhs)
+	/*	friend bool operator==(TreeIte const& lhs, TreeIte const& rhs)
 		{
 			return (lhs.node == rhs.node);
-		}
+		}*/
 
 		template <typename T2>
-		friend bool operator==(TreeIte<T> const& lhs, TreeIte<T2> const& rhs)
+		friend bool operator==(TreeIte const& lhs, TreeIte<T2, node_type> const& rhs)
 		{
-			return (lhs.base() == reinterpret_cast<node_pointer>(rhs.base()));
+			return (lhs.base() == rhs.base());
 		}
 
-		friend bool operator!=(TreeIte const& lhs, TreeIte const& rhs)
+	/*	friend bool operator!=(TreeIte const& lhs, TreeIte const& rhs)
 		{
 			return (lhs.node != rhs.node);
-		}
+		}*/
 
 		template <typename T2>
-		friend bool operator!=(TreeIte<T> const& lhs, TreeIte<T2> const& rhs)
+		friend bool operator!=(TreeIte const& lhs, TreeIte<T2, node_type> const& rhs)
 		{
-			return (lhs.base() != reinterpret_cast<node_pointer>(rhs.base()));
+			return (lhs.base() != rhs.base());
 		}
 };
 

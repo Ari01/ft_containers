@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:01:44 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/31 16:41:58 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/06/01 07:34:28 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ namespace ft
 			typedef typename allocator_type::const_reference				const_reference;
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef TreeIte<value_type>										iterator;
-			typedef TreeIte<const value_type>								const_iterator;
+			typedef TreeIte<value_type, Node<value_type> >					iterator;
+			typedef TreeIte<const value_type, Node<value_type> >			const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -100,7 +100,7 @@ namespace ft
 			/************ ITERATORS **********/
 			iterator	begin()
 			{
-				Node<value_type> *root;
+				Node<value_type>	*root;
 
 				root = tree.getRoot();
 				return (iterator(tree.min(root), root));
@@ -108,14 +108,10 @@ namespace ft
 
 			const_iterator	begin() const
 			{
-				Node<value_type> 		*root;
-				Node<const value_type>	*new_root;
-				Node<const value_type>	*new_node;
+				Node<value_type>	*root;
 
 				root = tree.getRoot();
-				new_root = reinterpret_cast<Node<const value_type>* >(root);
-				new_node = reinterpret_cast<Node<const value_type>* >(tree.min(root));
-				return (const_iterator(new_node, new_root));
+				return (const_iterator(tree.min(root), root));
 			}
 
 			iterator	end()
@@ -125,9 +121,9 @@ namespace ft
 
 			const_iterator	end() const
 			{
-				Node<const value_type>	*root;
+				Node<value_type>	*root;
 
-				root = reinterpret_cast<Node<const value_type>* >(tree.getRoot());
+				root = tree.getRoot();
 				return (const_iterator(NULL, root));
 			}
 

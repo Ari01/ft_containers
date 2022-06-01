@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 15:27:27 by dchheang          #+#    #+#             */
-/*   Updated: 2022/05/11 08:15:26 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:14:35 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,13 @@ namespace ft
 			RandomIte(RandomIte<TT> const& other)
 			{
 				this->val = other.base();
+			}
+
+			RandomIte &operator=(RandomIte const& other)
+			{
+				if (this != &other)
+					val = other.val;
+				return (*this);
 			}
 
 			~RandomIte() {}

@@ -6,7 +6,7 @@
 /*   By: dchheang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 13:22:56 by dchheang          #+#    #+#             */
-/*   Updated: 2022/04/07 14:38:25 by dchheang         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:36:43 by dchheang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ namespace ft
 
 		// OPERATORS
 			// OPERATOR= implicitly declared:
-			pair& operator= (const pair& pr)
+		/*	pair& operator= (const pair& pr)
 			{
 				if (this != &pr)
 				{
@@ -160,7 +160,7 @@ namespace ft
 					second = pr.second;
 				}
 				return (*this);
-			}
+			}*/
 
 			// OPERATOR ==
 			friend bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
